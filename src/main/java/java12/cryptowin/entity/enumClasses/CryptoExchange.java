@@ -1,20 +1,48 @@
 package java12.cryptowin.entity.enumClasses;
 
 public enum CryptoExchange {
-    ;
-
-    private double minDepositSum;
-    private double maxDepositSum;
+    POLONIEX,
+    BINANCE,
+    EXMO,
+    CRYPTO_BRIDGE,
+    GRAVIEX;
 
     private String name;
     private String url;
 
+    private double minDepositSum;
+    private double maxDepositSum;
 
-    CryptoExchange(double minDepositSum, double maxDepositSum, String name, String url) {
-        this.minDepositSum = minDepositSum;
-        this.maxDepositSum = maxDepositSum;
-        this.name = name;
-        this.url = url;
+    private String minWithdrawSum;
+    private double maxWithdrawSum;
+
+    private String withdrawCommission;
+    private double depositCommission;
+
+    private String transactionCommission;
+
+//    CryptoExchange(String name, String url,
+//                   double minDepositSum, double maxDepositSum,
+//                   String minWithdrawSum, double maxWithdrawSum,
+//                   String withdrawCommission, double depositCommission,
+//                   String transactionCommission) {
+//        this.name = name;
+//        this.url = url;
+//        this.minDepositSum = minDepositSum;
+//        this.maxDepositSum = maxDepositSum;
+//        this.minWithdrawSum = minWithdrawSum;
+//        this.maxWithdrawSum = maxWithdrawSum;
+//        this.withdrawCommission = withdrawCommission;
+//        this.depositCommission = depositCommission;
+//        this.transactionCommission = transactionCommission;
+//    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getUrl() {
+        return url;
     }
 
     public double getMinDepositSum() {
@@ -25,11 +53,23 @@ public enum CryptoExchange {
         return maxDepositSum;
     }
 
-    public String getName() {
-        return name;
+    public String getMinWithdrawSum() {
+        return minWithdrawSum;
     }
 
-    public String getUrl() {
-        return url;
+    public double getMaxWithdrawSum() {
+        return maxWithdrawSum;
+    }
+
+    public String getWithdrawCommission() {
+        return withdrawCommission;
+    }
+
+    public double getDepositCommission() {
+        return depositCommission;
+    }
+
+    public String getTransactionCommission() {
+        return transactionCommission;
     }
 }
