@@ -3,6 +3,7 @@ package java12.cryptowin.entity;
 import java12.cryptowin.entity.enumClasses.CryptCoinType;
 import java12.cryptowin.entity.enumClasses.CryptoExchange;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 @Data
 @Entity()
 @Table(name = "crypto_monitor")
+@NoArgsConstructor
 public class CryptoMonitor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

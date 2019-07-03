@@ -1,16 +1,16 @@
 package java12.cryptowin.entity.enumClasses;
 
 public enum CryptCoinType {
-    BITCOIN("Bitcoin"),
-    ETHEREUM("Ethereum"),
+    BITCOIN("BTC"),
+    ETHEREUM("ETH"),
     XRP("XRP"),
-    LITECOIN("Litecoin"),
-    BITCOIN_CASH("Bitcoin Cash"),
-    STELLAR("Stellar"),
+    LITECOIN("LTC"),
+    BITCOIN_CASH("BTH"),
+    STELLAR("XML"),
     TRON("TRON"),
     DASH("Dash"),
     EOS("EOS"),
-    IOTA_MIOTA( "IOTA (MIOTA)");
+    IOTA_MIOTA( "IOTA");
 
     private String nameOfCoin;
 
