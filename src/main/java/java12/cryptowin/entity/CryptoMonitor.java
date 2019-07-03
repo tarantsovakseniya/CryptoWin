@@ -1,6 +1,7 @@
 package java12.cryptowin.entity;
 
-import java12.cryptowin.entity.enam.CryptCoinType;
+import java12.cryptowin.entity.enumClasses.CryptCoinType;
+import java12.cryptowin.entity.enumClasses.CryptoExchange;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,6 +19,11 @@ public class CryptoMonitor {
     @Enumerated(EnumType.STRING)
     @Column(name = "TYPE_COIN")
     private CryptCoinType coinType;
+
+    //there will be enum for exchange
+    @Enumerated(EnumType.STRING)
+    @Column(name = "EXCHANGE")
+    private CryptoExchange exchange;
 
     @Column(name = "BUYING_RATE")
     private double buyingRate;
