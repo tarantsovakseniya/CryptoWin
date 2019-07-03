@@ -5,10 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class CryptowinApplication {
+public class CryptoWinApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CryptowinApplication.class, args);
+		SpringApplication.run(CryptoWinApplication.class, args);
 	}
 
 }
