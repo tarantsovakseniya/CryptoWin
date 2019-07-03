@@ -1,4 +1,4 @@
-package java12.cryptowin.final.cryptowin;
+package java12.cryptowin;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
