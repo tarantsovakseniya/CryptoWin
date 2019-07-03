@@ -1,4 +1,4 @@
-package java12.cryptowin.final.cryptowin;
+package java12.cryptowin;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
