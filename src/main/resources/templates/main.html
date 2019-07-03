@@ -5,6 +5,7 @@
     <title>Crypto Win</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 </head>
 <body style="color:Black; background-color: #ccccb3;">
 
@@ -31,7 +32,7 @@
 
         <div class="card-header">
             <div class="d-flex align-items-center">
-                <h5 class="mr-auto p-3" th:text="${item.getKey()}"></h5>
+                <h5 class="mr-auto p-3" th:text="${item.getKey().getNameOfCoin()}"></h5>
                 <button class="btn btn-success">Выгодные варианты</button>
             </div>
         </div>
@@ -40,19 +41,18 @@
             <table class="table table-bordered table-sm text-center">
                 <thead>
                 <tr>
-
                     <th:block th:each="itemValue:${item.getValue()}">
-                        <th th:text="${itemValue.getNameMarket()}">Binance</th>
+                        <th><a th:href="${itemValue.getExchange().getUrl()}" th:text="${itemValue.getExchange().name()}" target="_blank" /></th>
                     </th:block>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                     <th:block th:each="itemValue:${item.getValue()}">
-                        <td th:text="${itemValue.getBuy()}">1000</td>
+                        <td th:text="${itemValue.getBuyingRate()}+ ' / ' + ${itemValue.getSellingRate()}">1000</td>
                     </th:block>
-                </tbody>
                 </tr>
+                </tbody>
             </table>
             </tr>
             </table>
