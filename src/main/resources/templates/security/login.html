@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
+    <title>Login</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 </head>
 
-<body>
+<body style="color:Black; background-color: #ccccb3;">
 
 <div th:replace="fragments/header :: top-navbar"></div>
 
@@ -28,8 +28,8 @@
                     <input type="password" name="password" class="form-control form-control-sm" id="password">
                 </div>
             </div>
-            <div clas="card-footer">
-                <button type="submit" class="btn btn-primary">Войти</button>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-success float-right">Войти</button>
             </div>
         </div>
     </form>
