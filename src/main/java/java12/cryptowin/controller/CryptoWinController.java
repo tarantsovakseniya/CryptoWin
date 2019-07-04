@@ -3,11 +3,14 @@ package java12.cryptowin.controller;
 import java12.cryptowin.entity.CryptoMonitor;
 import java12.cryptowin.entity.enumClasses.CryptCoinType;
 import java12.cryptowin.entity.enumClasses.CryptoExchange;
+import java12.cryptowin.entity.enumClasses.TimeType;
 import java12.cryptowin.service.jpa.CryptoMonitorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Arrays;
@@ -19,6 +22,31 @@ public class CryptoWinController {
 
     @Autowired
     CryptoMonitorService cryptoMonitorService;
+
+    @RequestMapping(value = "/charts", method = {RequestMethod.GET, RequestMethod.POST})
+    public ModelAndView getCharts(@RequestParam( name = "coinType", required = false) String coinType,
+                                  @RequestParam(name = "exchangeType", required = false) String  exchangeType,
+                                  @RequestParam(name = "timeType", required = false) String timeType){
+        ModelAndView result = new  ModelAndView("chart");
+        if(coinType==null){
+            coinType = CryptCoinType.BITCOIN.getNameOfCoin();
+        }
+        if(exchangeType == null){
+            exchangeType = CryptoExchange.BINANCE.getName();
+        }
+
+        List<CryptoMonitor> crypto = null;
+        //cryptoMonitorService.getByCryptoAndExName(coinType, exchangeType);
+        result.addObject("crypto", crypto);
+        result.addObject("coins", CryptCoinType.values());
+        result.addObject("exchanges", CryptoExchange.values());
+        result.addObject("times", TimeType.values());
+
+        result.addObject("coinType", coinType);
+
+        return result;
+
+    }
 
     @GetMapping
     public ModelAndView getMain() {

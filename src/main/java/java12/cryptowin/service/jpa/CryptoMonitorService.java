@@ -21,5 +21,7 @@ public class CryptoMonitorService {
 
     public void deleteById(long id){repository.deleteById(id);}
 
+   // public List<CryptoMonitor> getByCryptoAndExName(String cName, String  eName ){return repository.getByCryptoAndExchangeName(cName,eName);}
+
 
 }
