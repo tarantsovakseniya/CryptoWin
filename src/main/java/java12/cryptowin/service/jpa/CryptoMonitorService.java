@@ -1,4 +1,4 @@
-package java12.cryptowin.service;
+package java12.cryptowin.service.jpa;
 
 import java12.cryptowin.entity.CryptoMonitor;
 import java12.cryptowin.repository.CryptoMonitorRepository;

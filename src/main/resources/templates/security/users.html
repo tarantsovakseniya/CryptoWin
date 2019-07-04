@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<body>
+
+<div th:replace="fragments/header :: top-navbar"></div>
+
+
+<div class="container mt-3">
+    <div class="card">
+        <div class="card-header bg info">
+            Users
+            <a href="/register" class="btn btn-primary">Вернуться к регистрации</a>
+        </div>
+        <div class="card-body">
+            <table class="table table-sm">
+                <thead>
+                <tr>
+                    <th>Mail</th>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>Birthday</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.mail}"></td>
+                    <td th:text="${user.firstName}"></td>
+                    <td th:text="${user.lastName}"></td>
+                    <td th:text="${dateFormatService.format(user.birthday)}"></td>
+                    <td>
+                    <form th:action="@{/register/users/delete}" method="post">
+                        <input type="hidden" name="mail" th:value="${user.mail}" />
+                        <button type="submit" value="Delete" class="btn btn-danger">Удалить</button>
+                    </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

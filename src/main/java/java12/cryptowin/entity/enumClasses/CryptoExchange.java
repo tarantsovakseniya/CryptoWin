@@ -1,11 +1,11 @@
 package java12.cryptowin.entity.enumClasses;
 
 public enum CryptoExchange {
-    POLONIEX,
-    BINANCE,
-    EXMO,
-    CRYPTO_BRIDGE,
-    GRAVIEX;
+    POLONIEX (""),
+    BINANCE(""),
+    EXMO(""),
+    CRYPTO_BRIDGE(""),
+    GRAVIEX("");
 
     private String name;
     private String url;
@@ -47,6 +47,10 @@ public enum CryptoExchange {
 
     public double getMinDepositSum() {
         return minDepositSum;
+    }
+
+    CryptoExchange(String url) {
+        this.url = url;
     }
 
     public double getMaxDepositSum() {
