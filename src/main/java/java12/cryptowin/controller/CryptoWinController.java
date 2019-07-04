@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
-@RequestMapping("/main")
+@RequestMapping(value = {"/main", "/"})
 public class CryptoWinController {
 
     @Autowired
@@ -55,6 +55,8 @@ public class CryptoWinController {
 
         List<CryptoMonitor> items = Arrays.asList
                 (new CryptoMonitor(CryptCoinType.ETHEREUM, CryptoExchange.BINANCE, 10000, 10040),
+                        new CryptoMonitor(CryptCoinType.ETHEREUM, CryptoExchange.GRAVIEX, 10000, 10040),
+                        new CryptoMonitor(CryptCoinType.ETHEREUM, CryptoExchange.CRYPTO_BRIDGE, 10000, 10040),
                         new CryptoMonitor(CryptCoinType.ETHEREUM, CryptoExchange.POLONIEX, 10000, 10040),
                         new CryptoMonitor(CryptCoinType.ETHEREUM, CryptoExchange.EXMO, 10000, 10040),
                         new CryptoMonitor(CryptCoinType.BITCOIN, CryptoExchange.BINANCE, 10100, 10042),

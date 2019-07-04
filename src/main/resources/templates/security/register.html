@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-<body>
+</head>
+<body style="color:Black; background-color: #ccccb3;">
 
 <div th:replace="fragments/header :: top-navbar"></div>
 
@@ -37,8 +43,8 @@
             </div>
             <div class="card-footer">
                 <a href="/login" class="btn btn-small btn-secondary">Войти</a>
-                <a href="/register/users" class="btn btn-outline-primary">Пользователи</a>
-                <button type="submit" class="btn btn-primary float-right">Зарегистрироваться</button>
+                <a href="/register/users" class="btn btn-outline-success">Пользователи</a>
+                <button type="submit" class="btn btn-success float-right">Зарегистрироваться</button>
             </div>
         </div>
     </form>
