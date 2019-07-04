@@ -35,11 +35,4 @@ public class CryptoMonitor {
 
     @Column(name = "SELLING_RATE")
     private double sellingRate;
-
-    public CryptoMonitor(CryptCoinType coinType, CryptoExchange exchange, double buyingRate, double sellingRate) {
-        this.coinType = coinType;
-        this.exchange = exchange;
-        this.buyingRate = buyingRate;
-        this.sellingRate = sellingRate;
-    }
 }
