@@ -19,7 +19,7 @@
 
 <div th:replace="fragments/header :: top-navbar"></div>
 
-<div class="container-fluid" >
+<div class="container-fluid">
     <div class="row">
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
             <div class="sidebar-sticky">
@@ -58,67 +58,107 @@
             </div>
         </nav>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+
+            <!--            buttons to choose options-->
             <form method="post" action="/main/charts">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2" th:text = "${coinType}" >BTC</h1>
-                <h2 class="h3" th:text="'На бирже: ' + ${exchangeType}"></h2>
-                <h3 class="h4" th:text="${timeType}"></h3>
-                <div class="btn-toolbar mb-2 mb-md-0">
-                    <div class="btn-group mr-2">
-                        <select name="coinType" id="coinType" class="form-control form-control-sm">
-                            <option value="">Выбрать валюту</option>
-                            <option th:each="coinType : ${coins}"
-                                    th:value="${coinType.getNameOfCoin()}"
-                                    th:text="${coinType.getNameOfCoin()}"
-                            ></option>
-                        </select>
-                    </div>
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2" th:text="${coinType}">BTC</h1>
+                    <h2 class="h3" th:text="${exchangeType}"></h2>
+                    <h3 class="h4" th:text="' ' + ${timeType}"></h3>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group mr-2">
+                            <select name="coinType" id="coinType" class="form-control form-control-sm">
+                                <option value="">Выбрать валюту</option>
+                                <option th:each="coinType : ${coins}"
+                                        th:value="${coinType.getNameOfCoin()}"
+                                        th:text="${coinType.getNameOfCoin()}"
+                                ></option>
+                            </select>
+                        </div>
 
-                    <div class="btn-group mr-2">
-                        <select name="exchangeType" id="exchangeType" class="form-control form-control-sm">
-                            <option value="">Выбрать биржу</option>
-                            <option th:each="exchangeType : ${exchanges}"
-                                    th:value="${exchangeType.getName()}"
-                                    th:text="${exchangeType.getName()}"></option>
-                        </select>
-                    </div>
+                        <div class="btn-group mr-2">
+                            <select name="exchangeType" id="exchangeType" class="form-control form-control-sm">
+                                <option value="">Выбрать биржу</option>
+                                <option th:each="exchangeType : ${exchanges}"
+                                        th:value="${exchangeType.getName()}"
+                                        th:text="${exchangeType.getName()}"></option>
+                            </select>
+                        </div>
 
-                    <div class="btn-group mr-2">
-                        <select name="timeType" id="timeType" class="form-control form-control-sm">
-                            <option value="">Выбрать временной промежуток</option>
-                            <option th:each="timeType : ${times}"
-                                    th:value="${timeType.getName()}"
-                                    th:text="${timeType.getName()}"></option>
-                        </select>
-                    </div>
+                        <div class="btn-group mr-2">
+                            <select name="timeType" id="timeType" class="form-control form-control-sm">
+                                <option value="">Выбрать временной промежуток</option>
+                                <option th:each="timeType : ${times}"
+                                        th:value="${timeType.getName()}"
+                                        th:text="${timeType.getName()}"></option>
+                            </select>
+                        </div>
 
-                    <div class="btn-group mr-2">
-                        <button type="submit" class="btn btn-sm btn-outline-secondary">Подтвердить</button>
+                        <div class="btn-group mr-2">
+                            <button type="submit" class="btn btn-sm btn-outline-secondary">Подтвердить</button>
+                        </div>
                     </div>
                 </div>
-            </div>
             </form>
+
+            <!--   table-->
+            <div class="card-header">
+                <div class="d-flex align-items-center">
+                    <h5 class="mr-auto p-3">Данные за этот промежуток</h5>
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-bordered table-sm text-center" id="table">
+                    <thead>
+                    <tr>
+                        <th>Цена</th>
+                        <th>Дата</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th:block th:each="crypt:${crypto}">
+                            <td th:text="${crypt.getSellingRate()}">1000</td>
+                            <td th:text="${crypt.getDate()}">1000</td>
+                        </th:block>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
 
             <div class="container mt-3">
                 <div class="row">
                     <div class="col-md-15 col-md">
 
                         <!-- График -->
-                        <div id="chart">
 
+                        <div id="chart">
                             <script>
+var prices = new Array();
+var dates = new Array();
+var table = document.getElementById('table');
+
+for (var i = 1; i < table.rows.length; i++) {
+
+
+}
+
  $(document).ready(function () {
+
  $("#chart").shieldChart({
  theme: "light",
  primaryHeader: {
- text: "Курс валюты"
+ text: "Обзор бюджета"
  },
  exportOptions: {
  image: false,
  print: false
  },
  axisX: {
- categoricalValues: ["2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014"]
+ categoricalValues: dates,
  },
  tooltipSettings: {
  chartBound: true,
@@ -129,8 +169,8 @@
  },
  dataSeries: [{
  seriesType: 'line',
- collectionAlias: "Валюта в долларах",
- data: [100, 320, 453, 234, 553, 665, 345, 123, 432, 545, 654, 345, 332, 456, 234]
+ collectionAlias: "Бюджет в тысячях",
+ data: prices,
  }]
  });
  });
@@ -138,11 +178,11 @@
 
 
 
-
-
                             </script><!-- /.График -->
 
-                        </div><!-- /.col-md-8 col-md-offset-2 -->
+                        </div>
+
+                        <!-- /.col-md-8 col-md-offset-2 -->
                     </div><!-- /.row -->
                 </div><!-- /.container -->
             </div>

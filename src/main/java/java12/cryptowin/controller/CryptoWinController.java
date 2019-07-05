@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,8 +40,10 @@ public class CryptoWinController {
             timeType = TimeType.YEAR.getName();
         }
 
-        List<CryptoMonitor> crypto = null;
-        //cryptoMonitorService.getByCryptoAndExName(coinType, exchangeType);
+        List<CryptoMonitor> crypto = cryptoMonitorService.getAll();
+       //crypto = filterByCryptoNameDateAndExchange(crypto, coinType, timeType, exchangeType);
+
+
         result.addObject("crypto", crypto);
         result.addObject("coins", CryptCoinType.values());
         result.addObject("exchanges", CryptoExchange.values());
@@ -51,6 +55,28 @@ public class CryptoWinController {
 
         return result;
 
+    }
+
+    // method that filters cryptoMonitors for request
+    private List<CryptoMonitor> filterByCryptoNameDateAndExchange(List<CryptoMonitor> crypto,
+                                                                  String coinType, String timeType, String exchangeType) {
+
+        LocalDate localDate = LocalDate.parse(timeType);
+        crypto.forEach(crypt ->{
+            if(!crypt.getCoinType().getNameOfCoin().equals(coinType)){
+                crypto.remove(crypt);
+            }
+
+            if(!crypt.getExchange().getName().equals(exchangeType)){
+                crypto.remove(crypt);
+            }
+            if(crypt.getDate().isBefore(localDate)){
+                crypto.remove(crypt);
+            }
+
+        });
+
+        return crypto;
     }
 
     @GetMapping
