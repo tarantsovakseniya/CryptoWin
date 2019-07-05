@@ -23,12 +23,12 @@
 
             <table class="table table-bordered table-sm text-center">
                 <thead>
-                <tr>
-                    <th>Exchange</th>
-                    <th>BuyingRate</th>
-                    <th>Exchange</th>
-                    <th>SellingRate</th>
-                    <th>Profit</th>
+                <tr style="background-color: #CBFA7B;">
+                    <th>Биржа покупки</th>
+                    <th>Покупа</th>
+                    <th>Биржа продажи</th>
+                    <th>Продажа</th>
+                    <th>Выгода</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -36,12 +36,15 @@
                     <td th:text="${betterOffer.get(0).getExchange().getName()}"></td>
                     <td th:text="${betterOffer.get(0).getBuyingRate()}"></td>
                     <td th:text="${betterOffer.get(1).getExchange().getName()}"></td>
-                    <td th:text="${betterOffer.get(0).getSellingRate()}"></td>
+                    <td th:text="${betterOffer.get(1).getSellingRate()}"></td>
                     <td th:text="${betterOffers.get(betterOffer).doubleValue()}"></td>
                     </tr>
                 </th:block>
                 </tbody>
             </table>
+        </div>
+        <div class="card-footer">
+            <a href="/main" class="btn btn-info">Назад</a>
         </div>
     </div>
 </div>
