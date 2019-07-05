@@ -53,8 +53,8 @@ public class CryptoWinController {
         return result;
     }
 
-    @PostMapping(value = {"/main/better-offer", "/better-offer"})
-    public ModelAndView postBetterOffer(@RequestParam("nameOfCoin") CryptCoinType cryptCoin) {
+    @GetMapping(value = {"/main/better-offer", "/better-offer"})
+    public ModelAndView postBetterOffer(@RequestParam("cryptCoin") CryptCoinType cryptCoin) {
         ModelAndView result = new ModelAndView("better-offer");
 
 //        List<CryptoMonitor> items = cryptoMonitorService.getAll();

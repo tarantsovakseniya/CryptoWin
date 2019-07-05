@@ -13,15 +13,12 @@
 <div class="container mt-3">
     <div class="card card-sm" th:block th:each="cryptCoin:${cryptCoins}">
 
-        <form method="post" action="/main/better-offer">
         <div class="card-header">
             <div class="d-flex align-items-center">
                 <h5 class="mr-auto p-3" th:text="${cryptCoin.getNameOfCoin()}"></h5>
-                <input type="hidden" name="nameOfCoin" th:value="${cryptCoin}">
-                <button class="btn btn-success">Выгодные варианты</button>
+                <a th:href="'/main/better-offer/?cryptCoin=' + ${cryptCoin}" class="btn btn-info">Выгодные варианты</a>
             </div>
         </div>
-        </form>
 
         <div class="card-body">
 
