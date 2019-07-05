@@ -34,6 +34,9 @@ public class CryptoWinController {
         if(exchangeType == null){
             exchangeType = CryptoExchange.BINANCE.getName();
         }
+        if(timeType == null){
+            timeType = TimeType.YEAR.getName();
+        }
 
         List<CryptoMonitor> crypto = null;
         //cryptoMonitorService.getByCryptoAndExName(coinType, exchangeType);
@@ -43,6 +46,8 @@ public class CryptoWinController {
         result.addObject("times", TimeType.values());
 
         result.addObject("coinType", coinType);
+        result.addObject("timeType", timeType);
+        result.addObject("exchangeType", exchangeType);
 
         return result;
 

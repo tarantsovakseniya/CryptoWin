@@ -61,12 +61,14 @@
             <form method="post" action="/main/charts">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2" th:text = "${coinType}" >BTC</h1>
+                <h2 class="h3" th:text="'На бирже: ' + ${exchangeType}"></h2>
+                <h3 class="h4" th:text="${timeType}"></h3>
                 <div class="btn-toolbar mb-2 mb-md-0">
                     <div class="btn-group mr-2">
                         <select name="coinType" id="coinType" class="form-control form-control-sm">
                             <option value="">Выбрать валюту</option>
                             <option th:each="coinType : ${coins}"
-                                    th:value="${coinType}"
+                                    th:value="${coinType.getNameOfCoin()}"
                                     th:text="${coinType.getNameOfCoin()}"
                             ></option>
                         </select>
@@ -76,7 +78,7 @@
                         <select name="exchangeType" id="exchangeType" class="form-control form-control-sm">
                             <option value="">Выбрать биржу</option>
                             <option th:each="exchangeType : ${exchanges}"
-                                    th:value="${exchangeType}"
+                                    th:value="${exchangeType.getName()}"
                                     th:text="${exchangeType.getName()}"></option>
                         </select>
                     </div>
@@ -85,7 +87,7 @@
                         <select name="timeType" id="timeType" class="form-control form-control-sm">
                             <option value="">Выбрать временной промежуток</option>
                             <option th:each="timeType : ${times}"
-                                    th:value="${timeType}"
+                                    th:value="${timeType.getName()}"
                                     th:text="${timeType.getName()}"></option>
                         </select>
                     </div>
