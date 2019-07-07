@@ -16,7 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Controller
-@RequestMapping("/main/charts")
+@RequestMapping("/charts")
 public class ChartsController {
 
     @Autowired
