@@ -23,7 +23,6 @@ public class UserInitListener {
     public void onAppStarter(){
         validateRoles();
         validateUser();
-
     }
 
     private void validateRoles(){
