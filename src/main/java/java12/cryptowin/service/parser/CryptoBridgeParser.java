@@ -32,26 +32,26 @@ public class CryptoBridgeParser {
             Object name = linkedTreeMap.get("id");
             if (name.toString().contains("_USDT")) {
                 String nameCrypto = name.toString().substring(0, name.toString().length() - 5);
-                Object buyingRate = linkedTreeMap.get("bid"); //цена покупки
-                Object sellingRate = linkedTreeMap.get("ask"); //цена продажи
+                double buyingRate = Double.parseDouble((String)linkedTreeMap.get("bid")); //цена покупки
+                double sellingRate = Double.parseDouble((String)linkedTreeMap.get("ask")); //цена продажи
                 if (nameCrypto.equals(CryptCoinType.BITCOIN.name())) {
                     list.add(new CryptoMonitor(CryptCoinType.BITCOIN, CryptoExchange.CRYPTO_BRIDGE,
-                            Double.parseDouble(buyingRate.toString()), LocalDate.now(), Double.parseDouble(sellingRate.toString())));
+                            buyingRate, LocalDate.now(), sellingRate));
                 } else if (nameCrypto.equals(CryptCoinType.ETHEREUM.name())) {
                     list.add(new CryptoMonitor(CryptCoinType.ETHEREUM, CryptoExchange.CRYPTO_BRIDGE,
-                            Double.parseDouble(buyingRate.toString()), LocalDate.now(), Double.parseDouble(sellingRate.toString())));
+                            buyingRate, LocalDate.now(), sellingRate));
                 } else if (nameCrypto.equals(CryptCoinType.XRP.name())) {
                     list.add(new CryptoMonitor(CryptCoinType.XRP, CryptoExchange.CRYPTO_BRIDGE,
-                            Double.parseDouble(buyingRate.toString()), LocalDate.now(), Double.parseDouble(sellingRate.toString())));
+                            buyingRate, LocalDate.now(), sellingRate));
                 } else if (nameCrypto.equals(CryptCoinType.LITECOIN.name())) {
                     list.add(new CryptoMonitor(CryptCoinType.LITECOIN, CryptoExchange.CRYPTO_BRIDGE,
-                            Double.parseDouble(buyingRate.toString()), LocalDate.now(), Double.parseDouble(sellingRate.toString())));
+                            buyingRate, LocalDate.now(), sellingRate));
                 } else if (nameCrypto.equals(CryptCoinType.BITCOIN_CASH.name()) || nameCrypto.equals("BCH")) {
                     list.add(new CryptoMonitor(CryptCoinType.BITCOIN_CASH, CryptoExchange.CRYPTO_BRIDGE,
-                            Double.parseDouble(buyingRate.toString()), LocalDate.now(), Double.parseDouble(sellingRate.toString())));
+                            buyingRate, LocalDate.now(), sellingRate));
                 } else if (nameCrypto.equals(CryptCoinType.DASH.name())) {
                     list.add(new CryptoMonitor(CryptCoinType.DASH, CryptoExchange.CRYPTO_BRIDGE,
-                            Double.parseDouble(buyingRate.toString()), LocalDate.now(), Double.parseDouble(sellingRate.toString())));
+                            buyingRate, LocalDate.now(), sellingRate));
                 }
             }
         }
