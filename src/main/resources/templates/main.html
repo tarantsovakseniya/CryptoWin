@@ -11,12 +11,12 @@
 
 <div th:replace="fragments/header :: top-navbar"></div>
 <div class="container mt-3">
-    <div class="card card-sm mt-3" th:block th:each="cryptCoin:${cryptCoins}">
+    <div class="card card-sm mb-3" th:block th:each="cryptCoin:${cryptCoins}">
 
         <div class="card-header">
             <div class="d-flex align-items-center">
                 <h5 class="mr-auto p-3" th:text="${cryptCoin.getNameOfCoin()}"></h5>
-                <a th:href="'/main/better-offer/?cryptCoin=' + ${cryptCoin}" class="btn btn-info">Выгодные варианты</a>
+                <a th:href="'/better-offer/?cryptCoin=' + ${cryptCoin}" class="btn btn-info">Выгодные варианты</a>
             </div>
         </div>
 
