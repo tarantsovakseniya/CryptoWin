@@ -2,6 +2,7 @@ package java12.cryptowin.service.jpa;
 
 import java12.cryptowin.entity.Role;
 import java12.cryptowin.entity.User;
+
 import java12.cryptowin.repository.UserRepository;
 import java12.cryptowin.service.security.SecurityProcessor;
 import org.springframework.beans.factory.annotation.Autowired;

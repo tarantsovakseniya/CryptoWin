@@ -24,64 +24,6 @@ public class CryptoWinController {
     @Autowired
     CryptoMonitorService cryptoMonitorService;
 
-
-    @RequestMapping(value = "/charts", method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView getCharts(@RequestParam( name = "coinType", required = false) String coinType,
-                                  @RequestParam(name = "exchangeType", required = false) String  exchangeType,
-                                  @RequestParam(name = "timeType", required = false) String timeType){
-        ModelAndView result = new  ModelAndView("chart");
-        if(coinType==null){
-            coinType = CryptCoinType.BITCOIN.getNameOfCoin();
-        }
-        if(exchangeType == null){
-            exchangeType = CryptoExchange.BINANCE.getName();
-        }
-        if(timeType == null){
-            timeType = TimeType.WEEK.getName();
-        }
-
-        List<CryptoMonitor> crypto = fillListToUserRequest(coinType, timeType, exchangeType, cryptoMonitorService.getAll());
-        //cryptoMonitorService.getByCryptoAndExName(coinType, exchangeType);
-        result.addObject("crypto", crypto);
-        result.addObject("coins", CryptCoinType.values());
-        result.addObject("exchanges", CryptoExchange.values());
-        result.addObject("times", TimeType.values());
-        result.addObject("timeType", timeType);
-        result.addObject("exchangeType", exchangeType);
-        result.addObject("coinType", coinType);
-
-        return result;
-
-    }
-
-    private List<CryptoMonitor> fillListToUserRequest(String coinType, String timeType, String exchangeType, List<CryptoMonitor> all) {
-        all.forEach(cryptoMonitor -> {
-            if(!cryptoMonitor.getCoinType().getNameOfCoin().equals(coinType)){
-                all.remove(cryptoMonitor);
-            }
-
-            if(!cryptoMonitor.getExchange().getName().equals(exchangeType)){
-                all.remove(cryptoMonitor);
-            }
-
-            LocalDate localDate = LocalDate.now();
-            if(timeType.equals(TimeType.YEAR.getName())){
-                localDate = localDate.minusYears(1);
-            }
-            if(timeType.equals(TimeType.MONTH.getName())){
-                localDate = localDate.minusMonths(1);
-            }
-            if(timeType.equals(TimeType.WEEK.getName())){
-                localDate.minusWeeks(1);
-            }
-
-            if(cryptoMonitor.getDate().isBefore(localDate)){
-                all.remove(cryptoMonitor);
-            }
-        });
-        return all;
-    }
-
     @GetMapping
     public ModelAndView getMain() {
 
