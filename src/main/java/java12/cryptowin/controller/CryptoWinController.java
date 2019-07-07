@@ -58,7 +58,7 @@ public class CryptoWinController {
 
         return result;
     }
-    
+
     @GetMapping(value = "/better-offer")
     public ModelAndView getBetterOffer(@RequestParam("cryptCoin") CryptCoinType cryptCoin) {
         ModelAndView result = new ModelAndView("better-offer");
