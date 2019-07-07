@@ -8,12 +8,14 @@ import java12.cryptowin.service.jpa.BetterOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.*;
 
 @Controller
+@RequestMapping (value = "/")
 public class CryptoWinController {
 
     @Autowired
@@ -22,7 +24,7 @@ public class CryptoWinController {
     @Autowired
     BetterOfferService betterOfferService;
 
-    @GetMapping(value = {"/main", "/"})
+    @GetMapping
     public ModelAndView getMain() {
 
 //        List<CryptoMonitor> items = cryptoMonitorService.getAll();
@@ -50,7 +52,7 @@ public class CryptoWinController {
         return result;
     }
 
-    @GetMapping(value = {"/main/better-offer", "/better-offer"})
+    @GetMapping(value = "/better-offer")
     public ModelAndView getBetterOffer(@RequestParam("cryptCoin") CryptCoinType cryptCoin) {
         ModelAndView result = new ModelAndView("better-offer");
 
