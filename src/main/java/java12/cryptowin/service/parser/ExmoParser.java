@@ -32,48 +32,48 @@ public class ExmoParser {
         objects.forEach((key, value) -> {
             if (key.toString().contains("_USD")) {
                 LinkedTreeMap linked = (LinkedTreeMap) value;
-                Object buy_price = linked.get("buy_price");
-                Object sell_price = linked.get("sell_price");
+                double buy_price =Double.parseDouble((String) linked.get("buy_price"));
+                double sell_price = Double.parseDouble((String)linked.get("sell_price"));
                 String nameCrypto = key.toString().substring(0, key.toString().length() - 4);
                 if (nameCrypto.equals(CryptCoinType.BITCOIN.name())){
                     list.add(new CryptoMonitor(CryptCoinType.BITCOIN, CryptoExchange.EXMO,
-                            Double.parseDouble(buy_price.toString()), LocalDate.now(),  Double.parseDouble(sell_price.toString())));
+                            buy_price, LocalDate.now(),  sell_price));
                 }
                 else if (nameCrypto.equals(CryptCoinType.ETHEREUM.name())){
                     list.add(new CryptoMonitor(CryptCoinType.ETHEREUM, CryptoExchange.EXMO,
-                            Double.parseDouble(buy_price.toString()), LocalDate.now(), Double.parseDouble(sell_price.toString())));
+                            buy_price, LocalDate.now(), sell_price));
                 }
                 else if (nameCrypto.equals(CryptCoinType.BITCOIN_CASH.name())|| nameCrypto.equals("BCH")){
                     list.add(new CryptoMonitor(CryptCoinType.BITCOIN_CASH, CryptoExchange.EXMO,
-                            Double.parseDouble(buy_price.toString()),LocalDate.now(),  Double.parseDouble(sell_price.toString())));
+                            buy_price,LocalDate.now(),  sell_price));
                 }
                 else if (nameCrypto.equals(CryptCoinType.DASH.name())){
                     list.add(new CryptoMonitor(CryptCoinType.DASH, CryptoExchange.EXMO,
-                            Double.parseDouble(buy_price.toString()), LocalDate.now(), Double.parseDouble(sell_price.toString())));
+                            buy_price, LocalDate.now(), sell_price));
                 }
                 else if (nameCrypto.equals(CryptCoinType.EOS.name())){
                     list.add(new CryptoMonitor(CryptCoinType.EOS, CryptoExchange.EXMO,
-                            Double.parseDouble(buy_price.toString()), LocalDate.now(), Double.parseDouble(sell_price.toString())));
+                            buy_price, LocalDate.now(), sell_price));
                 }
                 else if (nameCrypto.equals(CryptCoinType.LITECOIN.name())){
                     list.add(new CryptoMonitor(CryptCoinType.LITECOIN, CryptoExchange.EXMO,
-                            Double.parseDouble(buy_price.toString()), LocalDate.now(), Double.parseDouble(sell_price.toString())));
+                            buy_price, LocalDate.now(), sell_price));
                 }
                 else if (nameCrypto.equals(CryptCoinType.IOTA_MIOTA.name())){
                     list.add(new CryptoMonitor(CryptCoinType.IOTA_MIOTA, CryptoExchange.EXMO,
-                            Double.parseDouble(buy_price.toString()), LocalDate.now(), Double.parseDouble(sell_price.toString())));
+                            buy_price, LocalDate.now(), sell_price));
                 }
                 else if (nameCrypto.equals(CryptCoinType.TRON.name()) || nameCrypto.equals("TRX")){
                     list.add(new CryptoMonitor(CryptCoinType.TRON, CryptoExchange.EXMO,
-                            Double.parseDouble(buy_price.toString()), LocalDate.now(), Double.parseDouble(sell_price.toString())));
+                            buy_price, LocalDate.now(),sell_price));
                 }
                 else if (nameCrypto.equals(CryptCoinType.STELLAR.name())){
                     list.add(new CryptoMonitor(CryptCoinType.STELLAR, CryptoExchange.EXMO,
-                            Double.parseDouble(buy_price.toString()), LocalDate.now(), Double.parseDouble(sell_price.toString())));
+                            buy_price, LocalDate.now(), sell_price));
                 }
                 else if (nameCrypto.equals(CryptCoinType.XRP.name())){
                     list.add(new CryptoMonitor(CryptCoinType.XRP, CryptoExchange.EXMO,
-                            Double.parseDouble(buy_price.toString()), LocalDate.now(), Double.parseDouble(sell_price.toString())));
+                            buy_price, LocalDate.now(), sell_price));
                 }
             }
         });
