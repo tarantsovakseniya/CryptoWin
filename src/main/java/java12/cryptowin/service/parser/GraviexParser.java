@@ -9,6 +9,7 @@ import org.jsoup.Jsoup;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,17 +31,22 @@ public class GraviexParser {
             double buyPrice = Double.parseDouble((String) linked.get("buy"));
             double sellPrice = Double.parseDouble((String) linked.get("sell"));
 
-            // нет XRP, Stellar, TRON, EOS, IOTA
+            // XRP, Stellar, TRON, EOS, IOTA are absent
             if (k.equals("btcusd")) {
-                result.add(new CryptoMonitor(CryptCoinType.BITCOIN, CryptoExchange.GRAVIEX, buyPrice, sellPrice));
+                result.add(new CryptoMonitor(CryptCoinType.BITCOIN, CryptoExchange.GRAVIEX,
+                        buyPrice, LocalDate.now(), sellPrice));
             } else if (k.equals("ethbtc")) {
-                result.add(new CryptoMonitor(CryptCoinType.ETHEREUM, CryptoExchange.GRAVIEX, buyPrice, sellPrice));
+                result.add(new CryptoMonitor(CryptCoinType.ETHEREUM, CryptoExchange.GRAVIEX,
+                        buyPrice, LocalDate.now(), sellPrice));
             } else if (k.equals("ltcusd")) {
-                result.add(new CryptoMonitor(CryptCoinType.LITECOIN, CryptoExchange.GRAVIEX, buyPrice, sellPrice));
+                result.add(new CryptoMonitor(CryptCoinType.LITECOIN, CryptoExchange.GRAVIEX,
+                        buyPrice, LocalDate.now(), sellPrice));
             } else if (k.equals("bchusdt")) {
-                result.add(new CryptoMonitor(CryptCoinType.BITCOIN_CASH, CryptoExchange.GRAVIEX, buyPrice, sellPrice));
+                result.add(new CryptoMonitor(CryptCoinType.BITCOIN_CASH, CryptoExchange.GRAVIEX,
+                        buyPrice, LocalDate.now(), sellPrice));
             } else if (k.equals("dashusdt")) {
-                result.add(new CryptoMonitor(CryptCoinType.DASH, CryptoExchange.GRAVIEX, buyPrice, sellPrice));
+                result.add(new CryptoMonitor(CryptCoinType.DASH, CryptoExchange.GRAVIEX,
+                        buyPrice, LocalDate.now(), sellPrice));
             }
         });
 
