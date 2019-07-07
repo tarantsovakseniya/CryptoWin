@@ -31,13 +31,13 @@
                 </h6>
                 <ul class="nav flex-column mb-2">
                     <li class="nav-item">
-                        <a class="nav-link" href="/main/charts?state=buy">
+                        <a class="nav-link" href="/charts?state=buy">
                             <span data-feather="text"></span>
                             График покупок
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/chart">
+                        <a class="nav-link" href="/charts">
                             <span data-feather="text"></span>
                             График продаж
                         </a>
@@ -108,7 +108,7 @@
                     <tbody>
 
                     <th:block th:each="crypt:${crypto}">
-                        <tr th:swich="${state}">
+                        <tr th:switch="${state}">
                             <td th:case="null" th:text="${crypt.getSellingRate()}">1000</td>
                             <td th:case="buy" th:text="${crypt.getBuyingRate()}">1000</td>
                             <td th:text="${crypt.getDate()}">1000</td>
