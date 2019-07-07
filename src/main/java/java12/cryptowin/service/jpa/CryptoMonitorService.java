@@ -22,4 +22,5 @@ public class CryptoMonitorService {
     public void deleteById(long id){repository.deleteById(id);}
 
 
+
 }
