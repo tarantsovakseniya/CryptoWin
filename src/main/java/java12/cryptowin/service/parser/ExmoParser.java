@@ -20,14 +20,13 @@ import java.util.List;
 public class ExmoParser {
 
     // на exmo нет ни IOTA, ни IOT, ни MOITA
-    private List<CryptoMonitor> list = new ArrayList();
 
-    private String apiUrl = "https://api.exmo.com/v1/ticker/";
-
-    public List parse() throws IOException {
+    public List<CryptoMonitor> parse() throws IOException {
+        List<CryptoMonitor> list = new ArrayList();
+        String apiUrl = "https://api.exmo.com/v1/ticker/";
+        Gson gson = new Gson();
         String stringGson = Jsoup.connect(apiUrl).ignoreContentType(true).get().text();
 
-        Gson gson = new Gson();
         LinkedTreeMap objects = gson.fromJson(stringGson, LinkedTreeMap.class);
 
         objects.forEach((key, value) -> {
