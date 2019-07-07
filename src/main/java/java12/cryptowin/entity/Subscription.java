@@ -15,7 +15,7 @@ public class Subscription {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "cryptCoin")
