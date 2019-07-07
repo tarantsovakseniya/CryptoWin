@@ -142,7 +142,7 @@ console.log(table.rows[i].cells[0]);
  $("#chart").shieldChart({
  theme: "light",
  primaryHeader: {
- text: "Обзор бюджета"
+ text: "Изменение курса"
  },
  exportOptions: {
  image: false,
@@ -160,7 +160,7 @@ console.log(table.rows[i].cells[0]);
  },
  dataSeries: [{
  seriesType: 'line',
- collectionAlias: "Бюджет в тысячях",
+ collectionAlias: "Цена в долларах",
  data: prices,
  }]
  });
