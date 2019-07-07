@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+interface GITUserRepository extends JpaRepository<User, Long> {
     @Query("from User u where u.email = :email")
     User getUserByEmail(@Param("email") String email);
 }
