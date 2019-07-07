@@ -60,7 +60,8 @@ public class ChartsController {
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView getCharts(@RequestParam(name = "coinType", required = false) String coinType,
                                   @RequestParam(name = "exchangeType", required = false) String exchangeType,
-                                  @RequestParam(name = "timeType", required = false) String timeType) {
+                                  @RequestParam(name = "timeType", required = false) String timeType,
+                                  @RequestParam(name = "state", required = false) String state) {
         ModelAndView result = new ModelAndView("chart");
         if (coinType == null) {
             coinType = CryptCoinType.BITCOIN.getNameOfCoin();
@@ -82,8 +83,7 @@ public class ChartsController {
         result.addObject("timeType", timeType);
         result.addObject("exchangeType", exchangeType);
         result.addObject("coinType", coinType);
-
-
+        result.addObject("state", state);
         return result;
 
     }
