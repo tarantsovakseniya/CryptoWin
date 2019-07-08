@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Crypto Win</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<body style="color:Black; background-color: #ccccb3;">
+<div th:replace="fragments/header :: top-navbar"></div>
+<div class="container mt-3">
+    <th:block th:if="${error}">
+        <div class="alert alert" style="background-color: #F0E68C" role="alert">
+            <h4 class="alert-heading">Возникла ошибка</h4>
+            <p class="lead">Извините, но эта функция доступна лишь для зарегистрированных пользователей</p>
+            <hr class="my-4">
+            <p class="mb-0">Для оформления подписки вам необходимо
+                <a href="/register" class="alert-link">войти в аккаунт</a> или
+                <a href="/login" class="alert-link">зарегистрироваться</a>.</p>
+        </div>
+    </th:block>
+
+    <div class="jumbotron" style="background-color: #E0FFFF">
+        <h1 class="display-4">Раздел подписок</h1>
+        <p class="lead">Узнавайте первыми о изменении курса выбраной криптвалюты</p>
+        <hr class="my-4">
+        <p>В этом разделе вы можете оформить подписку криптвалюту. При выборе криптвалюты вы даете согласие на
+            получение уведомлений о максимальной и минимальной ее стоимости.</p>
+    </div>
+
+
+
+    <ul th:each="coin:${coins}" class="list-group">
+        <li class="list-group-item">
+            <div class="card mt-3">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h5 class="mr-auto p-3" th:text="'Подписка на изменение курса ' + ${coin.getNameOfCoin()}"></h5>
+                        <a th:if="${user}" th:href="'/subscription/addNew?coin=' + ${coin} + '&' + 'user=' + ${user}"
+                           class="btn btn-info">  Оформить подписку</a>
+                        <a th:unless="${user}"  th:href="'/subscription?error=exist'"
+                           class="btn btn-info" >Оформить подписку</a>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <th:block th:switch="${user}">
+        <th:block th:case="null">
+
+        </th:block>
+    </th:block>
+</div>
+
+
+</body>
+</html>
