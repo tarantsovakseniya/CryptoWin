@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class BinanceParser {
@@ -19,7 +21,7 @@ public class BinanceParser {
     //BTH, BCH  - BITCOIN_CASH
     public List<CryptoMonitor> parse() throws IOException {
 
-        List<CryptoMonitor> list = new ArrayList();
+        List<CryptoMonitor> list = new ArrayList<>();
         String apiUrl = "https://api.binance.com/api/v1/ticker/24hr";
         String stringGson = Jsoup.connect(apiUrl).ignoreContentType(true).get().text();
         Gson gson = new Gson();
@@ -33,34 +35,34 @@ public class BinanceParser {
                 String nameCrypto = name.toString().substring(0, name.toString().length() - 4);
                 double bid_price = Double.parseDouble((String)linkedTreeMap.get("bidPrice"));// string, цена покупки
                 double ask_price = Double.parseDouble((String)linkedTreeMap.get("askPrice"));// string, цена продажи
-                if (nameCrypto.equals(CryptCoinType.BITCOIN.name())) {
+                if (nameCrypto.equals(CryptCoinType.BITCOIN.getNameOfCoin())) {
                     list.add(new CryptoMonitor(CryptCoinType.BITCOIN, CryptoExchange.BINANCE,
                             bid_price, LocalDate.now(), ask_price));
-                } else if (nameCrypto.equals(CryptCoinType.ETHEREUM.name())) {
+                } else if (nameCrypto.equals(CryptCoinType.ETHEREUM.getNameOfCoin())) {
                     list.add(new CryptoMonitor(CryptCoinType.ETHEREUM, CryptoExchange.BINANCE,
                             bid_price, LocalDate.now(), ask_price));
-                } else if (nameCrypto.equals(CryptCoinType.BITCOIN_CASH.name()) || nameCrypto.equals("BCH")) {
+                } else if (nameCrypto.equals(CryptCoinType.BITCOIN_CASH.getNameOfCoin()) || nameCrypto.equals("BCH")) {
                     list.add(new CryptoMonitor(CryptCoinType.BITCOIN_CASH, CryptoExchange.BINANCE,
                             bid_price, LocalDate.now(), ask_price));
-                } else if (nameCrypto.equals(CryptCoinType.DASH.name())) {
+                } else if (nameCrypto.equals(CryptCoinType.DASH.getNameOfCoin())) {
                     list.add(new CryptoMonitor(CryptCoinType.DASH, CryptoExchange.BINANCE,
                             bid_price, LocalDate.now(), ask_price));
-                } else if (nameCrypto.equals(CryptCoinType.EOS.name())) {
+                } else if (nameCrypto.equals(CryptCoinType.EOS.getNameOfCoin())) {
                     list.add(new CryptoMonitor(CryptCoinType.EOS, CryptoExchange.BINANCE,
                             bid_price, LocalDate.now(), ask_price));
-                } else if (nameCrypto.equals(CryptCoinType.LITECOIN.name())) {
+                } else if (nameCrypto.equals(CryptCoinType.LITECOIN.getNameOfCoin())) {
                     list.add(new CryptoMonitor(CryptCoinType.LITECOIN, CryptoExchange.BINANCE,
                             bid_price, LocalDate.now(), ask_price));
-                } else if (nameCrypto.equals(CryptCoinType.IOTA_MIOTA.name())) {
+                } else if (nameCrypto.equals(CryptCoinType.IOTA_MIOTA.getNameOfCoin())) {
                     list.add(new CryptoMonitor(CryptCoinType.IOTA_MIOTA, CryptoExchange.BINANCE,
                             bid_price, LocalDate.now(), ask_price));
-                } else if (nameCrypto.equals(CryptCoinType.TRON.name()) || nameCrypto.equals("TRX")) {
+                } else if (nameCrypto.equals(CryptCoinType.TRON.getNameOfCoin()) || nameCrypto.equals("TRX")) {
                     list.add(new CryptoMonitor(CryptCoinType.TRON, CryptoExchange.BINANCE,
                             bid_price, LocalDate.now(), ask_price));
-                } else if (nameCrypto.equals(CryptCoinType.STELLAR.name())) {
+                } else if (nameCrypto.equals(CryptCoinType.STELLAR.getNameOfCoin())) {
                     list.add(new CryptoMonitor(CryptCoinType.STELLAR, CryptoExchange.BINANCE,
                             bid_price, LocalDate.now(), ask_price));
-                } else if (nameCrypto.equals(CryptCoinType.XRP.name())) {
+                } else if (nameCrypto.equals(CryptCoinType.XRP.getNameOfCoin())) {
                     list.add(new CryptoMonitor(CryptCoinType.XRP, CryptoExchange.BINANCE,
                             bid_price, LocalDate.now(), ask_price));
                 }
