@@ -34,9 +34,9 @@ public class Parser {
         binanceList.forEach(cryptoMonitor -> cryptoMonitorService.save(cryptoMonitor));
         List<CryptoMonitor> bridgeList = cryptoBridgeParser.parse();
         bridgeList.forEach(cryptoMonitor -> cryptoMonitorService.save(cryptoMonitor));
-        List<CryptoMonitor> poloniexList = poloniexParser.getExchangeRate();
+        List<CryptoMonitor> poloniexList = poloniexParser.parse();
         poloniexList.forEach(cryptoMonitor -> cryptoMonitorService.save(cryptoMonitor));
-        List<CryptoMonitor> graviexList = graviexParser.getExchangeRate();
+        List<CryptoMonitor> graviexList = graviexParser.parse();
         graviexList.forEach(cryptoMonitor -> cryptoMonitorService.save(cryptoMonitor));
     }
 }
