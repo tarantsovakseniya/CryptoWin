@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -22,7 +24,7 @@ public class ExmoParser {
     // на exmo нет ни IOTA, ни IOT, ни MOITA
 
     public List<CryptoMonitor> parse() throws IOException {
-        List<CryptoMonitor> list = new ArrayList();
+        List<CryptoMonitor> list = new ArrayList<>();
         String apiUrl = "https://api.exmo.com/v1/ticker/";
         Gson gson = new Gson();
         String stringGson = Jsoup.connect(apiUrl).ignoreContentType(true).get().text();
@@ -32,46 +34,37 @@ public class ExmoParser {
         objects.forEach((key, value) -> {
             if (key.toString().contains("_USD")) {
                 LinkedTreeMap linked = (LinkedTreeMap) value;
-                double buy_price =Double.parseDouble((String) linked.get("buy_price"));
-                double sell_price = Double.parseDouble((String)linked.get("sell_price"));
+                double buy_price = Double.parseDouble((String) linked.get("buy_price"));
+                double sell_price = Double.parseDouble((String) linked.get("sell_price"));
                 String nameCrypto = key.toString().substring(0, key.toString().length() - 4);
-                if (nameCrypto.equals(CryptCoinType.BITCOIN.name())){
+                if (nameCrypto.equals(CryptCoinType.BITCOIN.getNameOfCoin())) {
                     list.add(new CryptoMonitor(CryptCoinType.BITCOIN, CryptoExchange.EXMO,
-                            buy_price, LocalDate.now(),  sell_price));
-                }
-                else if (nameCrypto.equals(CryptCoinType.ETHEREUM.name())){
+                            buy_price, LocalDate.now(), sell_price));
+                } else if (nameCrypto.equals(CryptCoinType.ETHEREUM.getNameOfCoin())) {
                     list.add(new CryptoMonitor(CryptCoinType.ETHEREUM, CryptoExchange.EXMO,
                             buy_price, LocalDate.now(), sell_price));
-                }
-                else if (nameCrypto.equals(CryptCoinType.BITCOIN_CASH.name())|| nameCrypto.equals("BCH")){
+                } else if (nameCrypto.equals(CryptCoinType.BITCOIN_CASH.getNameOfCoin()) || nameCrypto.equals("BCH")) {
                     list.add(new CryptoMonitor(CryptCoinType.BITCOIN_CASH, CryptoExchange.EXMO,
-                            buy_price,LocalDate.now(),  sell_price));
-                }
-                else if (nameCrypto.equals(CryptCoinType.DASH.name())){
+                            buy_price, LocalDate.now(), sell_price));
+                } else if (nameCrypto.equals(CryptCoinType.DASH.getNameOfCoin())) {
                     list.add(new CryptoMonitor(CryptCoinType.DASH, CryptoExchange.EXMO,
                             buy_price, LocalDate.now(), sell_price));
-                }
-                else if (nameCrypto.equals(CryptCoinType.EOS.name())){
+                } else if (nameCrypto.equals(CryptCoinType.EOS.getNameOfCoin())) {
                     list.add(new CryptoMonitor(CryptCoinType.EOS, CryptoExchange.EXMO,
                             buy_price, LocalDate.now(), sell_price));
-                }
-                else if (nameCrypto.equals(CryptCoinType.LITECOIN.name())){
+                } else if (nameCrypto.equals(CryptCoinType.LITECOIN.getNameOfCoin())) {
                     list.add(new CryptoMonitor(CryptCoinType.LITECOIN, CryptoExchange.EXMO,
                             buy_price, LocalDate.now(), sell_price));
-                }
-                else if (nameCrypto.equals(CryptCoinType.IOTA_MIOTA.name())){
+                } else if (nameCrypto.equals(CryptCoinType.IOTA_MIOTA.getNameOfCoin())) {
                     list.add(new CryptoMonitor(CryptCoinType.IOTA_MIOTA, CryptoExchange.EXMO,
                             buy_price, LocalDate.now(), sell_price));
-                }
-                else if (nameCrypto.equals(CryptCoinType.TRON.name()) || nameCrypto.equals("TRX")){
+                } else if (nameCrypto.equals(CryptCoinType.TRON.getNameOfCoin()) || nameCrypto.equals("TRX")) {
                     list.add(new CryptoMonitor(CryptCoinType.TRON, CryptoExchange.EXMO,
-                            buy_price, LocalDate.now(),sell_price));
-                }
-                else if (nameCrypto.equals(CryptCoinType.STELLAR.name())){
+                            buy_price, LocalDate.now(), sell_price));
+                } else if (nameCrypto.equals(CryptCoinType.STELLAR.getNameOfCoin())) {
                     list.add(new CryptoMonitor(CryptCoinType.STELLAR, CryptoExchange.EXMO,
                             buy_price, LocalDate.now(), sell_price));
-                }
-                else if (nameCrypto.equals(CryptCoinType.XRP.name())){
+                } else if (nameCrypto.equals(CryptCoinType.XRP.getNameOfCoin())) {
                     list.add(new CryptoMonitor(CryptCoinType.XRP, CryptoExchange.EXMO,
                             buy_price, LocalDate.now(), sell_price));
                 }
