@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class GraviexParser {
 
-    public List<CryptoMonitor> getExchangeRate() throws IOException {
+    public List<CryptoMonitor> parse() throws IOException {
         List<CryptoMonitor> result = new ArrayList();
         Gson gson = new Gson();
 
