@@ -1,31 +1,19 @@
-package java12.cryptowin.service.jpa;
+package java12.cryptowin.service.mailing;
 
-import java12.cryptowin.entity.CryptoMonitor;
-import java12.cryptowin.entity.Subscription;
-import java12.cryptowin.entity.User;
-import java12.cryptowin.service.jpa.CryptoMonitorService;
-import java12.cryptowin.service.jpa.SubscriptionService;
-import java12.cryptowin.service.jpa.UserService;
+import java12.cryptowin.entity.*;
+import java12.cryptowin.service.jpa.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.mail.javamail.*;
+import org.springframework.scheduling.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
-public class EmailService {
+@EnableScheduling
+public class SubscriberMailSender {
 
     @Autowired
     private JavaMailSender emailSender;
@@ -39,7 +27,8 @@ public class EmailService {
     @Autowired
     private UserService userService;
 
-    public void sendEmail() throws FileNotFoundException {
+    @Scheduled(cron = "0 0 9 * * ?")
+    public void sendEmail() {
         Map<User, StringBuilder> result = mailing();
 
         result.keySet().forEach((user -> {
@@ -61,9 +50,8 @@ public class EmailService {
         }));
     }
 
-    public Map<User, StringBuilder> mailing() {
+    private Map<User, StringBuilder> mailing() {
         Map<User, StringBuilder> result = new HashMap<>();
-
 
         List<CryptoMonitor> cryptoMonitorList = cryptoMonitorService.getAll();
         List<Subscription> subscriptionList = subscriptionService.getAll();
@@ -74,11 +62,25 @@ public class EmailService {
                 result.put(subscription.getUser(), stringBuilder);
                 if (cryptoMonitor.getCoinType() == subscription.getCryptCoinType()
                         && cryptoMonitor.getBuyingRate() == subscription.getMinResult()) {
-                    result.get(subscription.getUser()).append("Buying min rate has reached the result: " + cryptoMonitor.getBuyingRate() + " on " + cryptoMonitor.getExchange() + " market.");
+                    result.get(subscription.getUser())
+                            .append("\nBuying min rate has reached the result: ")
+                            .append(cryptoMonitor.getBuyingRate())
+                            .append(" on ")
+                            .append(cryptoMonitor.getExchange())
+                            .append(" - ")
+                            .append(cryptoMonitor.getExchange().getUrl())
+                            .append(" market.");
                 }
                 if (cryptoMonitor.getCoinType() == subscription.getCryptCoinType()
                         && cryptoMonitor.getSellingRate() == subscription.getMaxResult()) {
-                    result.get(subscription.getUser()).append("Selling min rate has reached the result: " + cryptoMonitor.getSellingRate() + " on " + cryptoMonitor.getExchange() + " market.");
+                    result.get(subscription.getUser())
+                            .append("\nSelling min rate has reached the result: ")
+                            .append(cryptoMonitor.getSellingRate())
+                            .append(" on ")
+                            .append(cryptoMonitor.getExchange())
+                            .append(" - ")
+                            .append(cryptoMonitor.getExchange().getUrl())
+                            .append(" market.");
                 }
             }
         }
