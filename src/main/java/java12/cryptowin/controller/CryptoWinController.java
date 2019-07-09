@@ -6,6 +6,7 @@ import java12.cryptowin.entity.enumClasses.CryptoExchange;
 import java12.cryptowin.entity.enumClasses.TimeType;
 import java12.cryptowin.service.jpa.BetterOfferService;
 import java12.cryptowin.service.jpa.CryptoMonitorService;
+import java12.cryptowin.service.jpa.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,9 +27,11 @@ public class CryptoWinController {
     @Autowired
     CryptoMonitorService cryptoMonitorService;
 
-
     @Autowired
     BetterOfferService betterOfferService;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping
     public ModelAndView getMain() {
@@ -55,6 +58,7 @@ public class CryptoWinController {
         ModelAndView result = new ModelAndView("main");
         result.addObject("items", items);
         result.addObject("cryptCoins", CryptCoinType.values());
+result.addObject("user",userService.getCCurrentUser());
 
         return result;
     }
@@ -84,6 +88,7 @@ public class CryptoWinController {
 
         result.addObject("cryptCoinName", cryptCoin.getNameOfCoin());
         result.addObject("betterOffers", betterOffers);
+        result.addObject("user",userService.getCCurrentUser());
 
         return result;
     }
