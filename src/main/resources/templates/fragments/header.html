@@ -21,7 +21,7 @@
             </ul>
             </ul>
             <ul class="navbar-nav">
-                <th:block th:if="${user}">
+                <th:block th:if="${user!=null}">
                     <div>
                         <span class="badge badge-success mr-2" th:text="'Вошли как ' + ${user.name}+ ' ' + ${user.lastName}"></span>
                     </div>

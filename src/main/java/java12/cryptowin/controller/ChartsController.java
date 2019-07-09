@@ -17,14 +17,14 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Controller
-@RequestMapping("/charts")
+@RequestMapping(value = "/charts")
 public class ChartsController {
 
     @Autowired
-    CryptoMonitorService cryptoMonitorService;
+    private CryptoMonitorService cryptoMonitorService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     private List<CryptoMonitor> fillListToUserRequest(String coinType, String timeType, String exchangeType) {
         List<CryptoMonitor> all = cryptoMonitorService.getAll();
@@ -57,8 +57,6 @@ public class ChartsController {
             }
         };
         return all;
-
-
     }
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.GET})
@@ -77,8 +75,6 @@ public class ChartsController {
             timeType = TimeType.WEEK.getName();
         }
 
-
-
         List<CryptoMonitor> crypto = fillListToUserRequest(coinType, timeType, exchangeType);
         result.addObject("crypto", crypto);
         result.addObject("coins", CryptCoinType.values());
@@ -88,7 +84,7 @@ public class ChartsController {
         result.addObject("exchangeType", exchangeType);
         result.addObject("coinType", coinType);
         result.addObject("state", state);
-        result.addObject("user",userService.getCCurrentUser());
+        result.addObject("user",userService.getCurrentUser());
 
         return result;
 

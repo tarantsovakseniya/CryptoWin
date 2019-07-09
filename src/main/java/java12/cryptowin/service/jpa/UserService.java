@@ -56,7 +56,7 @@ public class UserService {
         user.setPassword(passwordHash);
     }
 
-    public User getCCurrentUser(){
+    public User getCurrentUser(){
         String currentUserEmail = securityProcessor.getCurrentUserEmail();
 
         if(currentUserEmail==null){
