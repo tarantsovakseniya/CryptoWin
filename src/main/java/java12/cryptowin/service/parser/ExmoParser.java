@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -34,8 +36,8 @@ public class ExmoParser {
         objects.forEach((key, value) -> {
             if (key.toString().contains("_USD")) {
                 LinkedTreeMap linked = (LinkedTreeMap) value;
-                double buy_price = Double.parseDouble((String) linked.get("buy_price"));
-                double sell_price = Double.parseDouble((String) linked.get("sell_price"));
+                double buy_price = new BigDecimal(Double.parseDouble((String) (linked.get("buy_price")))).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                double sell_price = new BigDecimal(Double.parseDouble((String) (linked.get("sell_price")))).setScale(2,RoundingMode.HALF_EVEN).doubleValue();
                 String nameCrypto = key.toString().substring(0, key.toString().length() - 4);
                 if (nameCrypto.equals(CryptCoinType.BITCOIN.getNameOfCoin())) {
                     list.add(new CryptoMonitor(CryptCoinType.BITCOIN, CryptoExchange.EXMO,
