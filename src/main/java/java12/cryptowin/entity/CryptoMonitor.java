@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity()
@@ -30,8 +31,8 @@ public class CryptoMonitor {
     @Column(name = "BUYING_RATE")
     private double buyingRate;
 
-    @Column(name = "CLICK_DATE")
-    private LocalDate date;
+    @Column (name = "DATE_TIME_CREATION")
+    private LocalDateTime date;
 
     @Column(name = "SELLING_RATE")
     private double sellingRate;
@@ -43,7 +44,7 @@ public class CryptoMonitor {
         this.sellingRate = sellingRate;
     }
 
-    public CryptoMonitor( CryptCoinType coinType, CryptoExchange exchange, double buyingRate, LocalDate date, double sellingRate) {
+    public CryptoMonitor( CryptCoinType coinType, CryptoExchange exchange, double buyingRate, LocalDateTime date, double sellingRate) {
         this.coinType = coinType;
         this.exchange = exchange;
         this.buyingRate = buyingRate;
