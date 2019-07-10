@@ -3,7 +3,8 @@ package java12.cryptowin.entity.enumClasses;
 public enum TimeType {
     MONTH("за последнй месяц"),
     YEAR("за последний год"),
-    WEEK("за последнюю неделю");
+    WEEK("за последнюю неделю"),
+    TODAY("за сегодняшний день");
 
     private String name;
 
