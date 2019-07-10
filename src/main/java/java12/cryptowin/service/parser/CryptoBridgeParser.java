@@ -9,6 +9,8 @@ import org.jsoup.Jsoup;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +21,11 @@ public class CryptoBridgeParser {
 
     public List<CryptoMonitor> parse() throws IOException {
 
-        List<CryptoMonitor> list = new ArrayList();
+        List<CryptoMonitor> list = new ArrayList<>();
         String apiUrl = "https://api.crypto-bridge.org/api/v1/ticker";
         Gson gson = new Gson();
-        String stringGson = Jsoup.connect(apiUrl).ignoreContentType(true).get().text();
+        String stringGson = Jsoup.connect(apiUrl).ignoreContentType(true).get
+                ().text();
 
         ArrayList objects = gson.fromJson(stringGson, ArrayList.class);
 
@@ -31,25 +34,31 @@ public class CryptoBridgeParser {
 
             Object name = linkedTreeMap.get("id");
             if (name.toString().contains("_USDT")) {
-                String nameCrypto = name.toString().substring(0, name.toString().length() - 5);
-                double buyingRate = Double.parseDouble((String)linkedTreeMap.get("bid")); //цена покупки
-                double sellingRate = Double.parseDouble((String)linkedTreeMap.get("ask")); //цена продажи
-                if (nameCrypto.equals(CryptCoinType.BITCOIN.name())) {
+                String nameCrypto = name.toString().substring(0, name.toString
+                        ().length() - 5);
+                double buyingRate = new BigDecimal(Double.parseDouble((String)
+                        (linkedTreeMap.get("bid")))).setScale(2, RoundingMode.HALF_EVEN).doubleValue();//цена покупки
+                double sellingRate = new BigDecimal(Double.parseDouble((String)
+                        (linkedTreeMap.get("ask")))).setScale(2,RoundingMode.HALF_EVEN).doubleValue();//цена продажи
+                if (nameCrypto.equals(CryptCoinType.BITCOIN.getNameOfCoin())) {
                     list.add(new CryptoMonitor(CryptCoinType.BITCOIN, CryptoExchange.CRYPTO_BRIDGE,
                             buyingRate, LocalDate.now(), sellingRate));
-                } else if (nameCrypto.equals(CryptCoinType.ETHEREUM.name())) {
+                } else if (nameCrypto.equals(CryptCoinType.ETHEREUM.getNameOfCoin
+                        ())) {
                     list.add(new CryptoMonitor(CryptCoinType.ETHEREUM, CryptoExchange.CRYPTO_BRIDGE,
                             buyingRate, LocalDate.now(), sellingRate));
-                } else if (nameCrypto.equals(CryptCoinType.XRP.name())) {
+                } else if (nameCrypto.equals(CryptCoinType.XRP.getNameOfCoin())) {
                     list.add(new CryptoMonitor(CryptCoinType.XRP, CryptoExchange.CRYPTO_BRIDGE,
                             buyingRate, LocalDate.now(), sellingRate));
-                } else if (nameCrypto.equals(CryptCoinType.LITECOIN.name())) {
+                } else if (nameCrypto.equals(CryptCoinType.LITECOIN.getNameOfCoin
+                        ())) {
                     list.add(new CryptoMonitor(CryptCoinType.LITECOIN, CryptoExchange.CRYPTO_BRIDGE,
                             buyingRate, LocalDate.now(), sellingRate));
-                } else if (nameCrypto.equals(CryptCoinType.BITCOIN_CASH.name()) || nameCrypto.equals("BCH")) {
+                } else if (nameCrypto.equals
+                        (CryptCoinType.BITCOIN_CASH.getNameOfCoin()) || nameCrypto.equals("BCH")) {
                     list.add(new CryptoMonitor(CryptCoinType.BITCOIN_CASH, CryptoExchange.CRYPTO_BRIDGE,
                             buyingRate, LocalDate.now(), sellingRate));
-                } else if (nameCrypto.equals(CryptCoinType.DASH.name())) {
+                } else if (nameCrypto.equals(CryptCoinType.DASH.getNameOfCoin())) {
                     list.add(new CryptoMonitor(CryptCoinType.DASH, CryptoExchange.CRYPTO_BRIDGE,
                             buyingRate, LocalDate.now(), sellingRate));
                 }

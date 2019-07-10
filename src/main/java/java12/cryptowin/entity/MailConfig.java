@@ -1,14 +1,18 @@
 package java12.cryptowin.entity;
 
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
 
-@Configuration
-public class MailSender {
+@Data
+@ConfigurationProperties(prefix="spring.mail")
+public class MailConfig {
+    private String username;
+    private String password;
 
     @Bean
     public JavaMailSender getMailSender() {
@@ -16,8 +20,8 @@ public class MailSender {
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
 
-        mailSender.setUsername("my.gmail@gmail.com");
-        mailSender.setPassword("password");
+        mailSender.setUsername(getUsername());
+        mailSender.setPassword(getPassword());
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");

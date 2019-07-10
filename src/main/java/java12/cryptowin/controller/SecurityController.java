@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 
 @Controller
 public class SecurityController {
@@ -44,6 +46,14 @@ public class SecurityController {
             return "redirect:/register?error="+RegisterError.invalidNameOrLastname.name();
         }
 
+        List<User> users = userService.getAllUsers();
+
+        for (User user : users) {
+            if (user.getEmail().equals(email)) {
+                return "redirect:/register?error=" + RegisterError.invalidData.name();
+            }
+        }
+
         User user = new User();
         user.setEmail(email);
         user.setName(name);
@@ -58,7 +68,8 @@ public class SecurityController {
     enum RegisterError {
         success ("Вы успешно зарегистрированы"),
         invalidEmail("Неправильный email"),
-        invalidNameOrLastname("Вы не ввели имя или фамилию");
+        invalidNameOrLastname("Вы не ввели имя или фамилию"),
+        invalidData("Пользователь с таким e-mail уже существует");
 
         String description;
 

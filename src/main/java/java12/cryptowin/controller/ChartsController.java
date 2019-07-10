@@ -5,6 +5,7 @@ import java12.cryptowin.entity.enumClasses.CryptCoinType;
 import java12.cryptowin.entity.enumClasses.CryptoExchange;
 import java12.cryptowin.entity.enumClasses.TimeType;
 import java12.cryptowin.service.jpa.CryptoMonitorService;
+import java12.cryptowin.service.jpa.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +17,14 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Controller
-@RequestMapping("/charts")
+@RequestMapping(value = "/charts")
 public class ChartsController {
 
     @Autowired
-    CryptoMonitorService cryptoMonitorService;
+    private CryptoMonitorService cryptoMonitorService;
+
+    @Autowired
+    private UserService userService;
 
     private List<CryptoMonitor> fillListToUserRequest(String coinType, String timeType, String exchangeType) {
         List<CryptoMonitor> all = cryptoMonitorService.getAll();
@@ -53,8 +57,6 @@ public class ChartsController {
             }
         };
         return all;
-
-
     }
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.GET})
@@ -73,8 +75,6 @@ public class ChartsController {
             timeType = TimeType.WEEK.getName();
         }
 
-
-
         List<CryptoMonitor> crypto = fillListToUserRequest(coinType, timeType, exchangeType);
         result.addObject("crypto", crypto);
         result.addObject("coins", CryptCoinType.values());
@@ -84,6 +84,8 @@ public class ChartsController {
         result.addObject("exchangeType", exchangeType);
         result.addObject("coinType", coinType);
         result.addObject("state", state);
+        result.addObject("user",userService.getCurrentUser());
+
         return result;
 
     }

@@ -24,9 +24,9 @@
             </ul>
             </ul>
             <ul class="navbar-nav">
-                <th:block th:if="${user}">
+                <th:block th:if="${user!=null}">
                     <div>
-                        <span class="badge badge-success mr-2" th:text="'Вошли как ' + ${user.name}+ ' ' + ${user.lastName}"></span>
+                        <button type="button" class="btn btn-sm btn-primary mr-2" disabled th:text="'Вошли как ' + ${user.name}+ ' ' + ${user.lastName}"></button>
                     </div>
                     <a class="btn btn-sm btn-danger" href="/logout">Выйти</a>
                 </th:block>
