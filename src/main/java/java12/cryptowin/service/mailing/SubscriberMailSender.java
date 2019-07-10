@@ -69,7 +69,7 @@ public class SubscriberMailSender {
                             .append(cryptoMonitor.getExchange())
                             .append(" - ")
                             .append(cryptoMonitor.getExchange().getUrl())
-                            .append(" market.");
+                            .append(" exchange.");
                 }
                 if (cryptoMonitor.getCoinType() == subscription.getCryptCoinType()
                         && cryptoMonitor.getSellingRate() == subscription.getMaxResult()) {
@@ -80,7 +80,7 @@ public class SubscriberMailSender {
                             .append(cryptoMonitor.getExchange())
                             .append(" - ")
                             .append(cryptoMonitor.getExchange().getUrl())
-                            .append(" market.");
+                            .append(" exchange.");
                 }
             }
         }
