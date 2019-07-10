@@ -5,6 +5,8 @@
     <title>Crypto Win</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </head>
 <body style="color:Black; background-color: #ccccb3;">
@@ -12,47 +14,115 @@
 
 
 <div class="container mt-3">
+
     <th:block th:if="${error}">
-        <div class="alert alert" style="background-color: #F0E68C" role="alert">
-            <h4 class="alert-heading">Возникла ошибка</h4>
-            <p class="lead">Извините, но эта функция доступна лишь для зарегистрированных пользователей</p>
-            <hr class="my-4">
-            <p class="mb-0">Для оформления подписки вам необходимо
-                <a href="/login" class="alert-link">войти в аккаунт</a> или
-                <a href="/register" class="alert-link">зарегистрироваться</a>.</p>
-        </div>
+        <th:block th:switch="${error}">
+            <div th:case="error" class="alert alert-dismissible fade show" style="background-color: #FFC0CB"
+                 role="alert">
+                <h4 class="alert-heading">Возникла ошибка</h4>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <p class="lead">Извините, но эта функция доступна лишь для зарегистрированных пользователей</p>
+                <hr class="my-4">
+                <p class="mb-0">Для оформления подписки вам необходимо
+                    <a href="/login" class="alert-link">войти в аккаунт</a> или
+                    <a href="/register" class="alert-link">зарегистрироваться</a>.</p>
+            </div>
+
+            <div th:case="incorrect" class="alert alert alert-dismissible fade show" style="background-color: #FFC0CB"
+                 role="alert">
+                <h4 class="alert-heading">Возникла ошибка</h4>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <p class="lead">Неверно введены ключевые данные!</p>
+                <hr class="my-4">
+                <p class="mb-0">Попробуйте еще раз.</p>
+            </div>
+
+            <div th:case="exist" class="alert alert alert-dismissible fade show" style="background-color: #F0E68C"
+                 role="alert">
+                <h4 class="alert-heading">Возможно, вы ошиблись</h4>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <p class="lead" th:text="'Вы уже подписаны на ' + ${coin.getNameOfCoin()}"></p>
+                <hr class="my-4">
+                <p class="mb-0">Чтобы перейти к списку своих подписок перейдите в вкладку мои подписки.</p>
+            </div>
+
+            <div th:case="success" class="alert  alert-dismissible fade show" style="background-color: #98FB98"
+                 role="alert">
+                <h4 class="alert-heading">Операция завершена успешно</h4>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <p class="lead" th:text="'Теперь вы подписанны на валюту ' + ${coin.getNameOfCoin()}"></p>
+                <hr class="my-4">
+                <p class="mb-0">Чтобы перейти к списку своих подписок перейдите в вкладку мои подписки.</p>
+            </div>
+        </th:block>
     </th:block>
 
     <div class="jumbotron" style="background-color: #E0FFFF">
         <h1 class="display-4">Раздел подписок</h1>
-        <p class="lead">Узнавайте первыми о изменении курса выбраной криптвалюты</p>
+        <p class="lead">Узнавайте первыми о изменении курса выбраной криптвалюты. Совершайте выгодные покупки и
+            получайте прибыль)</p>
         <hr class="my-4">
         <p>В этом разделе вы можете оформить подписку криптвалюту. При выборе криптвалюты вы даете согласие на
-            получение уведомлений о максимальной и минимальной ее стоимости.</p>
+            получение уведомлений о достижении ее курса максимальной и минимальной стоимости.</p>
     </div>
 
 
+    <form method="post" action="/subscription">
 
-    <ul th:each="coin:${coins}" class="list-group">
-        <li class="list-group-item">
-            <div class="card mt-3">
-                <div class="card-header">
-                    <div class="d-flex align-items-center">
-                        <h5 class="mr-auto p-3" th:text="'Подписка на изменение курса ' + ${coin.getNameOfCoin()}"></h5>
-                        <a th:if="${user}" th:href="'/subscription/addNew?coin=' + ${coin} + '&' + 'user=' + ${user}"
-                           class="btn btn-info">  Оформить подписку</a>
-                        <a th:unless="${user}"  th:href="'/subscription?error=exist'"
-                           class="btn btn-info" >Оформить подписку</a>
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5 class="mr-auto p-3">Подписка на изменение курса</h5>
+
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="container">
+                <div class="row mt-5">
+                    <div class="btn-group btn-lg btn-block">
+                        <select name="coinType" id="coinType" class="form-control form-control-sm">
+                            <option value="">Выбрать валюту</option>
+                            <option th:each="coinType : ${coins}"
+                                    th:value="${coinType}"
+                                    th:text="${coinType.getNameOfCoin()}"
+                            ></option>
+                        </select>
                     </div>
                 </div>
-            </div>
-        </li>
-    </ul>
-    <th:block th:switch="${user}">
-        <th:block th:case="null">
 
-        </th:block>
-    </th:block>
+
+                <div class="form-group">
+                    <label for="minResult">Введите минимальную цену: </label>
+                    <input type="text" class="form-control from-control-sm" name="minResult" id="minResult">
+                </div>
+                <div class="form-group">
+                    <label for="maxResult">Введите максимальную цену: </label>
+                    <input type="text" class="form-control from-control-sm" name="maxResult" id="maxResult">
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <div class="d-flex align-items-center">
+
+                <button th:if="${user}" type="submit"
+                        class="btn btn-info float-right">Оформить подписку
+                </button>
+                <a th:unless="${user}" href="/subscription?error=error"
+                   class="btn btn-info float-right"> Оформить подписку</a>
+
+            </div>
+        </div>
+
+    </form>
 </div>
 
 
