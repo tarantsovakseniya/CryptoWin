@@ -1,6 +1,7 @@
 package java12.cryptowin.service.jpa;
 
 import java12.cryptowin.entity.CryptoMonitor;
+import java12.cryptowin.pojo.CryptoMonitorResult;
 import java12.cryptowin.repository.CryptoMonitorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ public class CryptoMonitorService {
 
     public void deleteById(long id){repository.deleteById(id);}
 
-
-
+    public  List<CryptoMonitorResult> getListForMailPage (){
+        return repository.findAllNew();
+    }
 }
