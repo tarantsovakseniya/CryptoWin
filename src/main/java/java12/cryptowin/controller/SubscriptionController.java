@@ -20,16 +20,16 @@ public class SubscriptionController {
 
     @GetMapping
     public ModelAndView getSubscription(@RequestParam(value = "error", required = false) String error){
-        ModelAndView result = new ModelAndView("subscription");
+        ModelAndView result = new ModelAndView("subscription/subscription");
         result.addObject("coins", CryptCoinType.values());
         result.addObject("error", error);
         return result;
     }
 
     @GetMapping("/addNew")
-    public ModelAndView getFormForAdd(@RequestParam("coin") CryptCoinType coinType,
-                                      @RequestParam(value = "user") User user){
-        ModelAndView result = new ModelAndView("regSubscription");
+    public ModelAndView getFormForAdd(@RequestParam(value = "coin") CryptCoinType coinType,
+                                      @RequestParam(value = "user", required = false) User user){
+        ModelAndView result = new ModelAndView("subscription/regSubscription");
         return result;
 
     }

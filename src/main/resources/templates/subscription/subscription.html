@@ -9,6 +9,8 @@
 </head>
 <body style="color:Black; background-color: #ccccb3;">
 <div th:replace="fragments/header :: top-navbar"></div>
+
+
 <div class="container mt-3">
     <th:block th:if="${error}">
         <div class="alert alert" style="background-color: #F0E68C" role="alert">
@@ -16,8 +18,8 @@
             <p class="lead">Извините, но эта функция доступна лишь для зарегистрированных пользователей</p>
             <hr class="my-4">
             <p class="mb-0">Для оформления подписки вам необходимо
-                <a href="/register" class="alert-link">войти в аккаунт</a> или
-                <a href="/login" class="alert-link">зарегистрироваться</a>.</p>
+                <a href="/login" class="alert-link">войти в аккаунт</a> или
+                <a href="/register" class="alert-link">зарегистрироваться</a>.</p>
         </div>
     </th:block>
 

@@ -50,9 +50,9 @@
             <!--            buttons to choose options-->
             <form method="post" action="/charts">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2" th:text="${coinType}">BTC</h1>
-                    <h2 class="h3" th:text="${exchangeType}"></h2>
-                    <h3 class="h4" th:text="' ' + ${timeType}"></h3>
+                    <div class="d-flex align-items-center">
+                        <h1 class="mr-auto p-3" th:text="${coinType} + ' '">BTC</h1>
+                    </div>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group mr-2">
                             <select name="coinType" id="coinType" class="form-control form-control-sm">
@@ -83,50 +83,51 @@
                         </div>
 
                         <div class="btn-group mr-2">
-                            <button type="submit" class="btn btn-sm btn-outline-secondary">Подтвердить</button>
+                            <button type="submit" class="btn btn-sm btn-info">Подтвердить</button>
                         </div>
                     </div>
+
                 </div>
             </form>
 
             <!--   table-->
-            <div class="card-header">
-                <div class="d-flex align-items-center">
-                    <h5 class="mr-auto p-3">Данные за этот промежуток</h5>
+            <card class="card mt-3" style="background-color: #E0FFFF">
+                <div class="card-header text-center">
+                    <h3 class="mr-auto p-3" th:text=" 'Данные на бирже ' + ${exchangeType} + ' ' + ${timeType}"></h3>
+
                 </div>
-            </div>
 
-            <div class="card-body" th:if="${crypto} != null">
+                <div class="card-body" th:if="${crypto} != null">
 
-                <table class="table table-bordered table-sm text-center" id="table">
-                    <thead>
-                    <tr>
-                        <th>Цена</th>
-                        <th>Дата</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    <th:block th:each="crypt:${crypto}">
-                        <tr th:switch="${state}">
-                            <td th:case="null" th:text="${crypt.getSellingRate()}">1000</td>
-                            <td th:case="buy" th:text="${crypt.getBuyingRate()}">1000</td>
-                            <td th:text="${crypt.getDate()}">1000</td>
+                    <table class="table table-bordered table-sm text-center" id="table">
+                        <thead>
+                        <tr>
+                            <th>Максимльная цена за день в долларах</th>
+                            <th>Дата достижения максимума</th>
                         </tr>
-                    </th:block>
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody>
+
+                        <th:block th:each="crypt:${crypto}">
+                            <tr th:switch="${state}">
+                                <td th:case="null" th:text="${crypt.getSellingRate()}">1000</td>
+                                <td th:case="buy" th:text="${crypt.getBuyingRate()}">1000</td>
+                                <td th:text="${crypt.getDate()}">1000</td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
 
 
-            <div class="container mt-3">
-                <div class="row">
-                    <div class="col-md-15 col-md">
+                <div class="container mt-3">
+                    <div class="row">
+                        <div class="col-md-15 col-md">
 
-                        <!-- График -->
+                            <!-- График -->
 
-                        <div id="chart">
-                            <script>
+                            <div id="chart">
+                                <script>
 var prices = new Array();
 var dates = new Array();
 var table = document.getElementById('table');
@@ -171,14 +172,22 @@ console.log(table.rows[i].cells[0]);
 
 
 
-                            </script><!-- /.График -->
 
-                        </div>
 
-                        <!-- /.col-md-8 col-md-offset-2 -->
-                    </div><!-- /.row -->
-                </div><!-- /.container -->
-            </div>
+
+
+
+
+
+                                </script><!-- /.График -->
+
+                            </div>
+
+                            <!-- /.col-md-8 col-md-offset-2 -->
+                        </div><!-- /.row -->
+                    </div><!-- /.container -->
+                </div>
+            </card>
         </main>
     </div>
 </div>
