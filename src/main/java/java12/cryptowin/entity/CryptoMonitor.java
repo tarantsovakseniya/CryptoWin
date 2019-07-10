@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -16,25 +15,25 @@ import java.time.LocalDateTime;
 public class CryptoMonitor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CRYPTO_M_ID")
+    @Column(name = "crypto_m_id")
     private long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "TYPE_COIN")
+    @Column(name = "type_coin")
     private CryptCoinType coinType;
 
     //there will be enum for exchange
     @Enumerated(EnumType.STRING)
-    @Column(name = "EXCHANGE")
+    @Column(name = "exchange")
     private CryptoExchange exchange;
 
-    @Column(name = "BUYING_RATE")
+    @Column(name = "buying_rate")
     private double buyingRate;
 
-    @Column (name = "DATE_TIME_CREATION")
+    @Column (name = "date_time")
     private LocalDateTime date;
 
-    @Column(name = "SELLING_RATE")
+    @Column(name = "selling_rate")
     private double sellingRate;
 
     public CryptoMonitor(CryptCoinType coinType, CryptoExchange exchange, double buyingRate, double sellingRate) {

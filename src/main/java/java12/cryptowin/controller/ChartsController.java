@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDateTime;
 import java.util.List;
 
 @Controller
@@ -52,7 +53,7 @@ public class ChartsController {
                 localDate.minusWeeks(1);
             }
 
-            if (cryptoMonitor.getDate().isBefore(localDate)) {
+            if (cryptoMonitor.getDate().isBefore(ChronoLocalDateTime.from(localDate))) {
                 all.remove(cryptoMonitor);
             }
         };

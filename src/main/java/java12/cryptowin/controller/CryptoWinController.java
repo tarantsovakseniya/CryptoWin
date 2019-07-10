@@ -2,6 +2,7 @@ package java12.cryptowin.controller;
 
 import java12.cryptowin.entity.CryptoMonitor;
 import java12.cryptowin.entity.enumClasses.CryptCoinType;
+import java12.cryptowin.pojo.CryptoMonitorResult;
 import java12.cryptowin.service.jpa.BetterOfferService;
 import java12.cryptowin.service.jpa.CryptoMonitorService;
 import java12.cryptowin.service.jpa.UserService;
@@ -32,7 +33,11 @@ public class CryptoWinController {
     @GetMapping
     public ModelAndView getMain() {
 
-        List<CryptoMonitor> items = cryptoMonitorService.getAll();
+        List<CryptoMonitorResult> items = cryptoMonitorService.getListForMailPage();
+
+
+//        List<CryptoMonitor> items = cryptoMonitorService.getAll();
+
 
         ModelAndView result = new ModelAndView("main");
         result.addObject("items", items);
