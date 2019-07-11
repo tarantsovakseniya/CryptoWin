@@ -19,154 +19,187 @@
 
 <div th:replace="fragments/header :: top-navbar"></div>
 
-<div class="container-fluid">
-    <div class="row">
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-            <div class="sidebar">
-                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                    <span>Возможные варианты построения</span>
-                    <a class="d-flex align-items-center text-muted" href="#">
-                        <span data-feather="plus-circle"></span>
-                    </a>
-                </h6>
-                <ul class="nav flex-column mb-2">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/charts?state=buy">
-                            <span data-feather="text"></span>
-                            График покупок
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/charts">
-                            <span data-feather="text"></span>
-                            График продаж
-                        </a>
-                    </li>
-                </ul>
+<div class="container my-4" style="width: 1100px">
+
+
+    <th:block th:switch="${error}">
+        <div th:case="error" class="alert alert alert-dismissible fade show" style="background-color: #FFC0CB,width: 1100px "
+             role="alert">
+            <h4 class="alert-heading">Возникла ошибка</h4>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <p class="lead">Неверно введены ключевые данные!</p>
+            <hr class="my-4">
+            <p class="mb-0">Попробуйте еще раз.</p>
+        </div>
+    </th:block>
+
+    <!--            buttons to choose options-->
+    <form method="post" action="/charts">
+        <div class="card" style="width: 1100px">
+
+            <div class="card-header text-center">
+                <h1 th:text="'Графики покупки/продажи валюты ' + ${coinType}"></h1>
             </div>
-        </nav>
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 
-            <!--            buttons to choose options-->
-            <form method="post" action="/charts">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <div class="d-flex align-items-center">
-                        <h1 class="mr-auto p-3" th:text="${coinType} + ' '">BTC</h1>
+            <div class="card-body" style="background-color: #FFFFFF">
+
+                <div class="btn-group">
+                    <select name="state" id="state" class="form-control form-control-lg">
+                        <option value="">Покупка/продажа</option>
+                        <option th:value="buy">Курс покупки</option>
+                        <option th:value="sell">Курс продажи</option>
+                    </select>
+                </div>
+
+
+                <div class="btn-group">
+                    <select name="coinType" id="coinType" class="form-control form-control-lg">
+                        <option value="">Выбрать валюту</option>
+                        <option th:each="coinType : ${coins}"
+                                th:value="${coinType.getNameOfCoin()}"
+                                th:text="${coinType.getNameOfCoin()}"
+                        ></option>
+                    </select>
+                </div>
+
+
+                <div class="btn-group">
+                    <select name="exchangeType" id="exchangeType"
+                            class="form-control form-control-lg">
+                        <option value="">Выбрать биржу</option>
+                        <option th:each="exchangeType : ${exchanges}"
+                                th:value="${exchangeType.getName()}"
+                                th:text="${exchangeType.getName()}"></option>
+                    </select>
+                </div>
+
+
+                <div class="btn-group">
+                    <select name="timeType" id="timeType" class="form-control form-control-lg">
+                        <option value="">Выбрать временной промежуток</option>
+                        <option th:each="timeType : ${times}"
+                                th:value="${timeType.getName()}"
+                                th:text="${timeType.getName()}"></option>
+                    </select>
+                </div>
+
+            </div>
+
+
+            <div class="card-footer">
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-lg btn-info mr-auto">Подтвердить</button>
+                </div>
+            </div>
+
+
+        </div>
+    </form>
+
+    <card class="card" style="width: 1100px">
+
+        <div class="card-header text-center">
+            <h3 th:text=" 'Данные на бирже ' + ${exchangeType} + ' ' + ${timeType}"></h3>
+        </div>
+
+        <div class="card-body">
+
+            <div class="card border-info text-center">
+                <div class="card-body">
+                    <div th:unless="${error}" id="container" style="height: 400px; min-width: 1000px"></div>
+                    <div th:if="${error}">
+                        <h2 class="text">Извините, но недостаточно данных для отображения графика и таблицы</h2>
                     </div>
-                    <div class="btn-toolbar mb-2 mb-md-0">
-                        <div class="btn-group mr-2">
-                            <select name="coinType" id="coinType" class="form-control form-control-sm">
-                                <option value="">Выбрать валюту</option>
-                                <option th:each="coinType : ${coins}"
-                                        th:value="${coinType.getNameOfCoin()}"
-                                        th:text="${coinType.getNameOfCoin()}"
-                                ></option>
-                            </select>
-                        </div>
-
-                        <div class="btn-group mr-2">
-                            <select name="exchangeType" id="exchangeType" class="form-control form-control-sm">
-                                <option value="">Выбрать биржу</option>
-                                <option th:each="exchangeType : ${exchanges}"
-                                        th:value="${exchangeType.getName()}"
-                                        th:text="${exchangeType.getName()}"></option>
-                            </select>
-                        </div>
-
-                        <div class="btn-group mr-2">
-                            <select name="timeType" id="timeType" class="form-control form-control-sm">
-                                <option value="">Выбрать временной промежуток</option>
-                                <option th:each="timeType : ${times}"
-                                        th:value="${timeType.getName()}"
-                                        th:text="${timeType.getName()}"></option>
-                            </select>
-                        </div>
-
-                        <div class="btn-group mr-2">
-                            <button type="submit" class="btn btn-sm btn-info">Подтвердить</button>
-                        </div>
-                    </div>
-
                 </div>
-            </form>
-
-            <!--   table-->
-            <card class="card mt-3" style="background-color: #E0FFFF">
-                <div class="card-header text-center">
-                    <h3 class="mr-auto p-3" th:text=" 'Данные на бирже ' + ${exchangeType} + ' ' + ${timeType}"></h3>
-
-                </div>
-
-                <div class="card-body" th:if="${crypto} != null">
-
-                    <table class="table table-bordered table-sm text-center" id="table">
-                        <thead>
-                        <tr>
-                            <th>Цена криптвалюты в долларах</th>
-                            <th>Дата и время ее достижения</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        <th:block th:each="crypt:${crypto}">
-                            <tr th:switch="${state}">
-                                <td th:case="null" th:text="${crypt.getSellingRate()}">1000</td>
-                                <td th:case="buy" th:text="${crypt.getBuyingRate()}">1000</td>
-                                <td th:text="${crypt.getDate()}">1000</td>
-                            </tr>
-                        </th:block>
-                        </tbody>
-                    </table>
-                </div>
+            </div>
 
 
-                <div class="container mt-3">
-                    <div class="row">
-                        <div class="col-md-15 col-md">
+            <table th:unless="${error}" class="table table-striped table-bordered  text-center" id="table">
+                <thead>
+                <tr>
+                    <th>Цена криптвалюты в долларах</th>
+                    <th>Дата и время ее достижения</th>
+                </tr>
+                </thead>
 
-                            <!-- График -->
+                <tbody>
+                <th:block th:each="crypt:${crypto}">
+                    <tr th:switch="${state}">
+                        <td th:case="sell" th:text="${crypt.getSellingRate()}">1000</td>
+                        <td th:case="buy" th:text="${crypt.getBuyingRate()}">1000</td>
+                        <td th:text="${crypt.getDate()}">1000</td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
 
-                            <div id="chart">
-                                <script>
+            <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+            <script src="https://code.highcharts.com/stock/highstock.js"></script>
+            <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+            <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
+            <script>
 var prices = new Array();
 var dates = new Array();
 var table = document.getElementById('table');
 
 for (var i = 1; i < table.rows.length; i++) {
 prices[i - 1] = Number(table.rows[i].cells[0].innerHTML.replace('<td></td>', ""));
-dates[i - 1] = table.rows[i].cells[1].innerHTML;
+dates[i - 1] =  new Date(table.rows[i].cells[1].innerHTML).getTime();
 console.log(table.rows[i].cells[0]);
+}
+
+dates.sort();
+
+var data = new Array();
+
+for (var i = 1; i < prices.length; i++) {
+
+data[i] = new Array(2);
+data[i][1] = prices[i];
+data[i][0] = dates[i];
+console.log(data[i])
 
 }
 
  $(document).ready(function () {
 
- $("#chart").shieldChart({
- theme: "light",
- primaryHeader: {
- text: "Изменение курса"
- },
- exportOptions: {
- image: false,
- print: false
- },
- axisX: {
- categoricalValues: dates,
- },
- tooltipSettings: {
- chartBound: true,
- axisMarkers: {
- enabled: true,
- mode: 'xy'
- }
- },
- dataSeries: [{
- seriesType: 'line',
- collectionAlias: "Цена в долларах",
- data: prices,
- }]
- });
- });
+Highcharts.stockChart('container', {
+
+
+        rangeSelector: {
+            selected: 1
+        },
+
+        title: {
+            text: 'Изменение курса валюты'
+        },
+
+        series: [{
+            name: 'Цена валюты в долларах',
+            data: data,
+            type: 'area',
+            threshold: null,
+            turboThreshold: 2000,
+            tooltip: {
+                valueDecimals: 2
+            },
+            fillColor: {
+                linearGradient: {
+                    x1: 0,
+                    y1: 0,
+                    x2: 0,
+                    y2: 1
+                },
+                stops: [
+                    [0, Highcharts.getOptions().colors[0]],
+                    [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                ]
+            }
+        }]
+    });
+});
 
 
 
@@ -179,17 +212,14 @@ console.log(table.rows[i].cells[0]);
 
 
 
-                                </script><!-- /.График -->
 
-                            </div>
 
-                            <!-- /.col-md-8 col-md-offset-2 -->
-                        </div><!-- /.row -->
-                    </div><!-- /.container -->
-                </div>
-            </card>
-        </main>
-    </div>
+
+
+            </script>
+
+        </div>
+    </card>
 </div>
 
 

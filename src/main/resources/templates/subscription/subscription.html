@@ -13,7 +13,7 @@
 <div th:replace="fragments/header :: top-navbar"></div>
 
 
-<div class="container mt-3">
+<div class="container mt-3" >
 
     <th:block th:if="${error}">
         <th:block th:switch="${error}">
@@ -77,14 +77,14 @@
 
     <form method="post" action="/subscription">
 
-        <div class="card mt-3">
+        <div class="card mt-3" >
             <div class="card-header">
                 <h5 class="mr-auto p-3">Подписка на изменение курса</h5>
 
             </div>
         </div>
 
-        <div class="card-body">
+        <div class="card-body" style="background-color: #FFFFFF">
             <div class="container">
                 <div class="row mt-5">
                     <div class="btn-group btn-lg btn-block">
@@ -110,7 +110,7 @@
             </div>
         </div>
 
-        <div class="card-footer">
+        <div class="card-footer" style="background-color: #FFFFFF">
             <div class="d-flex align-items-center">
 
                 <button th:if="${user}" type="submit"

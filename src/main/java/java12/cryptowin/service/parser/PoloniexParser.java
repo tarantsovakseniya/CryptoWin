@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,28 +35,28 @@ public class PoloniexParser {
             // IOTA and TRON are absent
             if (k.equals("USDC_BTC")) {
                 result.add(new CryptoMonitor(CryptCoinType.BITCOIN, CryptoExchange.POLONIEX,
-                        buyPrice, LocalDate.now(), sellPrice));
+                        buyPrice, LocalDateTime.now(), sellPrice));
             } else if (k.equals("USDC_LTC")) {
                 result.add(new CryptoMonitor(CryptCoinType.LITECOIN, CryptoExchange.POLONIEX,
-                        buyPrice, LocalDate.now(), sellPrice));
+                        buyPrice, LocalDateTime.now(), sellPrice));
             } else if (k.equals("USDC_ETH")) {
                 result.add(new CryptoMonitor(CryptCoinType.ETHEREUM, CryptoExchange.POLONIEX,
-                        buyPrice, LocalDate.now(), sellPrice));
+                        buyPrice, LocalDateTime.now(), sellPrice));
             } else if (k.equals("USDC_XRP")) {
                 result.add(new CryptoMonitor(CryptCoinType.XRP, CryptoExchange.POLONIEX,
-                        buyPrice, LocalDate.now(), sellPrice));
+                        buyPrice, LocalDateTime.now(), sellPrice));
             } else if (k.equals("USDC_BCH")) {
                 result.add(new CryptoMonitor(CryptCoinType.BITCOIN_CASH, CryptoExchange.POLONIEX,
-                        buyPrice, LocalDate.now(), sellPrice));
+                        buyPrice, LocalDateTime.now(), sellPrice));
             } else if (k.equals("USDC_STR")) {
                 result.add(new CryptoMonitor(CryptCoinType.STELLAR, CryptoExchange.POLONIEX,
-                        buyPrice, LocalDate.now(), sellPrice));
+                        buyPrice, LocalDateTime.now(), sellPrice));
             } else if (k.equals("USDT_DASH")) {
                 result.add(new CryptoMonitor(CryptCoinType.DASH, CryptoExchange.POLONIEX,
-                        buyPrice, LocalDate.now(), sellPrice));
+                        buyPrice, LocalDateTime.now(), sellPrice));
             } else if (k.equals("USDT_EOS")) {
                 result.add(new CryptoMonitor(CryptCoinType.EOS, CryptoExchange.POLONIEX,
-                        buyPrice, LocalDate.now(), sellPrice));
+                        buyPrice, LocalDateTime.now(), sellPrice));
             }
         });
 
