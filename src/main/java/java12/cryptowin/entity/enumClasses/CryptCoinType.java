@@ -5,7 +5,7 @@ public enum CryptCoinType {
     ETHEREUM("ETH"),
     XRP("XRP"),
     LITECOIN("LTC"),
-    BITCOIN_CASH("BTH"),
+    BITCOIN_CASH("BCH"),
     STELLAR("XLM"),
     TRON("TRON"),
     DASH("DASH"),
