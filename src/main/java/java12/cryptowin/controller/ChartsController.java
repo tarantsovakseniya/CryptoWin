@@ -48,7 +48,7 @@ public class ChartsController {
         for (int i = 0; i < all.size(); i++) {
             if(all.get(i).getDate()==null){
                 cryptoMonitorService.deleteById(all.get(i).getId());
-                all.remove(all.get(i));
+                all.remove(i);
             }
         }
 
@@ -138,8 +138,7 @@ public class ChartsController {
         result.addObject("exchangeType", exchangeType);
         result.addObject("coinType", coinType);
         result.addObject("state", state);
-        result.addObject("user", userService.getCurrentUser());
-        result.addObject("error", error);
+        result.addObject("user",userService.getCurrentUser());
 
         return result;
 
