@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 import java.util.Map;
 
-@RestController
+@Controller
 public class CryptoWinController {
 
     @Autowired
@@ -24,9 +24,8 @@ public class CryptoWinController {
     @Autowired
     private UserService userService;
 
-    @GetMapping (value = "/")
+    @GetMapping(value = "/")
     public ModelAndView getMain() {
-
         List<CryptoMonitorResult> items = cryptoMonitorService.getListForMailPage();
 
         ModelAndView result = new ModelAndView("main");
