@@ -1,16 +1,12 @@
 package java12.cryptowin.controller;
 
-import java12.cryptowin.entity.CryptoMonitor;
 import java12.cryptowin.entity.enumClasses.CryptCoinType;
-import java12.cryptowin.service.jpa.BetterOfferService;
-import java12.cryptowin.service.jpa.CryptoMonitorService;
-import java12.cryptowin.service.jpa.UserService;
+import java12.cryptowin.pojo.CryptoMonitorResult;
+import java12.cryptowin.service.jpa.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -32,7 +28,7 @@ public class CryptoWinController {
     @GetMapping
     public ModelAndView getMain() {
 
-        List<CryptoMonitor> items = cryptoMonitorService.getAll();
+        List<CryptoMonitorResult> items = cryptoMonitorService.getListForMailPage();
 
         ModelAndView result = new ModelAndView("main");
         result.addObject("items", items);
@@ -46,9 +42,9 @@ public class CryptoWinController {
     public ModelAndView getBetterOffer(@RequestParam("cryptCoin") CryptCoinType cryptCoin) {
         ModelAndView result = new ModelAndView("better-offer");
 
-        List<CryptoMonitor> items = cryptoMonitorService.getAll();
+        List<CryptoMonitorResult> items = cryptoMonitorService.getListForMailPage();
 
-        Map<List<CryptoMonitor>, Double> betterOffers = betterOfferService.getBetterOffer(items, cryptCoin);
+        Map<List<CryptoMonitorResult>, Double> betterOffers = betterOfferService.getBetterOffer(items, cryptCoin);
 
         result.addObject("cryptCoinName", cryptCoin.getNameOfCoin());
         result.addObject("betterOffers", betterOffers);
