@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.LocalDate;
-import java.time.chrono.ChronoLocalDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -42,7 +41,7 @@ public class ChartsController {
                 all.remove(cryptoMonitor);
             }
 
-            LocalDate localDate = LocalDate.now();
+            LocalDateTime localDate = LocalDateTime.now();
             if (timeType.equals(TimeType.YEAR.getName())) {
                 localDate = localDate.minusYears(1);
             }
@@ -50,13 +49,16 @@ public class ChartsController {
                 localDate = localDate.minusMonths(1);
             }
             if (timeType.equals(TimeType.WEEK.getName())) {
-                localDate.minusWeeks(1);
+                localDate = localDate.minusWeeks(1);
+            }
+            if(timeType.equals(TimeType.TODAY.getName())){
+                localDate = localDate.minusHours(24);
             }
 
             if (cryptoMonitor.getDate().isBefore(ChronoLocalDateTime.from(localDate))) {
                 all.remove(cryptoMonitor);
             }
-        };
+        }
         return all;
     }
 
