@@ -26,8 +26,7 @@
                 <thead class>
                 <tr class="table-success">
                     <th:block th:each="item : ${items}" th:if="${item.getCoinType()==cryptCoin}">
-                        <th><a th:href="${item.getExchange().getUrl()}" th:text="${item.getExchange().name()}"
-                               target="_blank"/></th>
+                        <th><a th:href="${item.getExchange().getUrl()}" th:text="${item.getExchange().name()}" target="_blank"/></th>
                     </th:block>
                 </tr>
                 </thead>
