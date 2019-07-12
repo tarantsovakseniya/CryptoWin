@@ -12,9 +12,8 @@ import java.util.List;
 public interface CryptoMonitorRepository extends JpaRepository<CryptoMonitor, Long> {
 
     @Query("select new java12.cryptowin.pojo.CryptoMonitorResult(cm.id, cm.coinType, cm.exchange, max(cm.date), cm.buyingRate, cm.sellingRate)" +
-            "from CryptoMonitor as cm " +
+            "from java12.cryptowin.entity.CryptoMonitor as cm " +
             "group by cm.coinType, cm.exchange "+
-            "order by max(cm.date) desc"
-    )
+            "order by max(cm.date) desc")
     List<CryptoMonitorResult> findAllNew();
 }

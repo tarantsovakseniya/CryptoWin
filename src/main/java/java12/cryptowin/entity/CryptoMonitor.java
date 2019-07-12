@@ -43,7 +43,7 @@ public class CryptoMonitor {
         this.sellingRate = sellingRate;
     }
 
-    public CryptoMonitor( CryptCoinType coinType, CryptoExchange exchange, double buyingRate, LocalDateTime date, double sellingRate) {
+    public CryptoMonitor(CryptCoinType coinType, CryptoExchange exchange, double buyingRate, LocalDateTime date, double sellingRate) {
         this.coinType = coinType;
         this.exchange = exchange;
         this.buyingRate = buyingRate;
