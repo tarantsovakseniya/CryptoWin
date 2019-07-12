@@ -23,9 +23,9 @@ public class BetterOfferService {
        Map<List<CryptoMonitorResult>, Double> last = new HashMap<>();
         for (CryptoMonitorResult cryptoMonitor :forResult) {
             for (CryptoMonitorResult monitor :forResult) {
-                if((cryptoMonitor.getBuyingRate()-monitor.getSellingRate())>0){
+                if((cryptoMonitor.getSellingRate()-monitor.getBuyingRate())>0){
                 last.put(Arrays.asList(cryptoMonitor,monitor),
-                        (cryptoMonitor.getBuyingRate()-monitor.getSellingRate()));}
+                        Math.round((cryptoMonitor.getSellingRate()-monitor.getBuyingRate())*100)/100.00);}
             }
         }
 
