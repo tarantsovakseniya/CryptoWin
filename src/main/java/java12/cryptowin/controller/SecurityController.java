@@ -21,13 +21,13 @@ public class SecurityController {
 
     @GetMapping("/login")
     public ModelAndView getLogin() {
-        ModelAndView result = new ModelAndView("/security/login");
+        ModelAndView result = new ModelAndView("security/login");
         return result;
     }
 
     @GetMapping("/register")
     public ModelAndView getRegister(@RequestParam(value = "error", required = false) RegisterError error) {
-        ModelAndView result = new ModelAndView("/security/register");
+        ModelAndView result = new ModelAndView("security/register");
         if (error != null) {
             result.addObject("error", error.description);
         }
