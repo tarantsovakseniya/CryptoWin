@@ -9,7 +9,6 @@ import org.jsoup.Jsoup;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,17 +35,11 @@ public class GraviexParser {
             if (k.equals("btcusd")) {
                 result.add(new CryptoMonitor(CryptCoinType.BITCOIN, CryptoExchange.GRAVIEX,
                         buyPrice, LocalDateTime.now(), sellPrice));
-            } else if (k.equals("ethbtc")) {
+            } else if (k.equals("ethusd")) {
                 result.add(new CryptoMonitor(CryptCoinType.ETHEREUM, CryptoExchange.GRAVIEX,
                         buyPrice, LocalDateTime.now(), sellPrice));
             } else if (k.equals("ltcusd")) {
                 result.add(new CryptoMonitor(CryptCoinType.LITECOIN, CryptoExchange.GRAVIEX,
-                        buyPrice, LocalDateTime.now(), sellPrice));
-            } else if (k.equals("bchusdt")) {
-                result.add(new CryptoMonitor(CryptCoinType.BITCOIN_CASH, CryptoExchange.GRAVIEX,
-                        buyPrice, LocalDateTime.now(), sellPrice));
-            } else if (k.equals("dashusdt")) {
-                result.add(new CryptoMonitor(CryptCoinType.DASH, CryptoExchange.GRAVIEX,
                         buyPrice, LocalDateTime.now(), sellPrice));
             }
         });
