@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class CryptoMonitorService {
@@ -24,5 +25,8 @@ public class CryptoMonitorService {
 
     public  List<CryptoMonitorResult> getListForMailPage (){
         return repository.findAllNew();
+    }
+    public void saveAll(Set<CryptoMonitor> set){
+        repository.saveAll(set);
     }
 }
