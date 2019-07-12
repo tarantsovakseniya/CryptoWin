@@ -8,7 +8,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @EnableScheduling
@@ -24,19 +26,43 @@ public class Parser {
     @Autowired
     GraviexParser graviexParser;
     @Autowired
+    BitfinexParser bitfinexParser;
+    @Autowired
     CryptoMonitorService cryptoMonitorService;
 
     @Scheduled(fixedDelay=1000*5*60)
-    public void update() throws IOException {
-        List<CryptoMonitor> exmoList = exmoParser.parse();
-        exmoList.forEach(cryptoMonitor -> cryptoMonitorService.save(cryptoMonitor));
-        List<CryptoMonitor> binanceList = binanceParser.parse();
-        binanceList.forEach(cryptoMonitor -> cryptoMonitorService.save(cryptoMonitor));
-        List<CryptoMonitor> bridgeList = cryptoBridgeParser.parse();
-        bridgeList.forEach(cryptoMonitor -> cryptoMonitorService.save(cryptoMonitor));
-        List<CryptoMonitor> poloniexList = poloniexParser.parse();
-        poloniexList.forEach(cryptoMonitor -> cryptoMonitorService.save(cryptoMonitor));
-        List<CryptoMonitor> graviexList = graviexParser.parse();
-        graviexList.forEach(cryptoMonitor -> cryptoMonitorService.save(cryptoMonitor));
+    public void update()  {
+        Set<CryptoMonitor> parsers = new HashSet<>();
+        try {
+            parsers.addAll(exmoParser.parse());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            parsers.addAll(binanceParser.parse());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            parsers.addAll(cryptoBridgeParser.parse());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            parsers.addAll(graviexParser.parse());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            parsers.addAll(poloniexParser.parse());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            parsers.addAll(bitfinexParser.parse());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        cryptoMonitorService.saveAll(parsers);
     }
 }
