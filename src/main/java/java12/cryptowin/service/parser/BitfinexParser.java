@@ -41,8 +41,8 @@ public class BitfinexParser {
         String gsonString = Jsoup.connect(url).ignoreContentType(true).get().text();
         LinkedTreeMap ticker = gson.fromJson(gsonString, LinkedTreeMap.class);
 
-        buyPrice = Double.parseDouble((String) ticker.get("ask"));
-        sellPrice = Double.parseDouble((String) ticker.get("bid"));
+        buyPrice = Double.parseDouble((String) ticker.get("bid"));
+        sellPrice = Double.parseDouble((String) ticker.get("ask"));
 
         return new CryptoMonitor(type, CryptoExchange.BITFINEX,
                 buyPrice, LocalDateTime.now(), sellPrice);
