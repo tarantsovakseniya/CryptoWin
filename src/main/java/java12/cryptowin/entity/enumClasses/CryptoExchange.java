@@ -14,7 +14,7 @@ public enum CryptoExchange {
     EXMO("Exmo", "https://exmo.com/ru",
             23, 0,
             "23", 500000,
-            "6%", "0",
+            "6", "0",
             "0.2%"),
     CRYPTO_BRIDGE("CryptoBridge", "https://crypto-bridge.org/",
             0, 0,
