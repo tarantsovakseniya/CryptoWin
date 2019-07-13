@@ -1,11 +1,14 @@
 package java12.cryptowin.service.jpa;
 
 import java12.cryptowin.entity.CryptoMonitor;
+import java12.cryptowin.entity.enumClasses.TimeType;
 import java12.cryptowin.pojo.CryptoMonitorResult;
 import java12.cryptowin.repository.CryptoMonitorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -25,4 +28,60 @@ public class CryptoMonitorService {
     public  List<CryptoMonitorResult> getListForMailPage (){
         return repository.findAllNew();
     }
+
+    public List<CryptoMonitor> fillListToUserRequest(String coinType, String timeType, String exchangeType) {
+        List<CryptoMonitor> all = repository.findAll();
+
+        System.out.println(all.size());
+        CryptoMonitor cryptoMonitor;
+        LocalDateTime localDate = LocalDateTime.now();
+        if (timeType.equals(TimeType.YEAR.getName())) {
+            localDate = localDate.minusYears(1);
+        }
+        if (timeType.equals(TimeType.MONTH.getName())) {
+            localDate = localDate.minusMonths(1);
+        }
+        if (timeType.equals(TimeType.WEEK.getName())) {
+            localDate = localDate.minusWeeks(1);
+        }
+        if (timeType.equals(TimeType.TODAY.getName())) {
+            localDate = localDate.minusHours(24);
+        }
+        for (int i = 0; i < all.size(); i++) {
+            if(all.get(i).getDate()==null){
+                repository.deleteById(all.get(i).getId());
+                all.remove(i);
+            }
+        }
+
+        for (int i = 0; i < all.size(); i++) {
+            cryptoMonitor = all.get(i);
+
+            if (!cryptoMonitor.getCoinType().getNameOfCoin().equals(coinType) ||
+                    !cryptoMonitor.getExchange().getName().equals(exchangeType) ||
+                    cryptoMonitor.getDate().isBefore(localDate))
+                all.remove(cryptoMonitor);
+
+        }
+
+        all.sort(new Comparator<CryptoMonitor>() {
+            @Override
+            public int compare(CryptoMonitor o1, CryptoMonitor o2) {
+                if(o1.getDate().isBefore(o2.getDate())){
+                    return -1;
+                }
+                else{
+                    if(o2.getDate().isAfter(o2.getDate())){
+                        return 1;
+                    }
+                    else {
+                        return 0;
+                    }
+                }
+            }
+        });
+
+        return all;
+    }
+
 }
