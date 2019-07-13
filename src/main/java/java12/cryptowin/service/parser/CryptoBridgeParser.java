@@ -55,11 +55,7 @@ public class CryptoBridgeParser {
                         ())) {
                     list.add(new CryptoMonitor(CryptCoinType.LITECOIN, CryptoExchange.CRYPTO_BRIDGE,
                             buyingRate, LocalDateTime.now(), sellingRate));
-                } else if (nameCrypto.equals
-                        (CryptCoinType.BITCOIN_CASH.getNameOfCoin()) || nameCrypto.equals("BCH")) {
-                    list.add(new CryptoMonitor(CryptCoinType.BITCOIN_CASH, CryptoExchange.CRYPTO_BRIDGE,
-                            buyingRate, LocalDateTime.now(), sellingRate));
-                } else if (nameCrypto.equals(CryptCoinType.DASH.getNameOfCoin())) {
+                }  else if (nameCrypto.equals(CryptCoinType.DASH.getNameOfCoin())) {
                     list.add(new CryptoMonitor(CryptCoinType.DASH, CryptoExchange.CRYPTO_BRIDGE,
                             buyingRate, LocalDateTime.now(), sellingRate));
                 }

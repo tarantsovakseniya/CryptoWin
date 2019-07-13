@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class CryptoMonitorService {
@@ -27,6 +28,9 @@ public class CryptoMonitorService {
 
     public  List<CryptoMonitorResult> getListForMailPage (){
         return repository.findAllNew();
+    }
+    public void saveAll(Set<CryptoMonitor> set){
+        repository.saveAll(set);
     }
 
     public List<CryptoMonitor> fillListToUserRequest(String coinType, String timeType, String exchangeType) {
