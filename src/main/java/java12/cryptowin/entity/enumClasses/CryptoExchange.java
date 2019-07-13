@@ -28,7 +28,7 @@ public enum CryptoExchange {
             "0.2%"),
     BITFINEX("Bitfinex", "https://www.bitfinex.com/trading",
             "10$", "0$",
-            "0.001 BTC", "0",
+            "12$", "0",
             "1.5%", "1.5% + 5 UAH",
             "0.25 %"); // check and correct to actual
 
