@@ -41,7 +41,15 @@
         <div class="card" style="width: 1100px">
 
             <div class="card-header text-center">
-                <h1 th:text="'Графики покупки/продажи валюты ' + ${coin}"></h1>
+                <th:block th:switch="${state}">
+                    <h1>
+                        <a>График</a>
+                        <a th:case="sell"> продажи </a>
+                        <a th:case="buy"> покупки </a>
+                        <a th:text="${coin}"></a>
+                    </h1>
+                </th:block>
+
             </div>
 
             <div class="card-body" style="background-color: #FFFFFF">
@@ -63,7 +71,7 @@
 
                 <div class="btn-group">
                     <select name="coinType" id="coinType" class="form-control form-control-lg">
-                        <option >
+                        <option>
                             <a value="${coin}" th:if="${coin}" th:text="${coin}"></a>
                             <a value="" th:if="${coin == null}">Выбрать валюту</a>
                         </option>
@@ -92,7 +100,7 @@
                 <div class="btn-group">
                     <select name="timeType" id="timeType" class="form-control form-control-lg">
                         <option>
-                            <a  value="${time}" th:if="${time}" th:text="${time}"></a>
+                            <a value="${time}" th:if="${time}" th:text="${time}"></a>
                             <a value="" th:unless="${time}">Выбрать временной промежуток</a>
                         </option>
                         <option th:each="timeType : ${times}" th:unless="${time==timeType.getName()}"
@@ -132,104 +140,61 @@
             </div>
 
 
-            <table th:unless="${error}" class="table table-striped table-bordered  text-center " id="table">
-                <thead>
-                <tr>
-                    <th>Цена криптвалюты в долларах</th>
-                    <th>Дата и время ее достижения</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <th:block th:each="crypt:${crypto}">
-                    <tr th:switch="${state}">
-                        <td th:case="sell" th:text="${crypt.getSellingRate()}">1000</td>
-                        <td th:case="buy" th:text="${crypt.getBuyingRate()}">1000</td>
-                        <td th:text="${crypt.getDate()}">1000</td>
-                    </tr>
-                </th:block>
-                </tbody>
-            </table>
-
             <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
             <script src="https://code.highcharts.com/stock/highstock.js"></script>
             <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
             <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/d3/2.10.0/d3.v2.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
             <script>
-var prices = new Array();
-var dates = new Array();
-var table = document.getElementById('table');
 
-for (var i = 1; i < table.rows.length; i++) {
-prices[i - 1] = Number(table.rows[i].cells[0].innerHTML.replace('<td></td>', ""));
-dates[i - 1] =  new Date(table.rows[i].cells[1].innerHTML).getTime();
-console.log(table.rows[i].cells[0]);
-}
 
-dates.sort();
+
+console.log($(document.getElementById("state")));
+
+var arr = document.querySelectorAll('h1')[0].innerHTML.split(" ");
+console.log(arr[arr.length - 1]);
+var coin = arr[arr.length - 1];
+var state = arr[arr.length - 2];
+arr = document.querySelectorAll('h3')[0].innerHTML.split(" ");
+arr = arr.slice(4,7);
+console.log(arr);
+
+var exchange = arr[3];
+var time = arr.join(" ");
+
+
+
+$.getJSON('http://localhost:8080/data?coinType=' + coin + '&exchangeType=' + exchange +
+'&timeType=' + time + '&state=' + state , function (main) {
 
 var data = new Array();
-
-for (var i = 1; i < prices.length; i++) {
-
+for (var i = 0; i < main.length; i++) {
 data[i] = new Array(2);
-data[i][1] = prices[i];
-data[i][0] = dates[i];
-console.log(data[i])
 
+data[i][0] = (new Date(main[i][0])).getTime();
+data[i][1] = main[i][1];
 }
 
- $(document).ready(function () {
-
-Highcharts.stockChart('container', {
+data.sort();
 
 
+      Highcharts.stockChart('container', {
 
+
+      rangeSelector: {
+            selected: 1
+        },
 
         title: {
-            text: 'Изминение курса'
-        },
-
-        subtitle: {
-            text: 'Прокрутите, чтобы узнать больше'
-        },
-
-        xAxis: {
-            breaks: [{ // Nights
-                from: Date.UTC(2011, 9, 6, 16),
-                to: Date.UTC(2011, 9, 7, 8),
-                repeat: 24 * 36e5
-            }, { // Weekends
-                from: Date.UTC(2011, 9, 7, 16),
-                to: Date.UTC(2011, 9, 10, 8),
-                repeat: 7 * 24 * 36e5
-            }]
-        },
-
-        rangeSelector: {
-            buttons: [{
-                type: 'hour',
-                count: 1,
-                text: '1h'
-            }, {
-                type: 'day',
-                count: 1,
-                text: '1D'
-            }, {
-                type: 'all',
-                count: 1,
-                text: 'All'
-            }],
-            selected: 1,
-            inputEnabled: false
+            text: 'Изменение курса'
         },
 
         series: [{
-            name: 'Курс в долларах',
-            type: 'area',
+            name: 'Прокрутите, чтобы увидеть следующую/предыдущую часть графика',
             data: data,
-            gapSize: 5,
-            turboThread: 2000,
+            type: 'area',
+            threshold: null,
             tooltip: {
                 valueDecimals: 2
             },
@@ -244,11 +209,11 @@ Highcharts.stockChart('container', {
                     [0, Highcharts.getOptions().colors[0]],
                     [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
                 ]
-            },
-            threshold: null
+            }
         }]
     });
 });
+
 
 
 
