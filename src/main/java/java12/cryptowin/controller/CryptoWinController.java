@@ -37,18 +37,26 @@ public class CryptoWinController {
     }
 
     @GetMapping(value = "/better-offer")
-    public ModelAndView getBetterOffer(@RequestParam("cryptCoin") CryptCoinType cryptCoin) {
+    public ModelAndView getBetterOffer(@RequestParam("cryptCoin") CryptCoinType cryptCoin,
+                                       @RequestParam(value = "wantToBuy", required=false) String buy){
         ModelAndView result = new ModelAndView("better-offer");
 
         List<CryptoMonitorResult> items = cryptoMonitorService.getListForMailPage();
 
-        Map<List<CryptoMonitorResult>, Double> betterOffers = betterOfferService.getBetterOffer(items, cryptCoin);
+        Map<List<CryptoMonitorResult>, Double> betterOffers = null;
 
-        result.addObject("cryptCoinName", cryptCoin.getNameOfCoin());
+        if(buy==null) {
+            betterOffers= betterOfferService.getBetterOffer(items, cryptCoin);
+        }
+        else {
+            double buyDouble=Double.parseDouble(buy);
+            betterOffers = betterOfferService.getBetterOfferNew(items, cryptCoin, buyDouble);
+        }
+
+        result.addObject("cryptCoin", cryptCoin);
         result.addObject("betterOffers", betterOffers);
         result.addObject("user", userService.getCurrentUser());
 
         return result;
     }
-
 }
