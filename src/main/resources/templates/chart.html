@@ -61,6 +61,7 @@
                                 <a value="buy" th:case="buy">Курс покупки</a>
                                 <a value="sell" th:case="sell">Курс продажи</a>
                             </th:block>
+
                             <a value="" th:unless="${state}">Покупка/продажа</a>
                         </option>
                         <option th:unless="${state=='buy'}" th:value="buy">Курс покупки</option>
