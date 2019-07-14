@@ -27,10 +27,10 @@ public enum CryptoExchange {
             "5$", "0$",
             "0.2%"),
     BITFINEX("Bitfinex", "https://www.bitfinex.com/trading",
-            "10$", "0$",
-            "0.001 BTC", "0",
-            "1.5%", "1.5% + 5 UAH",
-            "0.25 %"); // check and correct to actual
+            "0$", "0$",
+            "7$", "0",
+            "7$", "5$ for deposit < 1000$",
+            "0.20%");
 
     private String name;
     private String url;
