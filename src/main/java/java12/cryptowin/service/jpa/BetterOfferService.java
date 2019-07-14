@@ -16,13 +16,12 @@ public class BetterOfferService {
         Map<List<CryptoMonitorResult>, Double> last = new HashMap<>();
         for (CryptoMonitorResult cryptoMonitor : forResult) {
             for (CryptoMonitorResult monitor : forResult) {
-                if ((cryptoMonitor.getSellingRate() - monitor.getBuyingRate()) > 1) {
+                if ((cryptoMonitor.getBuyingRate() - monitor.getSellingRate()) > 1) {
                     last.put(Arrays.asList(cryptoMonitor, monitor),
-                            Math.round((cryptoMonitor.getSellingRate() - monitor.getBuyingRate()) * 100) / 100.00);
+                            Math.round((cryptoMonitor.getBuyingRate() - monitor.getSellingRate()) * 100) / 100.00);
                 }
             }
         }
-
         return formListOfThreeBetter(last);
     }
 
@@ -32,9 +31,9 @@ public class BetterOfferService {
         Map<List<CryptoMonitorResult>, Double> last = new HashMap<>();
         for (CryptoMonitorResult cryptoMonitor : forResult) {
             for (CryptoMonitorResult monitor : forResult) {
-                if ((cryptoMonitor.getSellingRate() - monitor.getBuyingRate()) > 1) {
+                if ((cryptoMonitor.getBuyingRate() - monitor.getSellingRate()) > 1) {
 
-                    double coinsQuantity = buy / monitor.getBuyingRate();
+                    double coinsQuantity = buy / cryptoMonitor.getBuyingRate();
 
                     last.put(Arrays.asList(
                             new CryptoMonitorResult(
@@ -47,11 +46,10 @@ public class BetterOfferService {
                                     monitor.getExchange(),
                                     monitor.getBuyingRate() * coinsQuantity,
                                     monitor.getSellingRate() * coinsQuantity)),
-                            Math.round((cryptoMonitor.getSellingRate() * coinsQuantity - monitor.getBuyingRate() * coinsQuantity) * 100) / 100.00);
+                            Math.round((cryptoMonitor.getBuyingRate() * coinsQuantity - monitor.getSellingRate() * coinsQuantity) * 100) / 100.00);
                 }
             }
         }
-
         return formListOfThreeBetter(last);
     }
 

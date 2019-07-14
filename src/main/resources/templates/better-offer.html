@@ -38,25 +38,89 @@
             <table class="table table-bordered table-sm text-center">
                 <thead>
                 <tr class="table-success">
-                    <th>Биржа покупки</th>
-                    <th>Покупка</th>
-                    <th>Биржа продажи</th>
-                    <th>Продажа</th>
-                    <th>Выгода</th>
+                    <th>Биржа для ввода</th>
+                    <th>Смогу купить за:</th>
+                    <th>Биржа для вывода</th>
+                    <th>Смогу продать за:</th>
+                    <th>Прибыль ($)</th>
                 </tr>
                 </thead>
                 <tbody>
                 <th:block th:each="betterOffer : ${betterOffers.keySet()}">
-                    <td th:text="${betterOffer.get(1).getExchange().getName()}"></td>
-                    <td th:text="${betterOffer.get(1).getBuyingRate()}"></td>
-                    <td th:text="${betterOffer.get(0).getExchange().getName()}"></td>
-                    <td th:text="${betterOffer.get(0).getSellingRate()}"></td>
-                    <td th:text="${betterOffers.get(betterOffer).doubleValue()}"></td>
+                        <td th:text="${betterOffer.get(1).getExchange().getName()}"></td>
+                        <td>
+                            <span th:text="${betterOffer.get(1).getSellingRate()}"/>
+                            <button type="button" class="btn btn-sm btn-light btn-outline-success" data-toggle="modal" data-target="#myModalSell" th:attrappend="data-target=${betterOffer.get(1).getExchange()}">
+                                + Комиссия
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade bd-example-modal-xl" tabindex="-1"
+                                 aria-labelledby="myExtraLargeModalLabel" aria-hidden="true" id="myModalSell" role="dialog" th:attrappend="id=${betterOffer.get(1).getExchange()}"  >
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">
+                                                <span th:text="${betterOffer.get(1).getExchange().getName()} + ' условия и комиссия'"></span>
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <iframe th:src="${betterOffer.get(1).getExchange().getLinkWithDetails()}"
+                                                    width="1100" height="600"></iframe>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td th:text="${betterOffer.get(0).getExchange().getName()}"></td>
+                        <td>
+                            <span th:text="${betterOffer.get(0).getBuyingRate()}"/>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-sm btn-light btn-outline-success" data-toggle="modal" data-target="#myModalBuy" th:attrappend="data-target=${betterOffer.get(0).getExchange()}">
+                                + Комиссия
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade bd-example-modal-xl" tabindex="-1"
+                                 aria-labelledby="myExtraLargeModalLabel" aria-hidden="true" id="myModalBuy" role="dialog" th:attrappend="id=${betterOffer.get(0).getExchange()}"  >
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">
+                                                <span th:text="${betterOffer.get(0).getExchange().getName()} + ' условия и комиссия'"></span>
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <iframe th:src="${betterOffer.get(0).getExchange().getLinkWithDetails()}"
+                                                    width="1100" height="600">
+                                            </iframe>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td th:text="${betterOffers.get(betterOffer).doubleValue()}"></td>
                     </tr>
                 </th:block>
                 </tbody>
             </table>
-            <p class="font-weight-light">*Выгода указана без учета комиссии.</p>
+            <p class="font-weight-light">*Прибыль указана без учета комиссии.</p>
         </div>
         <div class="card-footer">
             <a href="/" class="btn btn-light btn-outline-success">Назад</a>
