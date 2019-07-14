@@ -2,7 +2,7 @@ package java12.cryptowin.controller;
 
 import java12.cryptowin.entity.Subscription;
 import java12.cryptowin.entity.User;
-import java12.cryptowin.entity.enumClasses.CryptCoinType;
+import java12.cryptowin.entity.enumeration.CryptCoinType;
 import java12.cryptowin.service.jpa.SubscriptionService;
 import java12.cryptowin.service.jpa.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
