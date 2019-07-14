@@ -25,7 +25,6 @@ public class ExmoParser {
 
         list.add(addCurrency("BTC_USD",CryptCoinType.BITCOIN));
         list.add(addCurrency("ETH_USD",CryptCoinType.ETHEREUM));
-        list.add(addCurrency("BCH_USD",CryptCoinType.BITCOIN_CASH));
         list.add(addCurrency("DASH_USD",CryptCoinType.DASH));
         list.add(addCurrency("EOS_USD",CryptCoinType.EOS));
         list.add(addCurrency("LTC_USD",CryptCoinType.LITECOIN));
