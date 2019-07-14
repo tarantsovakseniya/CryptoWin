@@ -24,7 +24,6 @@ public class PoloniexParser {
         result.add(addCurrency("USDC_LTC", CryptCoinType.LITECOIN));
         result.add(addCurrency("USDC_ETH", CryptCoinType.ETHEREUM));
         result.add(addCurrency("USDC_XRP", CryptCoinType.XRP));
-        //result.add(addCurrency("USDC_BCH", CryptCoinType.BITCOIN_CASH));
         result.add(addCurrency("USDC_STR", CryptCoinType.STELLAR));
         result.add(addCurrency("USDT_DASH", CryptCoinType.DASH));
         result.add(addCurrency("USDT_EOS", CryptCoinType.EOS));
