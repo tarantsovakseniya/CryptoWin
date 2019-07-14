@@ -1,6 +1,6 @@
 package java12.cryptowin.controller;
 
-import java12.cryptowin.entity.enumClasses.CryptCoinType;
+import java12.cryptowin.entity.enumeration.CryptCoinType;
 import java12.cryptowin.pojo.CryptoMonitorResult;
 import java12.cryptowin.service.jpa.*;
 

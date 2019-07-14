@@ -1,7 +1,7 @@
 package java12.cryptowin.service.jpa;
 
 import java12.cryptowin.entity.CryptoMonitor;
-import java12.cryptowin.entity.enumClasses.TimeType;
+import java12.cryptowin.entity.enumeration.TimeType;
 import java12.cryptowin.pojo.CryptoMonitorResult;
 import java12.cryptowin.repository.CryptoMonitorRepository;
 import org.springframework.beans.factory.annotation.Autowired;

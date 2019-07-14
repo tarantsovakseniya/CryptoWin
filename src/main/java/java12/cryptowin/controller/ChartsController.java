@@ -1,10 +1,9 @@
 package java12.cryptowin.controller;
 
-import com.google.gson.JsonArray;
 import java12.cryptowin.entity.CryptoMonitor;
-import java12.cryptowin.entity.enumClasses.CryptCoinType;
-import java12.cryptowin.entity.enumClasses.CryptoExchange;
-import java12.cryptowin.entity.enumClasses.TimeType;
+import java12.cryptowin.entity.enumeration.CryptCoinType;
+import java12.cryptowin.entity.enumeration.CryptoExchange;
+import java12.cryptowin.entity.enumeration.TimeType;
 import java12.cryptowin.service.jpa.CryptoMonitorService;
 import java12.cryptowin.service.jpa.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package java12.cryptowin.entity.enumClasses;
+package java12.cryptowin.entity.enumeration;
 
 public enum CryptCoinType {
     BITCOIN("BTC"),

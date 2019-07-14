@@ -1,13 +1,9 @@
 package java12.cryptowin.pojo;
 
-import java12.cryptowin.entity.enumClasses.CryptCoinType;
-import java12.cryptowin.entity.enumClasses.CryptoExchange;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Bean;
+import java12.cryptowin.entity.enumeration.CryptCoinType;
+import java12.cryptowin.entity.enumeration.CryptoExchange;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Component
