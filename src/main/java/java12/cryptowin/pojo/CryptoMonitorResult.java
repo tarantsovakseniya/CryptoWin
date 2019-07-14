@@ -37,6 +37,13 @@ public class CryptoMonitorResult {
         this.sellingRate = Math.round(sellingRate*100)/100.00;
     }
 
+    public CryptoMonitorResult(CryptCoinType coinType, CryptoExchange exchange, double buyingRate, double sellingRate) {
+        this.coinType = coinType;
+        this.exchange = exchange;
+        this.buyingRate = Math.round(buyingRate*100)/100.00;
+        this.sellingRate = Math.round(sellingRate*100)/100.00;
+    }
+
     public long getId() {
         return id;
     }
@@ -66,7 +73,7 @@ public class CryptoMonitorResult {
     }
 
     public void setBuyingRate(double buyingRate) {
-        this.buyingRate = buyingRate;
+        this.buyingRate = Math.round(buyingRate*100)/100.00;
     }
 
     public LocalDateTime getDate() {
@@ -82,6 +89,6 @@ public class CryptoMonitorResult {
     }
 
     public void setSellingRate(double sellingRate) {
-        this.sellingRate = sellingRate;
+        this.sellingRate = Math.round(sellingRate*100)/100.00;
     }
 }

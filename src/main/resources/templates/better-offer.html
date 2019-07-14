@@ -15,11 +15,25 @@
 
         <div class="card-header">
             <div class="d-flex align-items-center">
-                <h5 class="mr-auto p-3" th:text="${cryptCoinName}"></h5>
+                <h5 class="mr-auto p-3" th:text="${cryptCoin.getNameOfCoin()}"></h5>
             </div>
         </div>
 
         <div class="card-body">
+
+            <form method="get" action="/better-offer">
+                <input type="hidden" th:value="${cryptCoin}" name="cryptCoin"/>
+
+                <div class="form-row align-items-center mb-4">
+                    <div class="col-auto mb-3">
+                        <label for="wantToBuy" class="col-form-label">Сумма ввода для покупки, $</label>
+                        <input type="text" class="form-control" name="wantToBuy" id="wantToBuy">
+                    </div>
+                    <div class="col-auto mt-4">
+                        <button type="submit" class="btn btn-success">Пересчитать</button>
+                    </div>
+                </div>
+            </form>
 
             <table class="table table-bordered table-sm text-center">
                 <thead>
@@ -33,15 +47,16 @@
                 </thead>
                 <tbody>
                 <th:block th:each="betterOffer : ${betterOffers.keySet()}">
-                    <td th:text="${betterOffer.get(0).getExchange().getName()}"></td>
-                    <td th:text="${betterOffer.get(0).getBuyingRate()}"></td>
                     <td th:text="${betterOffer.get(1).getExchange().getName()}"></td>
-                    <td th:text="${betterOffer.get(1).getSellingRate()}"></td>
+                    <td th:text="${betterOffer.get(1).getBuyingRate()}"></td>
+                    <td th:text="${betterOffer.get(0).getExchange().getName()}"></td>
+                    <td th:text="${betterOffer.get(0).getSellingRate()}"></td>
                     <td th:text="${betterOffers.get(betterOffer).doubleValue()}"></td>
                     </tr>
                 </th:block>
                 </tbody>
             </table>
+            <p class="font-weight-light">*Выгода указана без учета комиссии.</p>
         </div>
         <div class="card-footer">
             <a href="/" class="btn btn-light btn-outline-success">Назад</a>

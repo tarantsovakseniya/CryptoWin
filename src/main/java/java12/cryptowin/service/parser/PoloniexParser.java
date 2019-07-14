@@ -9,7 +9,6 @@ import org.jsoup.Jsoup;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,48 +17,30 @@ import java.util.List;
 public class PoloniexParser {
 
     public List<CryptoMonitor> parse() throws IOException {
+        // IOTA and TRON are absent
         List<CryptoMonitor> result = new ArrayList();
-        Gson gson = new Gson();
 
-        String apiUrl = "https://poloniex.com/public?command=returnTicker";
-
-        String gsonString = Jsoup.connect(apiUrl).ignoreContentType(true).get().text();
-        LinkedTreeMap objects = gson.fromJson(gsonString, LinkedTreeMap.class);
-
-        objects.forEach((k,v) -> {
-            LinkedTreeMap linked = (LinkedTreeMap) v;
-
-            double buyPrice = Double.parseDouble((String) linked.get("lowestAsk"));
-            double sellPrice = Double.parseDouble((String) linked.get("highestBid"));
-
-            // IOTA and TRON are absent
-            if (k.equals("USDC_BTC")) {
-                result.add(new CryptoMonitor(CryptCoinType.BITCOIN, CryptoExchange.POLONIEX,
-                        buyPrice, LocalDateTime.now(), sellPrice));
-            } else if (k.equals("USDC_LTC")) {
-                result.add(new CryptoMonitor(CryptCoinType.LITECOIN, CryptoExchange.POLONIEX,
-                        buyPrice, LocalDateTime.now(), sellPrice));
-            } else if (k.equals("USDC_ETH")) {
-                result.add(new CryptoMonitor(CryptCoinType.ETHEREUM, CryptoExchange.POLONIEX,
-                        buyPrice, LocalDateTime.now(), sellPrice));
-            } else if (k.equals("USDC_XRP")) {
-                result.add(new CryptoMonitor(CryptCoinType.XRP, CryptoExchange.POLONIEX,
-                        buyPrice, LocalDateTime.now(), sellPrice));
-            } else if (k.equals("USDC_BCH")) {
-                result.add(new CryptoMonitor(CryptCoinType.BITCOIN_CASH, CryptoExchange.POLONIEX,
-                        buyPrice, LocalDateTime.now(), sellPrice));
-            } else if (k.equals("USDC_STR")) {
-                result.add(new CryptoMonitor(CryptCoinType.STELLAR, CryptoExchange.POLONIEX,
-                        buyPrice, LocalDateTime.now(), sellPrice));
-            } else if (k.equals("USDT_DASH")) {
-                result.add(new CryptoMonitor(CryptCoinType.DASH, CryptoExchange.POLONIEX,
-                        buyPrice, LocalDateTime.now(), sellPrice));
-            } else if (k.equals("USDT_EOS")) {
-                result.add(new CryptoMonitor(CryptCoinType.EOS, CryptoExchange.POLONIEX,
-                        buyPrice, LocalDateTime.now(), sellPrice));
-            }
-        });
+        result.add(addCurrency("USDC_BTC", CryptCoinType.BITCOIN));
+        result.add(addCurrency("USDC_LTC", CryptCoinType.LITECOIN));
+        result.add(addCurrency("USDC_ETH", CryptCoinType.ETHEREUM));
+        result.add(addCurrency("USDC_XRP", CryptCoinType.XRP));
+        //result.add(addCurrency("USDC_BCH", CryptCoinType.BITCOIN_CASH));
+        result.add(addCurrency("USDC_STR", CryptCoinType.STELLAR));
+        result.add(addCurrency("USDT_DASH", CryptCoinType.DASH));
+        result.add(addCurrency("USDT_EOS", CryptCoinType.EOS));
 
         return result;
+    }
+    private CryptoMonitor addCurrency(String kye, CryptCoinType cryptCoinType) throws IOException {
+        Gson gson = new Gson();
+        String apiUrl = "https://poloniex.com/public?command=returnTicker";
+        String gsonString = Jsoup.connect(apiUrl).ignoreContentType(true).get().text();
+        LinkedTreeMap objects = gson.fromJson(gsonString, LinkedTreeMap.class);
+        LinkedTreeMap values = (LinkedTreeMap) objects.get(kye);
+        double buyPrice = Double.parseDouble((String) values.get("lowestAsk"));
+        double sellPrice = Double.parseDouble((String) values.get("highestBid"));
+
+        return new CryptoMonitor(cryptCoinType, CryptoExchange.POLONIEX, buyPrice, LocalDateTime.now(), sellPrice);
+
     }
 }
