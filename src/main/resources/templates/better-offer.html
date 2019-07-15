@@ -49,7 +49,7 @@
                 <th:block th:each="betterOffer : ${betterOffers.keySet()}">
                         <td th:text="${betterOffer.get(1).getExchange().getName()}"></td>
                         <td>
-                            <span th:text="${betterOffer.get(1).getSellingRate()}"/>
+                            <span th:text="'$'+${betterOffer.get(1).getSellingRate()}"/>
                             <button type="button" class="btn btn-sm btn-light btn-outline-success" data-toggle="modal" data-target="#myModalSell" th:attrappend="data-target=${betterOffer.get(1).getExchange()}">
                                 + Комиссия
                             </button>
@@ -82,7 +82,7 @@
 
                         <td th:text="${betterOffer.get(0).getExchange().getName()}"></td>
                         <td>
-                            <span th:text="${betterOffer.get(0).getBuyingRate()}"/>
+                            <span th:text="'$'+${betterOffer.get(0).getBuyingRate()}"/>
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-sm btn-light btn-outline-success" data-toggle="modal" data-target="#myModalBuy" th:attrappend="data-target=${betterOffer.get(0).getExchange()}">
                                 + Комиссия
@@ -115,7 +115,7 @@
                             </div>
                         </td>
 
-                        <td th:text="${betterOffers.get(betterOffer).doubleValue()}"></td>
+                        <td th:text="'$'+${betterOffers.get(betterOffer).doubleValue()}"></td>
                     </tr>
                 </th:block>
                 </tbody>

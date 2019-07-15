@@ -33,7 +33,7 @@
                 <tbody>
                 <tr>
                     <th:block th:each="item : ${items}" th:if="${item.getCoinType()==cryptCoin}">
-                        <td th:text="${item.getBuyingRate()}+ ' / ' + ${item.getSellingRate()}">1000</td>
+                        <td th:text="'$'+${item.getBuyingRate()}+ ' | ' + '$'+${item.getSellingRate()}">1000</td>
                     </th:block>
                 </tr>
                 </tbody>
