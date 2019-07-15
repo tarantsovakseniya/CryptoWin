@@ -5,7 +5,20 @@
     <title>Better Offer</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <style type="text/css">
+    	html,
+body{
+ height: 100%;
+}
+.select_button{
+	margin: 5px;
+}
+.container{
+  margin: 0 auto;
+  background-color: #fff;
+  font-weight: normal;
+}
+    </style>
 </head>
 <body style="color:Black; background-color: #ccccb3;">
 
@@ -39,88 +52,151 @@
                 <thead>
                 <tr class="table-success">
                     <th>Биржа для ввода</th>
-                    <th>Смогу купить за:</th>
+                    <th>Смогу купить coins за:</th>
                     <th>Биржа для вывода</th>
-                    <th>Смогу продать за:</th>
+                    <th>Смогу продать coins за:</th>
                     <th>Прибыль ($)</th>
                 </tr>
                 </thead>
                 <tbody>
                 <th:block th:each="betterOffer : ${betterOffers.keySet()}">
-                        <td th:text="${betterOffer.get(1).getExchange().getName()}"></td>
-                        <td>
-                            <span th:text="'$'+${betterOffer.get(1).getSellingRate()}"/>
-                            <button type="button" class="btn btn-sm btn-light btn-outline-success" data-toggle="modal" data-target="#myModalSell" th:attrappend="data-target=${betterOffer.get(1).getExchange()}">
-                                + Комиссия
-                            </button>
-                            <!-- Modal -->
-                            <div class="modal fade bd-example-modal-xl" tabindex="-1"
-                                 aria-labelledby="myExtraLargeModalLabel" aria-hidden="true" id="myModalSell" role="dialog" th:attrappend="id=${betterOffer.get(1).getExchange()}"  >
-                                <div class="modal-dialog modal-xl">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">
-                                                <span th:text="${betterOffer.get(1).getExchange().getName()} + ' условия и комиссия'"></span>
-                                            </h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <iframe th:src="${betterOffer.get(1).getExchange().getLinkWithDetails()}"
-                                                    width="1100" height="600"></iframe>
+                    <td th:text="${betterOffer.get(1).getExchange().getName()}"></td>
+                    <td>
+                        <span th:text="'$'+${betterOffer.get(1).getSellingRate()}"/>
+                        <button type="button" class="btn btn-sm btn-light btn-outline-success" data-toggle="modal"
+                                data-target="#myModalSell"
+                                th:attrappend="data-target=${betterOffer.get(1).getExchange()}">
+                            + Комиссия
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade bd-example-modal-xl" tabindex="-1"
+                             aria-labelledby="myExtraLargeModalLabel" aria-hidden="true" id="myModalSell" role="dialog"
+                             th:attrappend="id=${betterOffer.get(1).getExchange()}">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">
+                                            <span th:text="${betterOffer.get(1).getExchange().getName()} + ' условия и комиссия'"></span>
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <iframe th:src="${betterOffer.get(1).getExchange().getLinkWithDetails()}"
+                                                width="1100" height="600"></iframe>
 
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
-                                            </button>
-                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                        </td>
+                        </div>
+                    </td>
 
-                        <td th:text="${betterOffer.get(0).getExchange().getName()}"></td>
-                        <td>
-                            <span th:text="'$'+${betterOffer.get(0).getBuyingRate()}"/>
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-sm btn-light btn-outline-success" data-toggle="modal" data-target="#myModalBuy" th:attrappend="data-target=${betterOffer.get(0).getExchange()}">
-                                + Комиссия
-                            </button>
-                            <!-- Modal -->
-                            <div class="modal fade bd-example-modal-xl" tabindex="-1"
-                                 aria-labelledby="myExtraLargeModalLabel" aria-hidden="true" id="myModalBuy" role="dialog" th:attrappend="id=${betterOffer.get(0).getExchange()}"  >
-                                <div class="modal-dialog modal-xl">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">
-                                                <span th:text="${betterOffer.get(0).getExchange().getName()} + ' условия и комиссия'"></span>
-                                            </h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <iframe th:src="${betterOffer.get(0).getExchange().getLinkWithDetails()}"
-                                                    width="1100" height="600">
-                                            </iframe>
+                    <td th:text="${betterOffer.get(0).getExchange().getName()}"></td>
+                    <td>
+                        <span th:text="'$'+${betterOffer.get(0).getBuyingRate()}"/>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-sm btn-light btn-outline-success" data-toggle="modal"
+                                data-target="#myModalBuy"
+                                th:attrappend="data-target=${betterOffer.get(0).getExchange()}">
+                            + Комиссия
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade bd-example-modal-xl" tabindex="-1"
+                             aria-labelledby="myExtraLargeModalLabel" aria-hidden="true" id="myModalBuy" role="dialog"
+                             th:attrappend="id=${betterOffer.get(0).getExchange()}">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">
+                                            <span th:text="${betterOffer.get(0).getExchange().getName()} + ' условия и комиссия'"></span>
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <iframe th:src="${betterOffer.get(0).getExchange().getLinkWithDetails()}"
+                                                width="1100" height="600">
+                                        </iframe>
 
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
-                                            </button>
-                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                        </td>
+                        </div>
+                    </td>
 
-                        <td th:text="'$'+${betterOffers.get(betterOffer).doubleValue()}"></td>
+                    <td th:text="'$'+${betterOffers.get(betterOffer).doubleValue()}"></td>
                     </tr>
                 </th:block>
                 </tbody>
             </table>
             <p class="font-weight-light">*Прибыль указана без учета комиссии.</p>
+            <p></p>
+            <p class="font-italic" style="color:#009933;"><br><b>Для расчета прибыли с учетом комиссии, воспользуйтесь калькулятором ниже:</b></br></p>
+            <br>
+            <section id="cover">
+                <div id="cover-caption">
+                    <div id="container" class="container">
+                        <div class="row">
+                            <div class="col-sm-10 offset-sm-1 text-center">
+                                <div class="info-form">
+                                    <form action="" class="form-inline justify-content-center" name="calc">
+
+                                        <input type="" name="" class="form-control col-sm-12" id="input_text" onkeyup="allowedChar(this);" >
+                                        <div class="col-sm-10 ">
+                                            <hr>
+                                            <div class="text-center select_button">
+                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('7')">7</a>
+                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('8')">8</a>
+                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('9')">9</a>
+                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('/')">/</a>
+                                            </div>
+
+
+                                            <div class="text-center select_button">
+                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('4')">4</a>
+                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('5')">5</a>
+                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('6')">6</a>
+                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('*')">x</a>
+                                            </div>
+                                            <div class="text-center select_button ">
+                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('1')">1</a>
+                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('2')">2</a>
+                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('3')">3</a>
+                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('-')">-</a>
+                                            </div>
+                                            <div class="text-center select_button">
+                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('0')">0</a>
+                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('.')">.</a>
+                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('9')">9</a>
+                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('+')">+</a>
+
+                                            </div>
+                                            <div class="text-center select_button">
+                                                <a name="" class="btn btn-outline-success col-sm-1"  href="javascript:addText('(')">(</a>
+                                                <a name="" class="btn btn-outline-success col-sm-1"  href="javascript:addText(')')">)</a>
+                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:removelastText()">DELETE</a>
+                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:clearText()">CLEAR</a>
+                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:answerText()">=</a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
         <div class="card-footer">
             <a href="/" class="btn btn-light btn-outline-success">Назад</a>
@@ -139,3 +215,58 @@
         crossorigin="anonymous"></script>
 </body>
 </html>
+<script type="text/javascript">
+	function addText(txt)
+	{
+	document.getElementById("input_text").value+=txt;
+	}
+	function clearText(txt)
+	{
+	document.getElementById("input_text").value="";
+	}
+    function removelastText()
+	{
+	var strng=document.getElementById("input_text").value;
+	document.getElementById("input_text").value=strng.substring(0,strng.length-1);
+	}
+	function answerText()
+	{
+	//easiest code "eval()"
+
+	try {
+	    document.calc.input_text.value = eval(document.calc.input_text.value);;
+	} catch (e) {
+	    if (e instanceof SyntaxError) {
+	        alert(e.message);
+	    }
+	}
+	 	// var a = parseInt("10");
+	 	// var b = parseInt("10");
+	 	// var c = a+b;
+	  //   var str = document.getElementById("input_text").value;
+	  //   var res = str.split("");
+	  //   document.getElementById("input_text").value = res;//display the splited value
+	  //   var temp = new Array();
+	  //   var temp = str.split("");
+	  //   for (a in temp ) {
+	  //  	 if (isNaN(temp[a]))
+	  //  	 {
+	  //  	 console.log (temp[a] = temp[a]);
+	  // 	}
+	 	//  else
+	  // 	{
+	  // 		console.log (temp[a] = parseInt(temp[a], 10));
+	  // 	}
+	 	// }
+	}
+	//NUMBER ONLY
+  function allowedChar(elem) {
+                var validChars = /[0-9(). ]/;
+                var strIn = elem.value;
+                var strOut = '';
+                for(var i=0; i < strIn.length; i++) {
+                  strOut += (validChars.test(strIn.charAt(i)))? strIn.charAt(i) : '';
+                }
+                elem.value = strOut;
+            }
+</script>

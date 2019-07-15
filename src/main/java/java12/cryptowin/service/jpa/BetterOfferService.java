@@ -33,7 +33,7 @@ public class BetterOfferService {
             for (CryptoMonitorResult monitor : forResult) {
                 if ((cryptoMonitor.getBuyingRate() - monitor.getSellingRate()) > 1) {
 
-                    double coinsQuantity = buy / cryptoMonitor.getBuyingRate();
+                    double coinsQuantity = buy / monitor.getSellingRate();
 
                     last.put(Arrays.asList(
                             new CryptoMonitorResult(
