@@ -11,11 +11,12 @@
     <script src="http://bootstraptema.ru/plugins/jquery/jquery-1.11.3.min.js"></script>
     <script src="http://bootstraptema.ru/plugins/2016/shieldui/script.js"></script>
 
+
 </head>
 
 
-<body>
-<body style="color:Black; background-color: #ccccb3;"></body>
+<body style="color:Black; background-color: #ccccb3" background=".../foneGreenClever.jpg">
+<body ></body>
 
 <div th:replace="fragments/header :: top-navbar"></div>
 
@@ -64,8 +65,8 @@
 
                             <a value="" th:unless="${state}">Покупка/продажа</a>
                         </option>
-                        <option th:unless="${state=='buy'}" th:value="buy">Курс покупки</option>
-                        <option th:unless="${state=='sell'}" th:value="sell">Курс продажи</option>
+                        <option th:unless="${state.equals('buy')}" th:value="buy">Курс покупки</option>
+                        <option th:unless="${state.equals('sell')}" th:value="sell">Курс продажи</option>
                     </select>
                 </div>
 
@@ -166,7 +167,7 @@ var time = arr.join(" ");
 
 
 
-$.getJSON('http://localhost:8080/data?coinType=' + coin + '&exchangeType=' + exchange +
+$.getJSON('http://crypto-benefit.com/data?coinType=' + coin + '&exchangeType=' + exchange +
 '&timeType=' + time + '&state=' + state , function (main) {
 
 var data = new Array();
