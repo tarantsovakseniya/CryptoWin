@@ -15,7 +15,7 @@
 </head>
 
 
-<body style="color:Black; background-color: #ccccb3" background=".../foneGreenClever.jpg">
+<body style="color:Black; background-color: #ccccb3" background=".../foneGreenClever.jpg/">
 <body ></body>
 
 <div th:replace="fragments/header :: top-navbar"></div>
@@ -150,24 +150,24 @@
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
             <script>
 
-
-
 console.log($(document.getElementById("state")));
 
-var arr = document.querySelectorAll('h1')[0].innerHTML.split(" ");
-console.log(arr[arr.length - 1]);
-var coin = arr[arr.length - 1];
-var state = arr[arr.length - 2];
-arr = document.querySelectorAll('h3')[0].innerHTML.split(" ");
+var arr = document.querySelectorAll('h1')[0].innerText.split(" ");
+console.log(arr);
+var coin = arr[2];
+console.log(coin);
+var state = arr[1];
+console.log(state)
+arr = document.querySelectorAll('h3')[0].innerText.split(" ");
+var exchange = arr[3];
+console.log(arr[3])
 arr = arr.slice(4,7);
 console.log(arr);
-
-var exchange = arr[3];
 var time = arr.join(" ");
 
 
 
-$.getJSON('http://crypto-benefit.com/data?coinType=' + coin + '&exchangeType=' + exchange +
+$.getJSON('http://localhost:8080/data?coinType=' + coin + '&exchangeType=' + exchange +
 '&timeType=' + time + '&state=' + state , function (main) {
 
 var data = new Array();
@@ -215,25 +215,6 @@ data.sort();
         }]
     });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </script>
 
         </div>
