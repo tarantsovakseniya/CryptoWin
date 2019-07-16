@@ -60,7 +60,7 @@ public class ChartsController {
                                   @RequestParam(name = "state", required = false) String state,
                                   @RequestParam(name = "error", required = false) String error) {
         ModelAndView result = new ModelAndView("chart");
-        if (coinType == null ) {
+        if (coinType == null) {
             coinType = CryptCoinType.BITCOIN.getNameOfCoin();
         }
         if (exchangeType == null) {
@@ -69,7 +69,7 @@ public class ChartsController {
         if (timeType == null) {
             timeType = TimeType.WEEK.getName();
         }
-        if (state == null || state.equals("")) {
+        if (state == null) {
             state = "sell";
         }
 
