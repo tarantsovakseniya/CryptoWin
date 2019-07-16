@@ -27,16 +27,25 @@ public class GraviexParser {
 
         return result;
     }
-    private CryptoMonitor addCurrency(String kye, CryptCoinType cryptCoinType) throws IOException {
+
+    private CryptoMonitor addCurrency(String key, CryptCoinType cryptCoinType) throws IOException {
         Gson gson = new Gson();
-        String apiUrl = "https://graviex.net:443//api/v3/tickers.json";
+        String apiUrl = "https://graviex.net:443//api/v2/tickers.json";
         String gsonString = Jsoup.connect(apiUrl).ignoreContentType(true).get().text();
         LinkedTreeMap objects = gson.fromJson(gsonString, LinkedTreeMap.class);
-        LinkedTreeMap values = (LinkedTreeMap) objects.get(kye);
-        double buyPrice = Double.parseDouble((String) values.get("buy"));
-        double sellPrice = Double.parseDouble((String) values.get("sell"));
+        LinkedTreeMap tickers = (LinkedTreeMap) objects.get(key);
 
-        return new CryptoMonitor(cryptCoinType, CryptoExchange.GRAVIEX, buyPrice, LocalDateTime.now(), sellPrice);
+        final double[] buyPrice = new double[1];
+        final double[] sellPrice = new double[1];
 
+        tickers.forEach((k, v) -> {
+            if (k.equals("ticker")) {
+                LinkedTreeMap values = (LinkedTreeMap) v;
+
+                buyPrice[0] = Double.parseDouble((String) values.get("buy"));
+                sellPrice[0] = Double.parseDouble((String) values.get("sell"));
+            }
+        });
+        return new CryptoMonitor(cryptCoinType, CryptoExchange.GRAVIEX, buyPrice[0], LocalDateTime.now(), sellPrice[0]);
     }
 }
