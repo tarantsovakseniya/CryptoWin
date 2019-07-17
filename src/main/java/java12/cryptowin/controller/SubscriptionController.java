@@ -37,7 +37,7 @@ public class SubscriptionController {
     public ModelAndView getAdd(@RequestParam("minResult") Double minResult,
                                @RequestParam("maxResult") Double maxResult,
                                @RequestParam("coinType") CryptCoinType coinType,
-                               @RequestParam("maxResult") Double profit) {
+                               @RequestParam("profit") Double profit) {
 
         ModelAndView result = new ModelAndView("subscription/subscription");
         result.addObject("user", userService.getCurrentUser());
