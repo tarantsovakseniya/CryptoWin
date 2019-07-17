@@ -25,7 +25,7 @@ public class DataController {
                         @RequestParam(name = "exchangeType") String exchangeType,
                         @RequestParam(name = "timeType") String timeType,
                         @RequestParam(name = "state") String state) {
-        List<CryptoMonitor> result = cryptoMonitorService.fillListToUserRequest(coinType, exchangeType, timeType);
+        List<CryptoMonitor> result = cryptoMonitorService.fillListToUserRequest(coinType, timeType,  exchangeType);
         Object[][] main = new Object[result.size()][2];
         for (int i = 0; i < result.size(); i++) {
             main[i][0] = result.get(i).getDate().toString();
