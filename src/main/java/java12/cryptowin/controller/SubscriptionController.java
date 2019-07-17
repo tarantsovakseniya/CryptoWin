@@ -34,9 +34,11 @@ public class SubscriptionController {
     }
 
     @PostMapping()
-    public ModelAndView getAdd(@RequestParam("minResult") Long minResult,
-                               @RequestParam("maxResult") Long maxResult,
-                               @RequestParam(value = "coinType") CryptCoinType coinType) {
+    public ModelAndView getAdd(@RequestParam("minResult") Double minResult,
+                               @RequestParam("maxResult") Double maxResult,
+                               @RequestParam("coinType") CryptCoinType coinType,
+                               @RequestParam("profit") Double profit) {
+
         ModelAndView result = new ModelAndView("subscription/subscription");
         result.addObject("user", userService.getCurrentUser());
         result.addObject("coin", coinType);
@@ -47,8 +49,9 @@ public class SubscriptionController {
         if (minResult == null || maxResult == null || coinType == null) {
             error = "incorrect";
         } else {
-                subscriptionService.save(new Subscription(user, coinType, minResult, maxResult));
-                error = "success";
+            Subscription subscription = new Subscription(user, coinType, minResult, maxResult, profit);
+            subscriptionService.save(subscription);
+            error = "success";
         }
         result.addObject("error", error);
         return result;
