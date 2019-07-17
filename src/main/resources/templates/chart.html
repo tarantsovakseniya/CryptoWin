@@ -16,7 +16,8 @@
 
 
 <body style="color:Black; background-color: #ccccb3" background=".../foneGreenClever.jpg/">
-<body ></body>
+<body></body>
+<body></body>
 
 <div th:replace="fragments/header :: top-navbar"></div>
 
@@ -34,6 +35,7 @@
             <p class="lead">Неверно введены ключевые данные!</p>
             <hr class="my-4">
             <p class="mb-0">Попробуйте еще раз.</p>
+            <p class="mb-0">Попробуйте еще раз. Пример правильного заполнения приведен ниже.</p>
         </div>
     </th:block>
 
@@ -43,7 +45,7 @@
 
             <div class="card-header text-center">
                 <th:block th:switch="${state}">
-                    <h1>
+                    <h1 th:unless="${error}">
                         <a>График</a>
                         <a th:case="sell"> продажи </a>
                         <a th:case="buy"> покупки </a>
@@ -57,30 +59,42 @@
 
                 <div class="btn-group">
                     <select name="state" id="state" class="form-control form-control-lg">
-                        <option>
-                            <th:block th:if="${state}" th:switch="${state}">
-                                <a value="buy" th:case="buy">Курс покупки</a>
-                                <a value="sell" th:case="sell">Курс продажи</a>
-                            </th:block>
+                        <th:block th:if="${error}" th:switch="${state}">
+                            <option th:case="buy" th:value="buy">Курс покупки</option>
+                            <option th:case="sell" th:value="sell">Курс продажи</option>
+                            <option th:case="null" th:value="">Покупка или продажа</option>
+                            <option th:if="${!state.equals('buy')}" th:value="buy">Курс покупки</option>
+                            <option th:if="${!state.equals('sell')}" th:value="sell">Курс продажи</option>
+                        </th:block>
+                        <th:block th:unless="${error}">
+                            <option th:value="''">Покупка или продажа</option>
+                            <option th:value="buy">Курс покупки</option>
+                            <option th:value="sell">Курс продажи</option>
+                        </th:block>
 
-                            <a value="" th:unless="${state}">Покупка/продажа</a>
-                        </option>
-                        <option th:unless="${state.equals('buy')}" th:value="buy">Курс покупки</option>
-                        <option th:unless="${state.equals('sell')}" th:value="sell">Курс продажи</option>
                     </select>
                 </div>
 
 
                 <div class="btn-group">
                     <select name="coinType" id="coinType" class="form-control form-control-lg">
-                        <option>
-                            <a value="${coin}" th:if="${coin}" th:text="${coin}"></a>
-                            <a value="" th:if="${coin == null}">Выбрать валюту</a>
-                        </option>
-                        <option th:each="coinType : ${coins}" th:unless="${coin==coinType.getNameOfCoin()}"
-                                th:value="${coinType.getNameOfCoin()}"
-                                th:text="${coinType.getNameOfCoin()}"
-                        ></option>
+                        <th:block th:if="${error}">
+                            <option th:unless="${coin}" th:value="''">Выбрать валюту</option>
+                            <option th:if="${coin!=''}" th:value="${coin}" th:text="${coin}"></option>
+                            <option th:each="coinType : ${coins}" th:unless="${coinType.getNameOfCoin()} == ${coin}"
+                                    th:value="${coinType.getNameOfCoin()}"
+                                    th:text="${coinType.getNameOfCoin()}"
+                            ></option>
+
+                        </th:block>
+
+                        <th:block th:unless="${error}">
+                            <option th:value="''">Выбрать валюту</option>
+                            <option th:each="coinType : ${coins}"
+                                    th:value="${coinType.getNameOfCoin()}"
+                                    th:text="${coinType.getNameOfCoin()}"
+                            ></option>
+                        </th:block>
                     </select>
                 </div>
 
@@ -88,26 +102,44 @@
                 <div class="btn-group">
                     <select name="exchangeType" id="exchangeType"
                             class="form-control form-control-lg">
-                        <option>
-                            <a value="${exchange}" th:if="${exchange}" th:text="${exchange}"> </a>
-                            <a value="" th:if="${exchange == null}">Выбрать биржу</a>
-                        </option>
-                        <option th:each="exchangeType : ${exchanges}" th:unless="${exchange==exchangeType.getName()}"
-                                th:value="${exchangeType.getName()}"
-                                th:text="${exchangeType.getName()}"></option>
+                        <th:block th:if="${error}">
+                            <option th:unless="${exchange}" th:value="''">Выбрать биржу</option>
+                            <option th:if="${exchange!=''}" th:value="${exchange}" th:text="${exchange}"></option>
+                            <option th:each="exchangeType : ${exchanges}"
+                                    th:unless="${exchangeType.getName()} == ${exchange}"
+                                    th:value="${exchangeType.getName()}"
+                                    th:text="${exchangeType.getName()}"></option>
+
+                        </th:block>
+
+                        <th:block th:unless="${error}">
+                            <option th:value="''">Выбрать биржу</option>
+                            <option th:each="exchangeType : ${exchanges}"
+                                    th:value="${exchangeType.getName()}"
+                                    th:text="${exchangeType.getName()}"></option>
+                        </th:block>
                     </select>
                 </div>
 
 
                 <div class="btn-group">
                     <select name="timeType" id="timeType" class="form-control form-control-lg">
-                        <option>
-                            <a value="${time}" th:if="${time}" th:text="${time}"></a>
-                            <a value="" th:unless="${time}">Выбрать временной промежуток</a>
-                        </option>
-                        <option th:each="timeType : ${times}" th:unless="${time==timeType.getName()}"
-                                th:value="${timeType.getName()}"
-                                th:text="${timeType.getName()}"></option>
+                        <th:block th:if="${error}">
+                            <option th:unless="${time}" th:value="''">Выбрать временной промежуток<</option>
+                            <option th:if="${time!=''}" th:value="${time}" th:text="${time}"></option>
+                            <option th:each="timeType : ${times}"
+                                    th:unless="${timeType.getName()} == ${time}"
+                                    th:value="${timeType.getName()}"
+                                    th:text="${timeType.getName()}"></option>
+
+                        </th:block>
+
+                        <th:block th:unless="${error}">
+                            <option th:value="''">Выбрать временной промежуток</option>
+                            <option th:each="timeType : ${times}"
+                                    th:value="${timeType.getName()}"
+                                    th:text="${timeType.getName()}"></option>
+                        </th:block>
                     </select>
                 </div>
 
@@ -127,17 +159,20 @@
     <card class="card" style="width: 1100px">
 
         <div class="card-header text-center">
-            <h3 th:text=" 'Данные на бирже ' + ${exchange} + ' ' + ${time}"></h3>
+            <h3 th:unless="${error}" th:text=" 'Данные на бирже ' + ${exchange} + ' ' + ${time}"></h3>
+            <h3 th:if="${error}">Ошибка ввода</h3>
         </div>
 
         <div class="card-body">
 
             <div class="card border-info text-center">
                 <div class="card-body">
-                    <div th:unless="${error}" id="container" style="height: 400px; min-width: 1000px"></div>
+                    <div th:if="${error==null AND crypto != null}" id="container"
+                         style="height: 400px; min-width: 1000px"></div>
                     <div th:if="${error}">
                         <h2 class="text">Извините, но недостаточно данных для отображения графика и таблицы</h2>
                     </div>
+
                 </div>
             </div>
 
@@ -215,6 +250,9 @@ data.sort();
         }]
     });
 });
+
+
+
             </script>
 
         </div>
