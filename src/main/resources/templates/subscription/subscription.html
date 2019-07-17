@@ -13,7 +13,7 @@
 <div th:replace="fragments/header :: top-navbar"></div>
 
 
-<div class="container mt-3" >
+<div class="container mt-3">
 
     <th:block th:if="${error}">
         <th:block th:switch="${error}">
@@ -49,7 +49,7 @@
                 </button>
                 <p class="lead" th:text="'Вы уже подписаны на ' + ${coin.getNameOfCoin()}"></p>
                 <hr class="my-4">
-                <p class="mb-0">Чтобы перейти к списку своих подписок перейдите в вкладку мои подписки.</p>
+                <p class="mb-0">Чтобы перейти к списку своих подписок перейдите на вкладку мои подписки.</p>
             </div>
 
             <div th:case="success" class="alert  alert-dismissible fade show" style="background-color: #98FB98"
@@ -60,68 +60,70 @@
                 </button>
                 <p class="lead" th:text="'Теперь вы подписанны на валюту ' + ${coin.getNameOfCoin()}"></p>
                 <hr class="my-4">
-                <p class="mb-0">Чтобы перейти к списку своих подписок перейдите в вкладку мои подписки.</p>
+                <p class="mb-0">Чтобы перейти к списку своих подписок перейдите на вкладку
+                    <a href="#" class="alert-link">мои подписки</a>.</p>
             </div>
         </th:block>
     </th:block>
 
     <div class="jumbotron" style="background-color: #E0FFFF">
         <h1 class="display-4">Раздел подписок</h1>
-        <p class="lead">Узнавайте первыми о изменении курса выбраной криптвалюты. Совершайте выгодные покупки и
-            получайте прибыль)</p>
+        <p class="lead">Узнавайте первыми об изменении курса выбранной криптовалюты. Совершайте выгодные покупки и
+            получайте прибыль!</p>
         <hr class="my-4">
-        <p>В этом разделе вы можете оформить подписку криптвалюту. При выборе криптвалюты вы даете согласие на
-            получение уведомлений о достижении ее курса максимальной и минимальной стоимости.</p>
+        <p>В этом разделе вы можете оформить подписку. При выборе криптовалюты вы даете согласие на
+            получение уведомлений о достижении ее курса максимальной, минимальной стоимости, а также желаемой разницы
+            между покупкой и продажей.</p>
     </div>
-
 
     <form method="post" action="/subscription">
 
-        <div class="card mt-3" >
+        <div class="card mt-1 mb-3">
             <div class="card-header">
                 <h5 class="mr-auto p-3">Подписка на изменение курса</h5>
-
             </div>
-        </div>
 
-        <div class="card-body" style="background-color: #FFFFFF">
-            <div class="container">
-                <div class="row mt-5">
-                    <div class="btn-group btn-lg btn-block">
-                        <select name="coinType" id="coinType" class="form-control form-control-sm">
-                            <option value="">Выбрать валюту</option>
-                            <option th:each="coinType : ${coins}"
-                                    th:value="${coinType}"
-                                    th:text="${coinType.getNameOfCoin()}"
-                            ></option>
-                        </select>
-                    </div>
+            <div class="card-body" style="background-color: #FFFFFF">
+                <div class="form-group">
+                    <label for="coinType">Выберите валюту</label>
+                    <select class="custom-select" required name="coinType" id="coinType">
+                        <option selected></option>
+                        <option th:each="coinType : ${coins}"
+                                th:value="${coinType}"
+                                th:text="${coinType.getNameOfCoin()}"
+                        ></option>
+                    </select>
+                    <div class="invalid-feedback">Выберите валюту из списка</div>
                 </div>
 
-
                 <div class="form-group">
-                    <label for="minResult">Введите минимальную цену: </label>
+                    <label for="minResult">Введите минимальную цену покупки в $ (сумма ввода): </label>
                     <input type="text" class="form-control from-control-sm" name="minResult" id="minResult">
                 </div>
+
                 <div class="form-group">
-                    <label for="maxResult">Введите максимальную цену: </label>
+                    <label for="maxResult">Введите максимальную цену продажи в $ (сумма вывода): </label>
                     <input type="text" class="form-control from-control-sm" name="maxResult" id="maxResult">
+                </div>
+
+                <div class="form-group">
+                    <label for="profit">Введите разницу между ценой покупки и продажи в $, которую готовы рассматривать для совершения торгов: </label>
+                    <input type="text" class="form-control from-control-sm" name="profit" id="profit">
+                </div>
+            </div>
+
+            <div class="card-footer" style="background-color: #FFFFFF">
+                <div class="d-flex align-items-center">
+
+                    <button th:if="${user}" type="submit"
+                            class="btn btn-success float-right">Оформить подписку
+                    </button>
+                    <a th:unless="${user}" href="/subscription?error=error"
+                       class="btn btn-success float-right"> Оформить подписку</a>
+
                 </div>
             </div>
         </div>
-
-        <div class="card-footer" style="background-color: #FFFFFF">
-            <div class="d-flex align-items-center">
-
-                <button th:if="${user}" type="submit"
-                        class="btn btn-info float-right">Оформить подписку
-                </button>
-                <a th:unless="${user}" href="/subscription?error=error"
-                   class="btn btn-info float-right"> Оформить подписку</a>
-
-            </div>
-        </div>
-
     </form>
 </div>
 
