@@ -17,6 +17,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
+                <li th:if="${user}" class="nav-item active">
+                    <a class="nav-link" href="/userProfile">Моя страница</a>
+                </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/charts">Архив</a>
                 </li>
