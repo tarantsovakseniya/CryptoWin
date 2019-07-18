@@ -31,7 +31,7 @@ public class SubscriberMailSender {
 
     @Scheduled(cron = "0 0 9 * * ?")
     public void sendEmail() {
-        Map<User, StringBuilder> result = mailing();
+        Map<User, StringBuilder> result = getNeedEmailUsers();
 
         result.keySet().forEach((user -> {
             try {
@@ -54,7 +54,7 @@ public class SubscriberMailSender {
         }));
     }
 
-    private Map<User, StringBuilder> mailing() {
+    private Map<User, StringBuilder> getNeedEmailUsers() {
         Map<User, StringBuilder> result = new HashMap<>();
 
         List<CryptoMonitor> cryptoMonitorList = withCheckDateList();

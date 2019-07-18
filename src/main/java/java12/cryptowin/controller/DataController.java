@@ -20,8 +20,8 @@ public class DataController {
     private CryptoMonitorService cryptoMonitorService;
 
     @GetMapping
-    public @ResponseBody
-    String getAnswer(@RequestParam(name = "coinType") String coinType,
+    @ResponseBody
+    public String getAnswer(@RequestParam(name = "coinType") String coinType,
                         @RequestParam(name = "exchangeType") String exchangeType,
                         @RequestParam(name = "timeType") String timeType,
                         @RequestParam(name = "state") String state) {

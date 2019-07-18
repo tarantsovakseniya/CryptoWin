@@ -19,7 +19,7 @@ public class GraviexParser {
     public List<CryptoMonitor> parse() throws IOException {
         // XRP, Stellar, TRON, EOS, IOTA are absent
 
-        List<CryptoMonitor> result = new ArrayList();
+        List<CryptoMonitor> result = new ArrayList<>();
 
         result.add(addCurrency("btcusd", CryptCoinType.BITCOIN));
         result.add(addCurrency("ethusd", CryptCoinType.ETHEREUM));
