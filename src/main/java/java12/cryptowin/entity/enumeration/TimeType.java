@@ -1,9 +1,8 @@
 package java12.cryptowin.entity.enumeration;
 
 public enum TimeType {
-    MONTH("за последнй месяц"),
-    YEAR("за последний год"),
     WEEK("за последнюю неделю"),
+    TWO_WEEK("за две недели"),
     TODAY("за сегодняшний день");
 
     private String name;
