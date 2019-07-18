@@ -20,6 +20,7 @@ public class Subscription {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Enumerated (value = EnumType.STRING)
     @Column(name = "cryptCoin")
     private CryptCoinType cryptCoinType;
 
@@ -29,10 +30,14 @@ public class Subscription {
     @Column (name = "maxResult")
     private double maxResult;
 
-    public Subscription(User user, CryptCoinType cryptCoinType, double minResult, double maxResult) {
+    @Column (name = "profit")
+    private double profit;
+
+    public Subscription(User user, CryptCoinType cryptCoinType, double minResult, double maxResult, double profit) {
         this.user = user;
         this.cryptCoinType = cryptCoinType;
         this.minResult = minResult;
         this.maxResult = maxResult;
+        this.profit = profit;
     }
 }

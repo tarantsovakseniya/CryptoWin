@@ -31,13 +31,14 @@
             <ul class="navbar-nav">
                 <th:block th:if="${user!=null}">
                     <div>
-                        <button type="button" class="btn btn-sm btn-primary mr-2" disabled th:text="'Вошли как ' + ${user.name}+ ' ' + ${user.lastName}"></button>
+                        <button type="button" class="btn btn-sm btn-outline-light mr-2" disabled
+                                th:text="'Вошли как ' + ${user.name}+ ' ' + ${user.lastName}"><i>Mishel</i></button>
                     </div>
-                    <a class="btn btn-sm btn-danger" href="/logout">Выйти</a>
+                    <a class="btn btn-sm btn-dark" href="/logout">Выйти</a>
                 </th:block>
                 <th:block th:if="${user==null}">
-                    <a class="btn btn-sm btn-light btn-outline-success mr-2" href ="/register">Зарегистрироваться</a>
-                    <a class="btn btn-sm btn-success" href ="/login">Войти</a>
+                    <a class="btn btn-sm btn-light btn-outline-success mr-2" href="/register">Зарегистрироваться</a>
+                    <a class="btn btn-sm btn-success" href="/login">Войти</a>
                 </th:block>
             </ul>
         </div>
