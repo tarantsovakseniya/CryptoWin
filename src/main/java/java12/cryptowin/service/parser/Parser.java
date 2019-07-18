@@ -16,19 +16,19 @@ import java.util.Set;
 @EnableScheduling
 public class Parser {
     @Autowired
-    ExmoParser exmoParser;
+    private ExmoParser exmoParser;
     @Autowired
-    BinanceParser binanceParser;
+    private BinanceParser binanceParser;
     @Autowired
-    CryptoBridgeParser cryptoBridgeParser;
+    private CryptoBridgeParser cryptoBridgeParser;
     @Autowired
-    PoloniexParser poloniexParser;
+    private PoloniexParser poloniexParser;
     @Autowired
-    GraviexParser graviexParser;
+    private GraviexParser graviexParser;
     @Autowired
-    BitfinexParser bitfinexParser;
+    private BitfinexParser bitfinexParser;
     @Autowired
-    CryptoMonitorService cryptoMonitorService;
+    private CryptoMonitorService cryptoMonitorService;
 
     @Scheduled(fixedDelay=1000*5*60)
     public void update()  {

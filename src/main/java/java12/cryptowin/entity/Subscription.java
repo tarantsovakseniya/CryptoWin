@@ -24,10 +24,10 @@ public class Subscription {
     @Column(name = "cryptCoin")
     private CryptCoinType cryptCoinType;
 
-    @Column (name = "minResult")
+    @Column (name = "min_result")
     private double minResult;
 
-    @Column (name = "maxResult")
+    @Column (name = "max_result")
     private double maxResult;
 
     @Column (name = "profit")
