@@ -1,4 +1,4 @@
-package java12.cryptowin.entity;
+package java12.cryptowin.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
