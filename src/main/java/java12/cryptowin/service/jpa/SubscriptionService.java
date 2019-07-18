@@ -21,4 +21,6 @@ public class SubscriptionService {
 
     public void deleteById(long id){subscriptionRepository.deleteById(id);}
 
+    public List<Subscription> getByUserId(long id){ return subscriptionRepository.getByUserId(id);}
+
 }
