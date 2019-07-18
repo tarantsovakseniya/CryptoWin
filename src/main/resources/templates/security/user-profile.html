@@ -47,155 +47,204 @@
     </th:block>
     </th:block>
 
-    <th:block th:if="${ref}">
-        <form method="post" th:action="'/userProfile/change?id=' + ${s.getId()}">
+    <th:block th:switch="${ref}">
 
-            <div class="card mt-1 mb-3">
-                <div class="card-header">
-                    <h5 class="mr-auto p-3">Изменение условий подписки</h5>
-                </div>
+        <th:block th:case="sub">
+            <form method="post" th:action="'/userProfile/change?id=' + ${s.getId()}">
 
-                <div class="card-body" style="background-color: #FFFFFF">
-                    <div class="form-group">
-                        <label for="coinType">Выберите валюту</label>
-                        <select class="custom-select" required name="coinType" id="coinType">
-                            <option selected></option>
-                            <option th:each="coinType : ${coins}"
-                                    th:value="${coinType}"
-                                    th:text="${coinType.getNameOfCoin()}"
-                            ></option>
-                        </select>
+                <div class="card mt-1 mb-3">
+                    <div class="card-header">
+                        <h5 class="mr-auto p-3">Изменение условий подписки</h5>
                     </div>
 
-                    <div class="form-group">
-                        <label for="minResult">Введите минимальную цену покупки в $ (сумма ввода): </label>
-                        <input type="text" class="form-control from-control-sm"
-                               name="minResult" id="minResult" th:placeholder="'Пример: ' + ${s.getMinResult()}">
+                    <div class="card-body" style="background-color: #FFFFFF">
+                        <div class="form-group">
+                            <label for="coinType">Выберите валюту</label>
+                            <select class="custom-select" required name="coinType" id="coinType">
+                                <option selected></option>
+                                <option th:each="coinType : ${coins}"
+                                        th:value="${coinType}"
+                                        th:text="${coinType.getNameOfCoin()}"
+                                ></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="minResult">Введите минимальную цену покупки в $ (сумма ввода): </label>
+                            <input type="text" class="form-control from-control-sm"
+                                   name="minResult" id="minResult" th:value="${s.getMinResult()}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="maxResult">Введите максимальную цену продажи в $ (сумма вывода): </label>
+                            <input type="text" class="form-control from-control-sm"
+                                   name="maxResult" id="maxResult" th:value="${s.getMaxResult()}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profit">Введите разницу между ценой покупки и продажи в $, которую готовы
+                                рассматривать для совершения торгов: </label>
+                            <input type="text" class="form-control from-control-sm" name="profit" id="profit"
+                                   th:value="${s.getProfit()}">
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="maxResult">Введите максимальную цену продажи в $ (сумма вывода): </label>
-                        <input type="text" class="form-control from-control-sm"
-                               name="maxResult" id="maxResult" th:placeholder="'Пример: ' + ${s.getMaxResult()}">
-                    </div>
+                    <div class="card-footer" style="background-color: #FFFFFF">
+                        <div class="d-flex align-items-center">
 
-                    <div class="form-group">
-                        <label for="profit">Введите разницу между ценой покупки и продажи в $, которую готовы
-                            рассматривать для совершения торгов: </label>
-                        <input type="text" class="form-control from-control-sm" name="profit" id="profit"
-                               th:placeholder="'Пример: ' + ${s.getProfit()}">
-                    </div>
-                </div>
+                            <button type="submit"
+                                    class="btn btn-success float-right">Подтвердить
+                            </button>
 
-                <div class="card-footer" style="background-color: #FFFFFF">
-                    <div class="d-flex align-items-center">
-
-                        <button type="submit"
-                                class="btn btn-success float-right">Подтвердить
-                        </button>
-
-                    </div>
-                </div>
-            </div>
-        </form>
-    </th:block>
-
-    <th:block th:unless="${ref}">
-        <div class="card  border-success" style="background-color: #FFFFFF">
-            <div class="card-header text-center">
-                <h3 class="card-text" th:text="'Пользователь: ' + ${user.getName()} + ' ' + ${user.getLastName()}"></h3>
-            </div>
-            <div class="card-body">
-                <div class="row">
-
-                    <div class="col-3">
-                        <th:block>
-                            <img th:if="${user.getIconType()==null}" class="card-img mr-auto"
-                                 src="http://bootstraptema.ru/snippets/icons/2017/smtb/elliot.jpg" alt="Card image cap"
-                                 style="width: 200px; height: 200px border-radius:50%;">
-                            <img th:if="${user.getIconType()!=null}" class="card-img mr-auto"
-                                 th:src="${user.getIconType().getUrl()}" alt="Card image cap"
-                                 style="width: 200px; height: 200px border-radius:50%;">
-                        </th:block>
-
-                    </div>
-                    <div class="col-9">
-                        <div class="card">
-                            <div class="card-header text-center">
-                                <h6 class="cart-text">Персональные данные</h6>
-                            </div>
-                            <div class="card-body">
-                                <p><strong>Email: </strong> <a th:text="${user.getEmail()}"></a></p>
-                                <hr class="my-4">
-                                <p class="h5 text-center"> Редактирование профиля</p>
-                                <hr class="my-4">
-                                <a class="btn btn-light btn-outline-success"
-                                   href="#">Изменить фото профиля</a>
-                                <a class="btn btn-light btn-outline-success"
-                                   href="/userProfile/changeData">Изменить персональные данные</a>
-                            </div>
                         </div>
                     </div>
                 </div>
+            </form>
+        </th:block>
+
+        <th:block th:case="null">
+            <div class="card  border-success" style="background-color: #FFFFFF">
+                <div class="card-header text-center">
+                    <h3 class="card-text" th:text="'Пользователь: ' + ${user.getName()} + ' ' + ${user.getLastName()}"></h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-3">
+                            <th:block>
+                                <img th:if="${user.getIconType()==null}" class="card-img mr-auto"
+                                     src="http://bootstraptema.ru/snippets/icons/2017/smtb/elliot.jpg" alt="Card image cap"
+                                     style="width: 200px; height: 200px border-radius:50%;">
+                                <img th:if="${user.getIconType()!=null}" class="card-img mr-auto"
+                                     th:src="${user.getIconType().getUrl()}" alt="Card image cap"
+                                     style="width: 200px; height: 200px border-radius:50%;">
+                            </th:block>
+
+                        </div>
+                        <div class="col-9">
+                            <div class="card">
+                                <div class="card-header text-center">
+                                    <h6 class="cart-text">Персональные данные</h6>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Email: </strong> <a th:text="${user.getEmail()}"></a></p>
+                                    <hr class="my-4">
+                                    <p class="h5 text-center"> Редактирование профиля</p>
+                                    <hr class="my-4">
+                                    <a class="btn btn-light btn-outline-success"
+                                       href="#">Изменить фото профиля</a>
+                                    <a class="btn btn-light btn-outline-success"
+                                       href="/userProfile/changeData">Изменить персональные данные</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
-            </div>
-
-
-        </div>
-
-        <div class="card my-4">
-            <div class="card-header">
-                <div th:unless="${subscription}" class=" card border-success mb-3">
-                    <h2>Нет оформленных подписок</h2>
                 </div>
 
-                <h3 th:if="${subscription}">Ваши подписки</h3>
+
             </div>
-            <div th:if="${subscription}" class="card-body">
 
-                <ul class="list-group">
-                    <th:block th:each="sub:${subscription}">
+            <div class="card my-4">
+                <div class="card-header">
+                    <div th:unless="${subscription}" class=" card border-success mb-3">
+                        <h2>Нет оформленных подписок</h2>
+                    </div>
 
-                        <li class="list-group-item">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h6 th:text="'Условия подписки на валюту ' +
+                    <h3 th:if="${subscription}">Ваши подписки</h3>
+                </div>
+                <div th:if="${subscription}" class="card-body">
+
+                    <ul class="list-group">
+                        <th:block th:each="sub:${subscription}">
+
+                            <li class="list-group-item">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h6 th:text="'Условия подписки на валюту ' +
                                         ${sub.getCryptCoinType().getNameOfCoin()}"></h6>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <ul class="list-group">
+                                            <li class="list-group-item"
+                                                th:text="'Минимальная сумма покупки: ' + ${sub.getMinResult()} + ' $'"></li>
+                                            <li class="list-group-item"
+                                                th:text="'Максимальная сумма продажи: ' + ${sub.getMaxResult()} + ' $'"></li>
+                                            <li class="list-group-item"
+                                                th:text="'Разность между покупкой и продажей: ' + ${sub.getProfit()} + ' $'"></li>
+                                        </ul>
+                                    </div>
                                 </div>
 
-                                <div class="card-body">
-                                    <ul class="list-group">
-                                        <li class="list-group-item"
-                                            th:text="'Минимальная сумма покупки: ' + ${sub.getMinResult()} + ' $'"></li>
-                                        <li class="list-group-item"
-                                            th:text="'Максимальная сумма продажи: ' + ${sub.getMaxResult()} + ' $'"></li>
-                                        <li class="list-group-item"
-                                            th:text="'Разность между покупкой и продажей: ' + ${sub.getProfit()} + ' $'"></li>
-                                    </ul>
+                                <div class="card-footer">
+                                    <a class="btn btn-light btn-outline-success"
+                                       th:href="'/userProfile/delete?id=' + ${sub.getId()}">
+                                        Отменить подписку
+                                    </a>
+                                    <a class="btn btn-light btn-outline-success"
+                                       th:href="'/userProfile/change?id=' + ${sub.getId()}">
+                                        Изменить условия подписки</a>
                                 </div>
-                            </div>
+                            </li>
 
-                            <div class="card-footer">
-                                <a class="btn btn-light btn-outline-success"
-                                   th:href="'/userProfile/delete?id=' + ${sub.getId()}">
-                                    Отменить подписку
-                                </a>
-                                <a class="btn btn-light btn-outline-success"
-                                   th:href="'/userProfile/change?id=' + ${sub.getId()}">
-                                    Изменить условия подписки</a>
-                            </div>
-                        </li>
-
-                    </th:block>
+                        </th:block>
 
 
-                </ul>
+                    </ul>
+                </div>
             </div>
-        </div>
 
 
+        </th:block>
+
+        <th:block th:case="info">
+            <form method="post" action="/userProfile/changeData">
+                <div class="card ml-auto mr-auto" style="max width: 600px;">
+                    <div class="card-header">
+                        Редактирование данных
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="form-group row">
+                            <label for="email" class="col-sm-2 col-form-label">Email</label>
+                            <div class="col-sm-10">
+                                <input type="email" readonly class="form-control-plaintext"  name="email" id="email"
+                                       th:value="${user.getEmail()}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control from-control-sm" name="password" id="password"
+                            th:value="${user.getPassword()}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">Имя</label>
+                            <input type="text" class="form-control from-control-sm" name="name" id="name" th:value="${user.getName()}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastname">Фамилия</label>
+                            <input type="text" class="form-control from-control-sm"
+                                   name="lastname" id="lastname" th:value="${user.getLastName()}">
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-success float-right">Подтвердить</button>
+                    </div>
+                </div>
+            </form>
+
+
+        </th:block>
     </th:block>
+
+
+
 
 </div>
 
