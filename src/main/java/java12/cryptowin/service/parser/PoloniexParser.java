@@ -15,10 +15,9 @@ import java.util.List;
 
 @Service
 public class PoloniexParser {
-
     public List<CryptoMonitor> parse() throws IOException {
         // IOTA and TRON are absent
-        List<CryptoMonitor> result = new ArrayList();
+        List<CryptoMonitor> result = new ArrayList<>();
 
         result.add(addCurrency("USDC_BTC", CryptCoinType.BITCOIN));
         result.add(addCurrency("USDC_LTC", CryptCoinType.LITECOIN));
@@ -30,12 +29,12 @@ public class PoloniexParser {
 
         return result;
     }
-    private CryptoMonitor addCurrency(String kye, CryptCoinType cryptCoinType) throws IOException {
+    private CryptoMonitor addCurrency(String key, CryptCoinType cryptCoinType) throws IOException {
         Gson gson = new Gson();
         String apiUrl = "https://poloniex.com/public?command=returnTicker";
         String gsonString = Jsoup.connect(apiUrl).ignoreContentType(true).get().text();
         LinkedTreeMap objects = gson.fromJson(gsonString, LinkedTreeMap.class);
-        LinkedTreeMap values = (LinkedTreeMap) objects.get(kye);
+        LinkedTreeMap values = (LinkedTreeMap) objects.get(key);
         double buyPrice = Double.parseDouble((String) values.get("lowestAsk"));
         double sellPrice = Double.parseDouble((String) values.get("highestBid"));
 

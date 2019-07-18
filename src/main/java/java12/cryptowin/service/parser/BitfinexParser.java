@@ -17,7 +17,7 @@ import java.util.List;
 public class BitfinexParser {
 
     public List<CryptoMonitor> parse() throws IOException {
-        List<CryptoMonitor> result = new ArrayList();
+        List<CryptoMonitor> result = new ArrayList<>();
         String apiUrl = "https://api.bitfinex.com/v1/pubticker/";
 
         result.add(addCurrency(apiUrl + "btcusd", CryptCoinType.BITCOIN));
