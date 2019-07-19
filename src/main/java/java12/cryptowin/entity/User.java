@@ -1,6 +1,5 @@
 package java12.cryptowin.entity;
 
-import java12.cryptowin.entity.enumeration.IconType;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -27,9 +26,6 @@ public class User {
 
     @Column(name = "last_name")
     private String lastName;
-
-    @Column(name = "photo_url")
-    private IconType iconType;
 
     @Column(name = "active")
     private int active = 1;

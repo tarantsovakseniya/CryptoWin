@@ -49,11 +49,8 @@ public class CryptoMonitorService {
         System.out.println(all.size());
         CryptoMonitor cryptoMonitor;
         LocalDateTime localDate = LocalDateTime.now();
-        if (timeType.equals(TimeType.YEAR.getName())) {
-            localDate = localDate.minusYears(1);
-        }
-        if (timeType.equals(TimeType.MONTH.getName())) {
-            localDate = localDate.minusMonths(1);
+        if (timeType.equals(TimeType.TWO_WEEK.getName())) {
+        localDate = localDate.minusWeeks(2);
         }
         if (timeType.equals(TimeType.WEEK.getName())) {
             localDate = localDate.minusWeeks(1);

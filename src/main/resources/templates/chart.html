@@ -58,18 +58,14 @@
 
                 <div class="btn-group">
                     <select name="state" id="state" class="form-control form-control-lg">
-                        <th:block th:if="${error}" th:switch="${state}">
+                        <th:block th:switch="${state}">
                             <option th:case="buy" th:value="buy">Курс покупки</option>
                             <option th:case="sell" th:value="sell">Курс продажи</option>
                             <option th:case="null" th:value="">Покупка или продажа</option>
                             <option th:if="${!state.equals('buy')}" th:value="buy">Курс покупки</option>
                             <option th:if="${!state.equals('sell')}" th:value="sell">Курс продажи</option>
                         </th:block>
-                        <th:block th:unless="${error}">
-                            <option th:value="''">Покупка или продажа</option>
-                            <option th:value="buy">Курс покупки</option>
-                            <option th:value="sell">Курс продажи</option>
-                        </th:block>
+
 
                     </select>
                 </div>
@@ -77,7 +73,7 @@
 
                 <div class="btn-group">
                     <select name="coinType" id="coinType" class="form-control form-control-lg">
-                        <th:block th:if="${error}">
+
                             <option th:unless="${coin}" th:value="''">Выбрать валюту</option>
                             <option th:if="${coin!=''}" th:value="${coin}" th:text="${coin}"></option>
                             <option th:each="coinType : ${coins}" th:unless="${coinType.getNameOfCoin()} == ${coin}"
@@ -85,15 +81,7 @@
                                     th:text="${coinType.getNameOfCoin()}"
                             ></option>
 
-                        </th:block>
 
-                        <th:block th:unless="${error}">
-                            <option th:value="''">Выбрать валюту</option>
-                            <option th:each="coinType : ${coins}"
-                                    th:value="${coinType.getNameOfCoin()}"
-                                    th:text="${coinType.getNameOfCoin()}"
-                            ></option>
-                        </th:block>
                     </select>
                 </div>
 
@@ -101,7 +89,7 @@
                 <div class="btn-group">
                     <select name="exchangeType" id="exchangeType"
                             class="form-control form-control-lg">
-                        <th:block th:if="${error}">
+
                             <option th:unless="${exchange}" th:value="''">Выбрать биржу</option>
                             <option th:if="${exchange!=''}" th:value="${exchange}" th:text="${exchange}"></option>
                             <option th:each="exchangeType : ${exchanges}"
@@ -109,36 +97,23 @@
                                     th:value="${exchangeType.getName()}"
                                     th:text="${exchangeType.getName()}"></option>
 
-                        </th:block>
 
-                        <th:block th:unless="${error}">
-                            <option th:value="''">Выбрать биржу</option>
-                            <option th:each="exchangeType : ${exchanges}"
-                                    th:value="${exchangeType.getName()}"
-                                    th:text="${exchangeType.getName()}"></option>
-                        </th:block>
+
                     </select>
                 </div>
 
 
                 <div class="btn-group">
                     <select name="timeType" id="timeType" class="form-control form-control-lg">
-                        <th:block th:if="${error}">
-                            <option th:unless="${time}" th:value="''">Выбрать временной промежуток<</option>
-                            <option th:if="${time!=''}" th:value="${time}" th:text="${time}"></option>
-                            <option th:each="timeType : ${times}"
-                                    th:unless="${timeType.getName()} == ${time}"
-                                    th:value="${timeType.getName()}"
-                                    th:text="${timeType.getName()}"></option>
 
-                        </th:block>
+                        <option th:unless="${time}" th:value="''">Выбрать временной промежуток<</option>
+                        <option th:if="${time!=''}" th:value="${time}" th:text="${time}"></option>
+                        <option th:each="timeType : ${times}"
+                                th:unless="${timeType.getName()} == ${time}"
+                                th:value="${timeType.getName()}"
+                                th:text="${timeType.getName()}"></option>
 
-                        <th:block th:unless="${error}">
-                            <option th:value="''">Выбрать временной промежуток</option>
-                            <option th:each="timeType : ${times}"
-                                    th:value="${timeType.getName()}"
-                                    th:text="${timeType.getName()}"></option>
-                        </th:block>
+
                     </select>
                 </div>
 
@@ -201,7 +176,7 @@ var time = arr.join(" ");
 
 
 
-$.getJSON('http://crypto-benefit.com/data?coinType=' + coin + '&exchangeType=' + exchange +
+$.getJSON('/data?coinType=' + coin + '&exchangeType=' + exchange +
 '&timeType=' + time + '&state=' + state , function (main) {
 
 var data = new Array();
@@ -249,6 +224,7 @@ data.sort();
         }]
     });
 });
+
 
 
 
