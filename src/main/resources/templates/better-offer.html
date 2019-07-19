@@ -40,7 +40,7 @@ body{
                 <div class="form-row align-items-center mb-4">
                     <div class="col-auto mb-3">
                         <label for="wantToBuy" class="col-form-label">Сумма ввода для покупки, $</label>
-                        <input type="text" class="form-control" name="wantToBuy" id="wantToBuy">
+                        <input type="text" class="form-control" name="wantToBuy" id="wantToBuy" th:value="${wantToBuy}">
                     </div>
                     <div class="col-auto mt-4">
                         <button type="submit" class="btn btn-success">Пересчитать</button>
@@ -141,8 +141,11 @@ body{
             </table>
             <p class="font-weight-light">*Прибыль указана без учета комиссии.</p>
             <p></p>
-            <p class="font-italic" style="color:#009933;"><br><b>Для расчета прибыли с учетом комиссии, воспользуйтесь калькулятором ниже:</b></br></p>
-            <br>
+            <p class="font-bold" style="color:#009933;"><br><b>Для расчета прибыли с учетом комиссии, воспользуйтесь калькулятором ниже:</b></br></p>
+
+            <!-- FORMS -->
+
+
             <section id="cover">
                 <div id="cover-caption">
                     <div id="container" class="container">

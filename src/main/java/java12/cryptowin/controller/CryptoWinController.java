@@ -58,6 +58,7 @@ public class CryptoWinController {
         result.addObject("cryptCoin", cryptCoin);
         result.addObject("betterOffers", betterOffers);
         result.addObject("user", userService.getCurrentUser());
+        result.addObject("wantToBuy", buy);
 
         return result;
     }
