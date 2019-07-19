@@ -112,13 +112,10 @@
 
                         <div class="col-3">
                             <th:block>
-                                <img th:if="${user.getIconType()==null}" class="card-img mr-auto"
+                                <img  class="card-img mr-auto"
                                      src="http://bootstraptema.ru/snippets/icons/2017/smtb/elliot.jpg" alt="Card image cap"
                                      style="width: 200px; height: 200px border-radius:50%;">
-                                <img th:if="${user.getIconType()!=null}" class="card-img mr-auto"
-                                     th:src="${user.getIconType().getUrl()}" alt="Card image cap"
-                                     style="width: 200px; height: 200px border-radius:50%;">
-                            </th:block>
+                                                           </th:block>
 
                         </div>
                         <div class="col-9">
