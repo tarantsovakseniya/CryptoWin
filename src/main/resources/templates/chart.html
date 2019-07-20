@@ -20,7 +20,7 @@
 
 <div th:replace="fragments/header :: top-navbar"></div>
 
-<div class="container my-4" style="width: 1100px">
+<div class="container my-4" >
 
 
     <th:block th:switch="${error}">
@@ -40,7 +40,7 @@
 
     <!--            buttons to choose options-->
     <form method="post" action="/charts">
-        <div class="card" style="width: 1100px">
+        <div class="card" >
 
             <div class="card-header text-center">
                 <th:block th:switch="${state}">

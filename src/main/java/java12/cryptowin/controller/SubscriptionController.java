@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 
 @Controller
 @RequestMapping(value = "/subscription")
@@ -33,7 +35,7 @@ public class SubscriptionController {
         return result;
     }
 
-    @PostMapping()
+    @PostMapping
     public ModelAndView getAdd(@RequestParam("minResult") Double minResult,
                                @RequestParam("maxResult") Double maxResult,
                                @RequestParam("coinType") CryptCoinType coinType,
@@ -49,9 +51,29 @@ public class SubscriptionController {
         if (minResult == null || maxResult == null || coinType == null) {
             error = "incorrect";
         } else {
-            Subscription subscription = new Subscription(user, coinType, minResult, maxResult, profit);
-            subscriptionService.save(subscription);
-            error = "success";
+
+            List<Subscription> subscriptions = subscriptionService.getByUserId(user.getId());
+            Subscription subscription;
+            boolean mark = true;
+
+            for (Subscription s : subscriptions) {
+                if (s.getMinResult() == minResult &&
+                        s.getMaxResult() == maxResult &&
+                        s.getCryptCoinType() == coinType &&
+                        s.getProfit() == profit) {
+                    mark = false;
+                }
+            }
+
+            if (mark) {
+
+                subscription = new Subscription(user, coinType, minResult, maxResult, profit);
+                subscriptionService.save(subscription);
+                error = "success";
+            }
+            else {
+                error = "exist";
+            }
         }
         result.addObject("error", error);
         return result;

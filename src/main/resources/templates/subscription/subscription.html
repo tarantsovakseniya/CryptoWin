@@ -17,18 +17,6 @@
 
     <th:block th:if="${error}">
         <th:block th:switch="${error}">
-            <div th:case="error" class="alert alert-dismissible fade show" style="background-color: #FFC0CB"
-                 role="alert">
-                <h4 class="alert-heading">Возникла ошибка</h4>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <p class="lead">Извините, но эта функция доступна лишь для зарегистрированных пользователей</p>
-                <hr class="my-4">
-                <p class="mb-0">Для оформления подписки вам необходимо
-                    <a href="/login" class="alert-link">войти в аккаунт</a> или
-                    <a href="/register" class="alert-link">зарегистрироваться</a>.</p>
-            </div>
 
             <div th:case="incorrect" class="alert alert alert-dismissible fade show" style="background-color: #FFC0CB"
                  role="alert">
@@ -49,7 +37,8 @@
                 </button>
                 <p class="lead" th:text="'Вы уже подписаны на ' + ${coin.getNameOfCoin()}"></p>
                 <hr class="my-4">
-                <p class="mb-0">Чтобы перейти к списку своих подписок перейдите на вкладку мои подписки.</p>
+                <p class="mb-0">Чтобы перейти к списку своих подписок перейдите на вкладку <a href="/userProfile" class="alert-link">
+                    мои подписки.</a></p>
             </div>
 
             <div th:case="success" class="alert  alert-dismissible fade show" style="background-color: #98FB98"
@@ -61,7 +50,7 @@
                 <p class="lead" th:text="'Теперь вы подписанны на валюту ' + ${coin.getNameOfCoin()}"></p>
                 <hr class="my-4">
                 <p class="mb-0">Чтобы перейти к списку своих подписок перейдите на вкладку
-                    <a href="#" class="alert-link">мои подписки</a>.</p>
+                    <a href="/userProfile" class="alert-link">мои подписки</a>.</p>
             </div>
         </th:block>
     </th:block>

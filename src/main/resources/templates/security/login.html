@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
@@ -13,6 +13,21 @@
 <div th:replace="fragments/header :: top-navbar"></div>
 
 <div class="container mt-3">
+
+    <div th:if="${error}" class="alert alert-dismissible fade show" style="background-color: #FFC0CB"
+         role="alert">
+        <h4 class="alert-heading">Ошибка доступа</h4>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <p class="lead">Извините, но раздел "Подписки" доступен лишь зарегистрированным пользователям</p>
+        <hr class="my-4">
+        <p class="mb-0">Для оформления подписки вам необходимо
+           войти в аккаунт или
+            <a href="/register" class="alert-link">зарегистрироваться</a>.</p>
+    </div>
+
+
     <form method="post" action="/login">
         <div class="card ml-auto mr-auto" style="max-width: 600 px;">
             <div class="card-header">

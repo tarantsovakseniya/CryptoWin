@@ -49,4 +49,5 @@ public class Subscription {
         this.maxResult = maxResult;
         this.profit = profit;
     }
+
 }
