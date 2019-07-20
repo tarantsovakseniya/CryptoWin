@@ -1,6 +1,8 @@
 package java12.cryptowin.service.jpa;
 
+import java12.cryptowin.entity.FormCalcBetterOffer;
 import java12.cryptowin.entity.enumeration.CryptCoinType;
+import java12.cryptowin.entity.enumeration.CryptoExchange;
 import java12.cryptowin.pojo.CryptoMonitorResult;
 import org.springframework.stereotype.Service;
 
@@ -73,4 +75,29 @@ public class BetterOfferService {
         return forResult;
     }
 
+    public void getCalc(FormCalcBetterOffer formCalc, List<CryptoMonitorResult> cryptoMonitorResultList,
+                                CryptCoinType cryptCoin, double pay) {
+
+        List<CryptoMonitorResult> items = formListOfCryptoMonitors(cryptoMonitorResultList, cryptCoin);
+
+        final double[] cryptoQuantity = new double[1];
+
+        items.forEach(cryptoMonitorResult -> {
+            if (cryptoMonitorResult.getExchange().equals(formCalc.getExchangeToBuy())) {
+                cryptoQuantity[0] = (pay - (formCalc.getRangeBuy() / 100) * pay) / cryptoMonitorResult.getSellingRate();
+                double payTotal = pay + formCalc.getFeeTaker() + formCalc.getAddFeeTaker();
+                formCalc.setSumBuyTotal(Math.round(payTotal * 100) / 100.00);
+            }
+        });
+        items.forEach(cryptoMonitorResult -> {
+            if (cryptoMonitorResult.getExchange().equals(formCalc.getExchangeToSell())) {
+                double sellQuantityCrypto = cryptoMonitorResult.getBuyingRate() * cryptoQuantity[0];
+                double sumAfterMinusRangeSell = sellQuantityCrypto - (formCalc.getRangeSell() / 100) * sellQuantityCrypto;
+                double sellTotal = sumAfterMinusRangeSell - formCalc.getFeeMaker() - formCalc.getAddFeeMaker();
+                formCalc.setSumSellTotal(Math.round(sellTotal * 100) / 100.00);
+            }
+        });
+        double benefit = formCalc.getSumSellTotal() - formCalc.getSumBuyTotal();
+        formCalc.setProfitTotal(Math.round(benefit * 100) / 100.00);
+    }
 }

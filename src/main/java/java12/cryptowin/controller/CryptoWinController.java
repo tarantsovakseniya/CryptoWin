@@ -1,6 +1,9 @@
 package java12.cryptowin.controller;
 
+import java12.cryptowin.entity.CryptoMonitor;
+import java12.cryptowin.entity.FormCalcBetterOffer;
 import java12.cryptowin.entity.enumeration.CryptCoinType;
+import java12.cryptowin.entity.enumeration.CryptoExchange;
 import java12.cryptowin.pojo.CryptoMonitorResult;
 import java12.cryptowin.service.jpa.*;
 
@@ -11,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -39,25 +44,32 @@ public class CryptoWinController {
     }
 
     @GetMapping(value = "/better-offer")
-    public ModelAndView getBetterOffer(@RequestParam("cryptCoin") CryptCoinType cryptCoin,
-                                       @RequestParam(value = "wantToBuy", required=false) String buy){
+    public ModelAndView getBetterOffer(@RequestParam(value = "cryptCoin") CryptCoinType cryptCoin,
+                                       @RequestParam(value = "wantToBuy", required = false) Double buy,
+                                       @ModelAttribute("formCalc") FormCalcBetterOffer formCalc) {
+
         ModelAndView result = new ModelAndView("better-offer");
+
+        System.out.println(formCalc.toString());
 
         List<CryptoMonitorResult> items = cryptoMonitorService.getListForMailPage();
 
         Map<List<CryptoMonitorResult>, Double> betterOffers = null;
 
-        if(buy==null) {
-            betterOffers= betterOfferService.getBetterOffer(items, cryptCoin);
-        }
-        else {
-            double buyDouble=Double.parseDouble(buy);
-            betterOffers = betterOfferService.getBetterOfferNew(items, cryptCoin, buyDouble);
+        if (buy == null) {
+            betterOffers = betterOfferService.getBetterOffer(items, cryptCoin);
+        } else {
+            betterOffers = betterOfferService.getBetterOfferNew(items, cryptCoin, buy);
+            betterOfferService.getCalc(formCalc, items, cryptCoin, buy);
         }
 
         result.addObject("cryptCoin", cryptCoin);
         result.addObject("betterOffers", betterOffers);
         result.addObject("user", userService.getCurrentUser());
+        result.addObject("items", CryptoExchange.values());
+
+        result.addObject("wantToBuy", buy);
+        result.addObject("formCalc", formCalc);
 
         return result;
     }

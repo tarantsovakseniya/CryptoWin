@@ -5,49 +5,34 @@
     <title>Better Offer</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <style type="text/css">
-    	html,
-body{
- height: 100%;
-}
-.select_button{
-	margin: 5px;
-}
-.container{
-  margin: 0 auto;
-  background-color: #fff;
-  font-weight: normal;
-}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="http://bootstraptema.ru/plugins/2018/irs/ion.rangeSlider.css"/>
+    <link rel="stylesheet" href="http://bootstraptema.ru/plugins/2018/irs/ion.rangeSlider.skin.css"/>
+
+    <style>
+
+        .btn-round-lg{
+        border-radius: 25px;}
+
     </style>
+
 </head>
 <body style="color:Black; background-color: #ccccb3;">
 
 <div th:replace="fragments/header :: top-navbar"></div>
-<div class="container mt-3">
+
+<div class="container mt-3 mb-3">
     <div class="card card-sm">
 
         <div class="card-header">
             <div class="d-flex align-items-center">
-                <h5 class="mr-auto p-3" th:text="${cryptCoin.getNameOfCoin()}"></h5>
+                <h5 class="mr-auto p-3"
+                    th:text="'Выгодные сделки для криптовалюты: '+${cryptCoin.getNameOfCoin()}"></h5>
             </div>
         </div>
 
         <div class="card-body">
-
-            <form method="get" action="/better-offer">
-                <input type="hidden" th:value="${cryptCoin}" name="cryptCoin"/>
-
-                <div class="form-row align-items-center mb-4">
-                    <div class="col-auto mb-3">
-                        <label for="wantToBuy" class="col-form-label">Сумма ввода для покупки, $</label>
-                        <input type="text" class="form-control" name="wantToBuy" id="wantToBuy">
-                    </div>
-                    <div class="col-auto mt-4">
-                        <button type="submit" class="btn btn-success">Пересчитать</button>
-                    </div>
-                </div>
-            </form>
-
+            <h4><p class="text-center"><b>ТОП-выгодных вариантов</b></p></h4>
             <table class="table table-bordered table-sm text-center">
                 <thead>
                 <tr class="table-success">
@@ -69,10 +54,10 @@ body{
                             + Комиссия
                         </button>
                         <!-- Modal -->
-                        <div class="modal fade bd-example-modal-xl" tabindex="-1"
-                             aria-labelledby="myExtraLargeModalLabel" aria-hidden="true" id="myModalSell" role="dialog"
+                        <div class="modal fade bd-example-modal-lg" tabindex="-1"
+                             aria-labelledby="myLargeModalLabel" aria-hidden="true" id="myModalSell" role="dialog"
                              th:attrappend="id=${betterOffer.get(1).getExchange()}">
-                            <div class="modal-dialog modal-xl">
+                            <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title">
@@ -84,7 +69,7 @@ body{
                                     </div>
                                     <div class="modal-body">
                                         <iframe th:src="${betterOffer.get(1).getExchange().getLinkWithDetails()}"
-                                                width="1100" height="600"></iframe>
+                                                style="width:100%; height:100%;margin:0px;border:0px"></iframe>
 
                                     </div>
                                     <div class="modal-footer">
@@ -106,10 +91,10 @@ body{
                             + Комиссия
                         </button>
                         <!-- Modal -->
-                        <div class="modal fade bd-example-modal-xl" tabindex="-1"
-                             aria-labelledby="myExtraLargeModalLabel" aria-hidden="true" id="myModalBuy" role="dialog"
+                        <div class="modal fade bd-example-modal-lg p-3" tabindex="-1"
+                             aria-labelledby="myLargeModalLabel" aria-hidden="true" id="myModalBuy" role="dialog"
                              th:attrappend="id=${betterOffer.get(0).getExchange()}">
-                            <div class="modal-dialog modal-xl">
+                            <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title">
@@ -121,7 +106,7 @@ body{
                                     </div>
                                     <div class="modal-body">
                                         <iframe th:src="${betterOffer.get(0).getExchange().getLinkWithDetails()}"
-                                                width="1100" height="600">
+                                                style="width:100%; height:100%;margin:0px;border:0px">
                                         </iframe>
 
                                     </div>
@@ -141,62 +126,124 @@ body{
             </table>
             <p class="font-weight-light">*Прибыль указана без учета комиссии.</p>
             <p></p>
-            <p class="font-italic" style="color:#009933;"><br><b>Для расчета прибыли с учетом комиссии, воспользуйтесь калькулятором ниже:</b></br></p>
-            <br>
-            <section id="cover">
-                <div id="cover-caption">
-                    <div id="container" class="container">
+
+            <!-- FORMS -->
+            <form method="get" action="/better-offer" th:object="${formCalc}">
+                <input type="hidden" th:value="${cryptCoin}" name="cryptCoin"/>
+
+                <div class="card mt-1 mb-3">
+                    <div class="card-header">
                         <div class="row">
-                            <div class="col-sm-10 offset-sm-1 text-center">
-                                <div class="info-form">
-                                    <form action="" class="form-inline justify-content-center" name="calc">
+                            <div class="col align-self-center">
+                                <h5><p class="text-center">КАЛЬКУЛЯТОР РАСЧЕТА ПРИБЫЛИ С УЧЕТОМ КОМИССИЙ</p></h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" style="background-color: #FFFFFF">
+                        <div class="form-group">
+                            <label for="wantToBuy"><b>СУММА ВВОДА, $</b></label>
+                            <input type="text" class="form-control" name="wantToBuy" id="wantToBuy"
+                                   placeholder="Введите сумму *"
+                                   th:value="${wantToBuy}">
+                        </div>
+                        <p class="text-center"><b>Данные о вводе $ для покупки криптовалюты</b></p>
+                        <div class="form-group">
+                            <label for="exchangeToBuy">БИРЖА ВВОДА $ И ПОКУПКИ КРИПТОВАЛЮТЫ</label>
+                            <select class="custom-select" required name="exchangeToBuy" id="exchangeToBuy">
+                                <option selected>-- выберите из списка --</option>
+                                <option th:each="item: ${items}"
+                                        th:value="${item}"
+                                        th:field="*{exchangeToBuy}"
+                                        th:text="${item.getName()}"
+                                ></option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="feeTaker">КОМИССИЯ ЗА ВВОД, $</label>
+                                <input type="text" class="form-control" name="feeTaker" id="feeTaker"
+                                       placeholder="Введите сумму *"
+                                       th:field="*{feeTaker}">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="addFeeTaker">ДОП. КОМИССИЯ (ЕСЛИ ЕСТЬ), $</label>
+                                <input type="text" class="form-control" id="addFeeTaker" name="addFeeTaker"
+                                       placeholder="Введите сумму *"
+                                       th:field="*{addFeeTaker}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="rangeBuy">ТОРГОВАЯ КОМИССИЯ, %</label>
+                            <input type="text" id="rangeBuy" name="rangeBuy"
+                                   th:field="*{rangeBuy}">
+                        </div>
 
-                                        <input type="" name="" class="form-control col-sm-12" id="input_text" onkeyup="allowedChar(this);" >
-                                        <div class="col-sm-10 ">
-                                            <hr>
-                                            <div class="text-center select_button">
-                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('7')">7</a>
-                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('8')">8</a>
-                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('9')">9</a>
-                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('/')">/</a>
-                                            </div>
-
-
-                                            <div class="text-center select_button">
-                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('4')">4</a>
-                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('5')">5</a>
-                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('6')">6</a>
-                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('*')">x</a>
-                                            </div>
-                                            <div class="text-center select_button ">
-                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('1')">1</a>
-                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('2')">2</a>
-                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('3')">3</a>
-                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('-')">-</a>
-                                            </div>
-                                            <div class="text-center select_button">
-                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('0')">0</a>
-                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('.')">.</a>
-                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('9')">9</a>
-                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:addText('+')">+</a>
-
-                                            </div>
-                                            <div class="text-center select_button">
-                                                <a name="" class="btn btn-outline-success col-sm-1"  href="javascript:addText('(')">(</a>
-                                                <a name="" class="btn btn-outline-success col-sm-1"  href="javascript:addText(')')">)</a>
-                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:removelastText()">DELETE</a>
-                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:clearText()">CLEAR</a>
-                                                <a name="" class="btn btn-outline-success col-sm-2"  href="javascript:answerText()">=</a>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <br>
+                        <p class="text-center"><b>Данные о продаже криптовалюты для вывода $</b></p>
+                        <div class="form-group">
+                            <label for="exchangeToSell">БИРЖА ПРОДАЖИ КРИПТОВАЛЮТЫ И ВЫВОДА $</label>
+                            <select class="custom-select" required name="exchangeToSell" id="exchangeToSell">
+                                <option selected>-- выберите из списка --</option>
+                                <option th:each="item: ${items}"
+                                        th:value="${item}"
+                                        th:field="*{exchangeToSell}"
+                                        th:text="${item.getName()}"
+                                ></option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="feeMaker">КОМИССИЯ ЗА ВЫВОД, $</label>
+                                <input type="text" class="form-control" id="feeMaker" name="feeMaker"
+                                       placeholder="Введите сумму *" th:field="*{feeMaker}">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="addFeeMaker">ДОП. КОМИССИЯ (ЕСЛИ ЕСТЬ), $</label>
+                                <input type="text" class="form-control" id="addFeeMaker" name="addFeeMaker"
+                                       placeholder="Введите сумму *"
+                                       th:field="*{addFeeMaker}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="rangeSell"><b>ТОРГОВАЯ КОМИССИЯ, %</b></label>
+                            <input type="text" id="rangeSell" name="rangeSell"
+                                   th:field="*{rangeSell}">
+                        </div>
+                    </div>
+                    <div class="row justify-content-center mb-4">
+                        <div class="col align-self-center col-2 mb-3">
+                            <button type="submit" class="btn btn-success btn-round-lg btn-lg">
+                                <b>ПОСЧИТАТЬ</b></button>
+                        </div>
+                    </div>
+                    <p></p>
+                    <div class="card-footer">
+                        <div class="form-group row">
+                            <label for="sumBuyTotal" class="col-sm-4 col-form-label"><b><i>Сумма ИТОГО за покупку и
+                                ввод:</i></b></label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly class="form-control-plaintext" id="sumBuyTotal"
+                                       name="sumBuyTotal" th:field="*{sumBuyTotal}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="sumSellTotal" class="col-sm-4 col-form-label"><b><i>Сумма ИТОГО за продажу и
+                                вывод:</i></b></label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly class="form-control-plaintext" id="sumSellTotal"
+                                       name="sumSellTotal" th:field="*{sumSellTotal}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="profitTotal" class="col-sm-4 col-form-label"><b><i>BENEFIT:</i></b></label>
+                            <div class="col-sm-8">
+                                <input type="text" readonly class="form-control-plaintext" id="profitTotal"
+                                       name="profitTotal" th:field="*{profitTotal}">
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
+            </form>
+
         </div>
         <div class="card-footer">
             <a href="/" class="btn btn-light btn-outline-success">Назад</a>
@@ -213,60 +260,32 @@ body{
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="http://bootstraptema.ru/plugins/2018/irs/ion.rangeSlider.min.js"></script>
+
 </body>
 </html>
-<script type="text/javascript">
-	function addText(txt)
-	{
-	document.getElementById("input_text").value+=txt;
-	}
-	function clearText(txt)
-	{
-	document.getElementById("input_text").value="";
-	}
-    function removelastText()
-	{
-	var strng=document.getElementById("input_text").value;
-	document.getElementById("input_text").value=strng.substring(0,strng.length-1);
-	}
-	function answerText()
-	{
-	//easiest code "eval()"
 
-	try {
-	    document.calc.input_text.value = eval(document.calc.input_text.value);;
-	} catch (e) {
-	    if (e instanceof SyntaxError) {
-	        alert(e.message);
-	    }
-	}
-	 	// var a = parseInt("10");
-	 	// var b = parseInt("10");
-	 	// var c = a+b;
-	  //   var str = document.getElementById("input_text").value;
-	  //   var res = str.split("");
-	  //   document.getElementById("input_text").value = res;//display the splited value
-	  //   var temp = new Array();
-	  //   var temp = str.split("");
-	  //   for (a in temp ) {
-	  //  	 if (isNaN(temp[a]))
-	  //  	 {
-	  //  	 console.log (temp[a] = temp[a]);
-	  // 	}
-	 	//  else
-	  // 	{
-	  // 		console.log (temp[a] = parseInt(temp[a], 10));
-	  // 	}
-	 	// }
-	}
-	//NUMBER ONLY
-  function allowedChar(elem) {
-                var validChars = /[0-9(). ]/;
-                var strIn = elem.value;
-                var strOut = '';
-                for(var i=0; i < strIn.length; i++) {
-                  strOut += (validChars.test(strIn.charAt(i)))? strIn.charAt(i) : '';
-                }
-                elem.value = strOut;
-            }
+<script>
+$("#rangeBuy").ionRangeSlider({
+  grid: true,
+ min: 0.0,
+ max: 1.0,
+ step: 0.1,
+ prettify_enabled: true
+ });
+
+$("#rangeSell").ionRangeSlider({
+  grid: true,
+min: 0.0,
+ max: 1.0,
+ step: 0.1,
+ prettify_enabled: true
+ });
+
+
+
+
+
+
 </script>
