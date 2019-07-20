@@ -87,7 +87,7 @@
                 <div class="form-group">
                     <label for="coinType">Выберите валюту</label>
                     <select class="custom-select" required name="coinType" id="coinType">
-                        <option selected></option>
+                        <option selected>-- выберите из списка --</option>
                         <option th:each="coinType : ${coins}"
                                 th:value="${coinType}"
                                 th:text="${coinType.getNameOfCoin()}"
