@@ -20,8 +20,9 @@ public class SecurityController {
     private UserService userService;
 
     @GetMapping("/login")
-    public ModelAndView getLogin() {
+    public ModelAndView getLogin(@RequestParam(value = "error", required = false) String error) {
         ModelAndView result = new ModelAndView("security/login");
+        result.addObject("error", error);
         return result;
     }
 

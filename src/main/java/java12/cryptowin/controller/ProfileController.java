@@ -35,10 +35,12 @@ public class ProfileController {
     public ModelAndView deleteSubscription(@RequestParam("id") long id) {
         ModelAndView view = new ModelAndView("security/user-profile");
 
-        subscriptionService.deleteById(id);
-        view.addObject("user", userService.getCurrentUser());
-        view.addObject("error", "success");
-        view.addObject("subscription", subscriptionService.getByUserId(userService.getCurrentUser().getId()));
+        if (userService.getCurrentUser().getSubscriptions().contains(subscriptionService.getById(id))) {
+            subscriptionService.deleteById(id);
+            view.addObject("user", userService.getCurrentUser());
+            view.addObject("error", "success");
+            view.addObject("subscription", subscriptionService.getByUserId(userService.getCurrentUser().getId()));
+        }
 
         return view;
     }
@@ -96,13 +98,13 @@ public class ProfileController {
             view.addObject("coins", CryptCoinType.values());
             view.addObject("error", "incorrect");
         } else {
-            subscriptionService.deleteById(id);
-            Subscription newSome = new Subscription(id, userService.getCurrentUser(), coinType, min, max, profit);
-            subscriptionService.save(newSome);
-            view.addObject("subscription", subscriptionService.getByUserId(userService.getCurrentUser().getId()));
-            view.addObject("error", "add");
-
-
+            if (userService.getCurrentUser().getSubscriptions().contains(subscriptionService.getById(id))) {
+                subscriptionService.deleteById(id);
+                Subscription newSome = new Subscription(id, userService.getCurrentUser(), coinType, min, max, profit);
+                subscriptionService.save(newSome);
+                view.addObject("subscription", subscriptionService.getByUserId(userService.getCurrentUser().getId()));
+                view.addObject("error", "add");
+            }
         }
         view.addObject("user", userService.getCurrentUser());
 
