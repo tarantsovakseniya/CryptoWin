@@ -33,7 +33,13 @@ public class ProfileController {
 
     }
 
+    @GetMapping("/userN")
+    public ModelAndView getTest() {
+        ModelAndView view = new ModelAndView("security/user");
+        view.addObject("user", userService.getCurrentUser());
+        return view;
 
+    }
 
     @GetMapping("/delete")
     public ModelAndView deleteSubscription(@RequestParam("id") long id) {
