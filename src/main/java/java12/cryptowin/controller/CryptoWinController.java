@@ -1,6 +1,5 @@
 package java12.cryptowin.controller;
 
-import java12.cryptowin.entity.CryptoMonitor;
 import java12.cryptowin.entity.FormCalcBetterOffer;
 import java12.cryptowin.entity.enumeration.CryptCoinType;
 import java12.cryptowin.entity.enumeration.CryptoExchange;
@@ -11,11 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +28,7 @@ public class CryptoWinController {
 
     @GetMapping(value = "/")
     public ModelAndView getMain() {
-        List<CryptoMonitorResult> items = cryptoMonitorService.getListForMailPage();
+        List<CryptoMonitorResult> items = cryptoMonitorService.getAllWithMaxLocalDateTime();
 
         ModelAndView result = new ModelAndView("main");
         result.addObject("items", items);
@@ -52,7 +47,7 @@ public class CryptoWinController {
 
         System.out.println(formCalc.toString());
 
-        List<CryptoMonitorResult> items = cryptoMonitorService.getListForMailPage();
+        List<CryptoMonitorResult> items = cryptoMonitorService.getAllWithMaxLocalDateTime();
 
         Map<List<CryptoMonitorResult>, Double> betterOffers = null;
 
