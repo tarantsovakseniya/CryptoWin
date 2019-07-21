@@ -47,12 +47,9 @@ public class CryptoWinController {
 
         List<CryptoMonitorResult> items = cryptoMonitorService.getAllWithMaxLocalDateTime();
 
-        Map<List<CryptoMonitorResult>, Double> betterOffers = null;
+        Map<List<CryptoMonitorResult>, Double> betterOffers = betterOfferService.getBetterOffer(items, cryptCoin);
 
-        if (buy == null) {
-            betterOffers = betterOfferService.getBetterOffer(items, cryptCoin);
-        } else {
-            betterOffers = betterOfferService.getBetterOfferNew(items, cryptCoin, buy);
+        if (buy != null) {
             betterOfferService.getCalc(formCalc, items, cryptCoin, buy);
         }
 
