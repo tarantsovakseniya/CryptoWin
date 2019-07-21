@@ -5,7 +5,11 @@
     <meta http-equiv="refresh" content="30">
     <meta name="keywords" content="Перечень ключевых слов">
     <meta name="description" content="Содержимое мета-тега «description»">
-    <title><p th:text="'Курс ' +${cryptMonitor.getCoinType()}+ ' на бирже ' + ${cryptMonitor.getExchange()}"/></title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title th:text="'Курс ' +${cryptMonitor.getCoinType()}+ ' на бирже ' + ${cryptMonitor.getExchange()}"></title>
+
 </head>
 <body style="color:Black; background-color: #e7e8e8;">
 <div th:replace="fragments/header :: top-navbar"></div>
