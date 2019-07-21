@@ -45,12 +45,11 @@
 
         </div>
     </th:block>
-    </th:block>
 
     <th:block th:switch="${ref}">
 
         <th:block th:case="sub">
-            <form method="post" th:action="'/userProfile/change?id=' + ${s.getId()}">
+            <form method="post" th:action="'/user/change?id=' + ${s.getId()}">
 
                 <div class="card mt-1 mb-3">
                     <div class="card-header">
@@ -61,8 +60,8 @@
                         <div class="form-group">
                             <label for="coinType">Выберите валюту</label>
                             <select class="custom-select" required name="coinType" id="coinType">
-                                <option selected></option>
-                                <option th:each="coinType : ${coins}"
+                                <option selected th:text="${s.getCryptCoinType().getNameOfCoin()}"></option>
+                                <option th:each="coinType : ${coins}" th:unless="${coinType} == ${s.getCryptCoinType()}"
                                         th:value="${coinType}"
                                         th:text="${coinType.getNameOfCoin()}"
                                 ></option>
@@ -131,7 +130,7 @@
                                     <a class="btn btn-light btn-outline-success"
                                        href="#">Изменить фото профиля</a>
                                     <a class="btn btn-light btn-outline-success"
-                                       href="/userProfile/changeData">Изменить персональные данные</a>
+                                       href="/user/changeData">Изменить персональные данные</a>
                                 </div>
                             </div>
                         </div>
@@ -170,18 +169,18 @@
                                             <li class="list-group-item"
                                                 th:text="'Максимальная сумма продажи: ' + ${sub.getMaxResult()} + ' $'"></li>
                                             <li class="list-group-item"
-                                                th:text="'Разность между покупкой и продажей: ' + ${sub.getProfit()} + ' $'"></li>
+                                                th:text="'Выгода: ' + ${sub.getProfit()} + ' $'"></li>
                                         </ul>
                                     </div>
                                 </div>
 
                                 <div class="card-footer">
                                     <a class="btn btn-light btn-outline-success"
-                                       th:href="'/userProfile/delete?id=' + ${sub.getId()}">
+                                       th:href="'/user/delete?id=' + ${sub.getId()}">
                                         Отменить подписку
                                     </a>
                                     <a class="btn btn-light btn-outline-success"
-                                       th:href="'/userProfile/change?id=' + ${sub.getId()}">
+                                       th:href="'/user/change?id=' + ${sub.getId()}">
                                         Изменить условия подписки</a>
                                 </div>
                             </li>
