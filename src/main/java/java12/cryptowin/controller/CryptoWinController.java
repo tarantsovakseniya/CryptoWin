@@ -45,8 +45,6 @@ public class CryptoWinController {
 
         ModelAndView result = new ModelAndView("better-offer");
 
-        System.out.println(formCalc.toString());
-
         List<CryptoMonitorResult> items = cryptoMonitorService.getAllWithMaxLocalDateTime();
 
         Map<List<CryptoMonitorResult>, Double> betterOffers = null;
