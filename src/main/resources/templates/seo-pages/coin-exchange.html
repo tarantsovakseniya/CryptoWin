@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="30">
+    <meta name="keywords" content="Перечень ключевых слов">
+    <meta name="description" content="Содержимое мета-тега «description»">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title><p th:text="'Курс ' +${cryptMonitor.getCoinType()}+ ' на бирже ' + ${cryptMonitor.getExchange()}"/></title>
+
+</head>
+<body style="color:Black; background-color: #e7e8e8;">
+<div th:replace="fragments/header :: top-navbar"></div>
+
+
+<div class="container-fluid mt-3">
+    <div class="card">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card-header">
+                    <h1><i>
+                        <p th:text="'Курс ' +${cryptMonitor.getCoinType()}+ ' на бирже ' + ${cryptMonitor.getExchange()}"/>
+                    </i></h1>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-12">
+                            <h4>Текущий курс покупки:</h4>
+                            <p th:text="'$'+${cryptMonitor.getBuyingRate()}"></p>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col-12 col-sm-12">
+                            <h4>Текущий курс продажи:</h4>
+                            <p th:text="'$'+${cryptMonitor.getSellingRate()}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
