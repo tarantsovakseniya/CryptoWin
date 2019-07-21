@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <div th:replace="fragments/header :: page-start"></div>
     <meta http-equiv="refresh" content="30">
     <meta name="keywords" content="Перечень ключевых слов">
     <meta name="description" content="Содержимое мета-тега «description»">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title><p th:text="'Курс ' +${cryptMonitor.getCoinType()}+ ' на бирже ' + ${cryptMonitor.getExchange()}"/></title>
-
 </head>
 <body style="color:Black; background-color: #e7e8e8;">
 <div th:replace="fragments/header :: top-navbar"></div>
@@ -27,13 +24,20 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12 col-sm-12">
-                            <h4>Текущий курс покупки:</h4>
-                            <p th:text="'$'+${cryptMonitor.getBuyingRate()}"></p>
+                            <h4 th:text="'Текущий курс покупки: '+'$'+${cryptMonitor.getBuyingRate()}"></h4>
+                        </div>
+                        <div class="col-12 col-sm-12">
+                            <h4 th:text="'Текущий курс продажи: '+'$'+${cryptMonitor.getSellingRate()}"></h4>
                         </div>
                         <div class="w-100"></div>
                         <div class="col-12 col-sm-12">
-                            <h4>Текущий курс продажи:</h4>
-                            <p th:text="'$'+${cryptMonitor.getSellingRate()}"></p>
+                            <h4 th:text="'Минимальный курс покупки за сегодня: '+'$'+${minBuy}"></h4>
+                            <h4 th:text="'Максимальный курс покупки за сегодня: '+'$'+${maxBuy}"></h4>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col-12 col-sm-12">
+                            <h4 th:text="'Минимальный курс продажи за сегодня: '+'$'+${minSell}"></h4>
+                            <h4 th:text="'Максимальный курс продажи за сегодня: '+'$'+${maxSell}"></h4>
                         </div>
                     </div>
                 </div>
