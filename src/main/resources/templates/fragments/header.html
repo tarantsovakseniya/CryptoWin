@@ -18,14 +18,14 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
                 <li th:if="${user}" class="nav-item active">
-                    <a class="nav-link" href="/userProfile">Моя страница</a>
+                    <a class="nav-link" href="/user">Моя страница</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/charts">Архив</a>
                 </li>
                 <li class="nav-item active">
 
-                    <a th:if="${user}" class="nav-link" href="/subscription">Подписки</a>
+                    <a th:if="${user}" class="nav-link" href="/user/subscription">Подписки</a>
                     <a th:unless="${user}" class="nav-link" href="/login?error=sub">Подписки</a>
                 </li>
                 <li class="nav-item active">

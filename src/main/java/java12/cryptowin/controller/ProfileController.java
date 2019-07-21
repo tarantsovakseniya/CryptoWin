@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
-@RequestMapping("/userProfile")
+@RequestMapping ("/user")
 public class ProfileController {
     @Autowired
     private UserService userService;
@@ -31,11 +33,19 @@ public class ProfileController {
 
     }
 
+    @GetMapping("/userN")
+    public ModelAndView getTest() {
+        ModelAndView view = new ModelAndView("security/user");
+        view.addObject("user", userService.getCurrentUser());
+        return view;
+
+    }
+
     @GetMapping("/delete")
     public ModelAndView deleteSubscription(@RequestParam("id") long id) {
         ModelAndView view = new ModelAndView("security/user-profile");
 
-        if (userService.getCurrentUser().getSubscriptions().contains(subscriptionService.getById(id))) {
+        if (subscriptionService.getById(id).getUser().equals(userService.getCurrentUser())) {
             subscriptionService.deleteById(id);
             view.addObject("user", userService.getCurrentUser());
             view.addObject("error", "success");
@@ -84,7 +94,7 @@ public class ProfileController {
     }
 
 
-    @PostMapping("/change")
+    @PostMapping("/subscription/change")
     public ModelAndView changeSubscription(@RequestParam("coinType") CryptCoinType coinType,
                                            @RequestParam("minResult") Double min,
                                            @RequestParam("maxResult") Double max,
@@ -98,7 +108,7 @@ public class ProfileController {
             view.addObject("coins", CryptCoinType.values());
             view.addObject("error", "incorrect");
         } else {
-            if (userService.getCurrentUser().getSubscriptions().contains(subscriptionService.getById(id))) {
+            if (subscriptionService.getById(id).getUser().equals(userService.getCurrentUser())) {
                 subscriptionService.deleteById(id);
                 Subscription newSome = new Subscription(id, userService.getCurrentUser(), coinType, min, max, profit);
                 subscriptionService.save(newSome);
@@ -110,6 +120,72 @@ public class ProfileController {
 
 
         return view;
+    }
+
+    @GetMapping("/subscription")
+    public ModelAndView getSubscription(@RequestParam(value = "error", required = false) String error) {
+        ModelAndView result = new ModelAndView("subscription/subscription");
+        result.addObject("coins", CryptCoinType.values());
+        result.addObject("error", error);
+        result.addObject("user", userService.getCurrentUser());
+        return result;
+    }
+
+    @PostMapping("/subscription")
+    public ModelAndView getAdd(@RequestParam("minResult") Double minResult,
+                               @RequestParam("maxResult") Double maxResult,
+                               @RequestParam("coinType") CryptCoinType coinType,
+                               @RequestParam("profit") Double profit) {
+
+        ModelAndView result = new ModelAndView("subscription/subscription");
+        result.addObject("user", userService.getCurrentUser());
+        result.addObject("coin", coinType);
+        result.addObject("coins", CryptCoinType.values());
+
+        String error = null;
+        User user = userService.getCurrentUser();
+        if (minResult == null || maxResult == null || coinType == null) {
+            error = "incorrect";
+        } else {
+
+            List<Subscription> subscriptions = subscriptionService.getByUserId(user.getId());
+            Subscription subscription;
+            boolean mark = true;
+
+            for (Subscription s : subscriptions) {
+                if (s.getMinResult() == minResult &&
+                        s.getMaxResult() == maxResult &&
+                        s.getCryptCoinType() == coinType &&
+                        s.getProfit() == profit) {
+                    mark = false;
+                }
+            }
+
+            if (mark) {
+
+                subscription = new Subscription(user, coinType, minResult, maxResult, profit);
+                subscriptionService.save(subscription);
+                error = "success";
+            }
+            else {
+                error = "exist";
+            }
+        }
+        result.addObject("error", error);
+        return result;
+    }
+
+
+    @GetMapping("/subscription/addNew")
+    public ModelAndView getFormForAdd(@RequestParam(value = "coin") CryptCoinType coinType,
+                                      @RequestParam("error") String error) {
+        ModelAndView result = new ModelAndView("subscription/subscription");
+        result.addObject("user", userService.getCurrentUser());
+        result.addObject("coin", coinType);
+        result.addObject("error", error);
+        result.addObject("coins", CryptCoinType.values());
+        return result;
+
     }
 
 }
