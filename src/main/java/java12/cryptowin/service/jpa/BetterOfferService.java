@@ -1,9 +1,9 @@
 package java12.cryptowin.service.jpa;
 
+import java12.cryptowin.entity.CryptoMonitor;
 import java12.cryptowin.entity.FormCalcBetterOffer;
 import java12.cryptowin.entity.enumeration.CryptCoinType;
 import java12.cryptowin.entity.enumeration.CryptoExchange;
-import java12.cryptowin.pojo.CryptoMonitorResult;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -12,12 +12,12 @@ import java.util.stream.Collectors;
 @Service
 public class BetterOfferService {
 
-    public Map<List<CryptoMonitorResult>, Double> getBetterOffer(List<CryptoMonitorResult> items, CryptCoinType cryptCoin) {
-        List<CryptoMonitorResult> forResult = formListOfCryptoMonitors(items, cryptCoin);
+    public Map<List<CryptoMonitor>, Double> getBetterOffer(List<CryptoMonitor> items, CryptCoinType cryptCoin) {
+        List<CryptoMonitor> forResult = formListOfCryptoMonitors(items, cryptCoin);
 
-        Map<List<CryptoMonitorResult>, Double> last = new HashMap<>();
-        for (CryptoMonitorResult cryptoMonitor : forResult) {
-            for (CryptoMonitorResult monitor : forResult) {
+        Map<List<CryptoMonitor>, Double> last = new HashMap<>();
+        for (CryptoMonitor cryptoMonitor : forResult) {
+            for (CryptoMonitor monitor : forResult) {
                 if ((cryptoMonitor.getBuyingRate() - monitor.getSellingRate()) > 1) {
                     last.put(Arrays.asList(cryptoMonitor, monitor),
                             Math.round((cryptoMonitor.getBuyingRate() - monitor.getSellingRate()) * 100) / 100.00);
@@ -27,23 +27,23 @@ public class BetterOfferService {
         return formListOfThreeBetter(last);
     }
 
-    public Map<List<CryptoMonitorResult>, Double> getBetterOfferNew(List<CryptoMonitorResult> items, CryptCoinType cryptCoin, double buy) {
-        List<CryptoMonitorResult> forResult = formListOfCryptoMonitors(items, cryptCoin);
+    public Map<List<CryptoMonitor>, Double> getBetterOfferNew(List<CryptoMonitor> items, CryptCoinType cryptCoin, double buy) {
+        List<CryptoMonitor> forResult = formListOfCryptoMonitors(items, cryptCoin);
 
-        Map<List<CryptoMonitorResult>, Double> last = new HashMap<>();
-        for (CryptoMonitorResult cryptoMonitor : forResult) {
-            for (CryptoMonitorResult monitor : forResult) {
+        Map<List<CryptoMonitor>, Double> last = new HashMap<>();
+        for (CryptoMonitor cryptoMonitor : forResult) {
+            for (CryptoMonitor monitor : forResult) {
                 if ((cryptoMonitor.getBuyingRate() - monitor.getSellingRate()) > 1) {
 
                     double coinsQuantity = buy / monitor.getSellingRate();
 
                     last.put(Arrays.asList(
-                            new CryptoMonitorResult(
+                            new CryptoMonitor(
                                     cryptoMonitor.getCoinType(),
                                     cryptoMonitor.getExchange(),
                                     cryptoMonitor.getBuyingRate() * coinsQuantity,
                                     cryptoMonitor.getSellingRate() * coinsQuantity),
-                            new CryptoMonitorResult(
+                            new CryptoMonitor(
                                     monitor.getCoinType(),
                                     monitor.getExchange(),
                                     monitor.getBuyingRate() * coinsQuantity,
@@ -55,8 +55,8 @@ public class BetterOfferService {
         return formListOfThreeBetter(last);
     }
 
-    private Map<List<CryptoMonitorResult>, Double> formListOfThreeBetter(Map<List<CryptoMonitorResult>, Double> last) {
-        Map<List<CryptoMonitorResult>, Double> topThree =
+    private Map<List<CryptoMonitor>, Double> formListOfThreeBetter(Map<List<CryptoMonitor>, Double> last) {
+        Map<List<CryptoMonitor>, Double> topThree =
                 last.entrySet().stream()
                         .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                         .limit(3)
@@ -65,8 +65,8 @@ public class BetterOfferService {
         return topThree;
     }
 
-    private List<CryptoMonitorResult> formListOfCryptoMonitors(List<CryptoMonitorResult> items, CryptCoinType cryptCoin) {
-        List<CryptoMonitorResult> forResult = new ArrayList<>();
+    private List<CryptoMonitor> formListOfCryptoMonitors(List<CryptoMonitor> items, CryptCoinType cryptCoin) {
+        List<CryptoMonitor> forResult = new ArrayList<>();
         items.forEach(cryptoMonitor -> {
             if (cryptoMonitor.getCoinType() == cryptCoin) {
                 forResult.add(cryptoMonitor);
@@ -75,10 +75,10 @@ public class BetterOfferService {
         return forResult;
     }
 
-    public void getCalc(FormCalcBetterOffer formCalc, List<CryptoMonitorResult> cryptoMonitorResultList,
+    public void getCalc(FormCalcBetterOffer formCalc, List<CryptoMonitor> cryptoMonitorResultList,
                                 CryptCoinType cryptCoin, double pay) {
 
-        List<CryptoMonitorResult> items = formListOfCryptoMonitors(cryptoMonitorResultList, cryptCoin);
+        List<CryptoMonitor> items = formListOfCryptoMonitors(cryptoMonitorResultList, cryptCoin);
 
         final double[] cryptoQuantity = new double[1];
 
