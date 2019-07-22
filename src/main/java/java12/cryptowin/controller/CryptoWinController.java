@@ -1,9 +1,7 @@
 package java12.cryptowin.controller;
 
-import java12.cryptowin.entity.FormCalcBetterOffer;
-import java12.cryptowin.entity.enumeration.CryptCoinType;
-import java12.cryptowin.entity.enumeration.CryptoExchange;
-import java12.cryptowin.pojo.CryptoMonitorResult;
+import java12.cryptowin.entity.*;
+import java12.cryptowin.entity.enumeration.*;
 import java12.cryptowin.service.jpa.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +26,7 @@ public class CryptoWinController {
 
     @GetMapping(value = "/")
     public ModelAndView getMain() {
-        List<CryptoMonitorResult> items = cryptoMonitorService.getAllWithMaxLocalDateTime();
+        List<CryptoMonitor> items = cryptoMonitorService.getAllWithMaxLocalDateTime();
 
         ModelAndView result = new ModelAndView("main");
         result.addObject("items", items);
@@ -45,9 +43,9 @@ public class CryptoWinController {
 
         ModelAndView result = new ModelAndView("better-offer");
 
-        List<CryptoMonitorResult> items = cryptoMonitorService.getAllWithMaxLocalDateTime();
+        List<CryptoMonitor> items = cryptoMonitorService.getAllWithMaxLocalDateTime();
 
-        Map<List<CryptoMonitorResult>, Double> betterOffers = betterOfferService.getBetterOffer(items, cryptCoin);
+        Map<List<CryptoMonitor>, Double> betterOffers = betterOfferService.getBetterOffer(items, cryptCoin);
 
         if (buy != null) {
             betterOfferService.getCalc(formCalc, items, cryptCoin, buy);

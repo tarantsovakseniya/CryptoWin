@@ -2,7 +2,6 @@ package java12.cryptowin.service.jpa;
 
 import java12.cryptowin.entity.CryptoMonitor;
 import java12.cryptowin.entity.enumeration.TimeType;
-import java12.cryptowin.pojo.CryptoMonitorResult;
 import java12.cryptowin.repository.CryptoMonitorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +34,7 @@ public class CryptoMonitorService {
         repository.deleteById(id);
     }
 
-    public List<CryptoMonitorResult> getAllWithMaxLocalDateTime() {
+    public List<CryptoMonitor> getAllWithMaxLocalDateTime() {
         return repository.findAllNew();
     }
 
