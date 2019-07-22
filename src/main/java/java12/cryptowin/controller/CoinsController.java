@@ -74,7 +74,6 @@ public class CoinsController {
         result.addObject("maxSell",maxPriceSell[0]);
         result.addObject("minBuy",minPriceBuy[0]);
 
-
         return result;
     }
 

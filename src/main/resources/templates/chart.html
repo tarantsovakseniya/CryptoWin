@@ -2,27 +2,25 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Crypto Win</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!--    <link rel="stylesheet" href="http://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>-->
+    <div th:replace="fragments/header :: page-start"></div>
+    <title>График изменения криптовалюты основных бирж</title>
+    <meta name="keywords" content="статистика изменений курса криптовалюты, курс криптовалюты сегодня, курсы криптовалют">
+    <meta name="description" content="
+    ➤ График изменения криптовалюты основных бирж
+    ✅ За сегодняшний день
+    ✅ За последнюю неделю
+    ✅ За последние две недели">
+
     <link type="text/css" rel="StyleSheet" href="http://bootstraptema.ru/plugins/2016/shieldui/style.css"/>
     <script src="http://bootstraptema.ru/plugins/jquery/jquery-1.11.3.min.js"></script>
     <script src="http://bootstraptema.ru/plugins/2016/shieldui/script.js"></script>
-
-
 </head>
 
-
 <body style="color:Black; background-color: #ccccb3" background=".../foneGreenClever.jpg/">
-
 
 <div th:replace="fragments/header :: top-navbar"></div>
 
 <div class="container my-4">
-
-
     <th:block th:switch="${error}">
         <div th:case="error" class="alert alert alert-dismissible fade show"
              style="background-color: #FFC0CB; width: 1100px "
@@ -66,10 +64,8 @@
                             <option th:if="${!state.equals('sell')}" th:value="sell">Курс продажи</option>
                         </th:block>
 
-
                     </select>
                 </div>
-
 
                 <div class="btn-group">
                     <select name="coinType" id="coinType" class="form-control form-control-lg">
@@ -81,10 +77,8 @@
                                     th:text="${coinType.getNameOfCoin()}"
                             ></option>
 
-
                     </select>
                 </div>
-
 
                 <div class="btn-group">
                     <select name="exchangeType" id="exchangeType"
@@ -97,11 +91,8 @@
                                     th:value="${exchangeType.getName()}"
                                     th:text="${exchangeType.getName()}"></option>
 
-
-
                     </select>
                 </div>
-
 
                 <div class="btn-group">
                     <select name="timeType" id="timeType" class="form-control form-control-lg">
@@ -113,19 +104,16 @@
                                 th:value="${timeType.getName()}"
                                 th:text="${timeType.getName()}"></option>
 
-
                     </select>
                 </div>
 
             </div>
-
 
             <div class="card-footer">
                 <div class="btn-group">
                     <button type="submit" class="btn btn-lg btn-info mr-auto">Подтвердить</button>
                 </div>
             </div>
-
 
         </div>
     </form>
@@ -150,7 +138,6 @@
                 </div>
             </div>
 
-
             <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
             <script src="https://code.highcharts.com/stock/highstock.js"></script>
             <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
@@ -174,8 +161,6 @@ arr = arr.slice(4,7);
 console.log(arr);
 var time = arr.join(" ");
 
-
-
 $.getJSON('/data?coinType=' + coin + '&exchangeType=' + exchange +
 '&timeType=' + time + '&state=' + state , function (main) {
 
@@ -189,9 +174,7 @@ data[i][1] = main[i][1];
 
 data.sort();
 
-
       Highcharts.stockChart('container', {
-
 
       rangeSelector: {
             selected: 1
@@ -225,15 +208,10 @@ data.sort();
     });
 });
 
-
-
-
             </script>
 
         </div>
     </card>
 </div>
-
-
 </body>
 </html>
