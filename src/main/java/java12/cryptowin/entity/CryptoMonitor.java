@@ -30,7 +30,7 @@ public class CryptoMonitor {
     @Column(name = "buying_rate")
     private double buyingRate;
 
-    @Column (name = "date_time")
+    @Column(name = "date_time")
     private LocalDateTime date;
 
     @Column(name = "selling_rate")
@@ -39,15 +39,15 @@ public class CryptoMonitor {
     public CryptoMonitor(CryptCoinType coinType, CryptoExchange exchange, double buyingRate, double sellingRate) {
         this.coinType = coinType;
         this.exchange = exchange;
-        this.buyingRate = buyingRate;
-        this.sellingRate = sellingRate;
+        this.buyingRate = Math.round(buyingRate * 100) / 100.00;
+        this.sellingRate = Math.round(sellingRate * 100) / 100.00;
     }
 
     public CryptoMonitor(CryptCoinType coinType, CryptoExchange exchange, double buyingRate, LocalDateTime date, double sellingRate) {
         this.coinType = coinType;
         this.exchange = exchange;
-        this.buyingRate = buyingRate;
+        this.buyingRate = Math.round(buyingRate * 100) / 100.00;
         this.date = date;
-        this.sellingRate = sellingRate;
+        this.sellingRate = Math.round(sellingRate * 100) / 100.00;
     }
 }

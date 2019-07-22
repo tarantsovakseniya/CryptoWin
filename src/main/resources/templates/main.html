@@ -1,43 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Crypto Win</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <div th:replace="fragments/header :: page-start"></div>
+    <title>Получение прибыли на биржах криптовалют - Crypto Benefit</title>
+    <meta http-equiv="refresh" content="30">
+    <meta name="keywords"
+          content="статистика изменений курса криптовалюты, курс криптовалюты сегодня, курсы криптовалют">
+    <meta name="description" content="
+    ➤ Получение прибыли на основных биржах криптовалют
+    ➤ Просчет максимально выгодных вариантов покупки и продажи криптовалюты
+    ➤ Графики изменения курса покупки и продажи криптовалют
+">
 </head>
 <body style="color:Black; background-color: #e7e8e8;">
 
 <div th:replace="fragments/header :: top-navbar"></div>
-<div class="container mt-3">
+<div class="container-fluid mt-3">
     <div class="card card-sm border-success mb-3" th:block th:each="cryptCoin:${cryptCoins}">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card-header" style="max-height: 5rem;">
+                    <div class="d-flex align-items-center">
+                        <h5 class="mr-auto p-3" th:text="${cryptCoin.getNameOfCoin()}"></h5>
+                        <a th:href="'/better-offer/?cryptCoin=' + ${cryptCoin}"
+                           class="btn btn-light btn-outline-success">Выгодные
+                            варианты</a>
+                    </div>
+                </div>
 
-        <div class="card-header" style="max-height: 5rem;">
-            <div class="d-flex align-items-center">
-                <h5 class="mr-auto p-3" th:text="${cryptCoin.getNameOfCoin()}"></h5>
-                <a th:href="'/better-offer/?cryptCoin=' + ${cryptCoin}" class="btn btn-light btn-outline-success">Выгодные варианты</a>
+                <div class="card-body">
+                    <table class="table table-bordered table-sm text-center">
+                        <thead class>
+                        <tr class="table-success">
+                            <th:block th:each="item : ${items}" th:if="${item.getCoinType()==cryptCoin}">
+                                <th>
+                                    <a th:href="'/stats/?cryptCoin=' + ${cryptCoin} + '&exchange=' +${item.getExchange()}"
+                                       th:text="${item.getExchange().name()}" target="_blank"/>
+                                    <a th:href="${item.getExchange().getUrl()}" target="_blank"><img
+                                            src="https://img.icons8.com/small/16/000000/external-link.png"></a></th>
+                            </th:block>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th:block th:each="item : ${items}" th:if="${item.getCoinType()==cryptCoin}">
+                                <td th:text="'$'+${item.getBuyingRate()}+ ' | ' + '$'+${item.getSellingRate()}">1000
+                                </td>
+                            </th:block>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-
-        <div class="card-body">
-
-            <table class="table table-bordered table-sm text-center">
-                <thead class>
-                <tr class="table-success">
-                    <th:block th:each="item : ${items}" th:if="${item.getCoinType()==cryptCoin}">
-                        <th><a th:href="${item.getExchange().getUrl()}" th:text="${item.getExchange().name()}" target="_blank"/></th>
-                    </th:block>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th:block th:each="item : ${items}" th:if="${item.getCoinType()==cryptCoin}">
-                        <td th:text="'$'+${item.getBuyingRate()}+ ' | ' + '$'+${item.getSellingRate()}">1000</td>
-                    </th:block>
-                </tr>
-                </tbody>
-            </table>
         </div>
     </div>
 </div>

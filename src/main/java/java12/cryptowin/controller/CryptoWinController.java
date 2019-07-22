@@ -1,21 +1,14 @@
 package java12.cryptowin.controller;
 
-import java12.cryptowin.entity.CryptoMonitor;
-import java12.cryptowin.entity.FormCalcBetterOffer;
-import java12.cryptowin.entity.enumeration.CryptCoinType;
-import java12.cryptowin.entity.enumeration.CryptoExchange;
-import java12.cryptowin.pojo.CryptoMonitorResult;
+import java12.cryptowin.entity.*;
+import java12.cryptowin.entity.enumeration.*;
 import java12.cryptowin.service.jpa.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +26,7 @@ public class CryptoWinController {
 
     @GetMapping(value = "/")
     public ModelAndView getMain() {
-        List<CryptoMonitorResult> items = cryptoMonitorService.getListForMailPage();
+        List<CryptoMonitor> items = cryptoMonitorService.getAllWithMaxLocalDateTime();
 
         ModelAndView result = new ModelAndView("main");
         result.addObject("items", items);
@@ -50,16 +43,11 @@ public class CryptoWinController {
 
         ModelAndView result = new ModelAndView("better-offer");
 
-        System.out.println(formCalc.toString());
+        List<CryptoMonitor> items = cryptoMonitorService.getAllWithMaxLocalDateTime();
 
-        List<CryptoMonitorResult> items = cryptoMonitorService.getListForMailPage();
+        Map<List<CryptoMonitor>, Double> betterOffers = betterOfferService.getBetterOffer(items, cryptCoin);
 
-        Map<List<CryptoMonitorResult>, Double> betterOffers = null;
-
-        if (buy == null) {
-            betterOffers = betterOfferService.getBetterOffer(items, cryptCoin);
-        } else {
-            betterOffers = betterOfferService.getBetterOfferNew(items, cryptCoin, buy);
+        if (buy != null) {
             betterOfferService.getCalc(formCalc, items, cryptCoin, buy);
         }
 

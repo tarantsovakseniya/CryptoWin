@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Better Offer</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <div th:replace="fragments/header :: page-start"></div>
+    <meta name="keywords" content="Перечень ключевых слов">
+    <meta name="description" content="Содержимое мета-тега «description»">
+    <meta http-equiv="refresh" content="30">
+    <title th:text="'Выгодные варианты покупки и продажи криптовалюты '+${cryptCoin.getNameOfCoin()}"></title>
+
     <link rel="stylesheet" href="http://bootstraptema.ru/plugins/2018/irs/ion.rangeSlider.css"/>
     <link rel="stylesheet" href="http://bootstraptema.ru/plugins/2018/irs/ion.rangeSlider.skin.css"/>
 
     <style>
-
         .btn-round-lg{
         border-radius: 25px;}
-
     </style>
 
 </head>
@@ -21,13 +20,13 @@
 
 <div th:replace="fragments/header :: top-navbar"></div>
 
-<div class="container mt-3 mb-3">
+<div class="container-fluid mt-3 mb-3">
     <div class="card card-sm">
 
         <div class="card-header">
             <div class="d-flex align-items-center">
-                <h5 class="mr-auto p-3"
-                    th:text="'Выгодные сделки для криптовалюты: '+${cryptCoin.getNameOfCoin()}"></h5>
+                <i><h1 class="mr-auto p-3"
+                    th:text="'Выгодные варианты покупки и продажи криптовалюты '+${cryptCoin.getNameOfCoin()}"></h1></i>
             </div>
         </div>
 
@@ -135,7 +134,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col align-self-center">
-                                <h5><p class="text-center">КАЛЬКУЛЯТОР РАСЧЕТА ПРИБЫЛИ С УЧЕТОМ КОМИССИЙ</p></h5>
+                                <h5><p class="text-center"><b>КАЛЬКУЛЯТОР РАСЧЕТА ПРИБЫЛИ С УЧЕТОМ КОМИССИЙ</b></p></h5>
                             </div>
                         </div>
                     </div>
@@ -144,71 +143,98 @@
                             <label for="wantToBuy"><b>СУММА ВВОДА, $</b></label>
                             <input type="text" class="form-control" name="wantToBuy" id="wantToBuy"
                                    placeholder="Введите сумму *"
-                                   th:value="${wantToBuy}">
-                        </div>
-                        <p class="text-center"><b>Данные о вводе $ для покупки криптовалюты</b></p>
-                        <div class="form-group">
-                            <label for="exchangeToBuy">БИРЖА ВВОДА $ И ПОКУПКИ КРИПТОВАЛЮТЫ</label>
-                            <select class="custom-select" required name="exchangeToBuy" id="exchangeToBuy">
-                                <option selected>-- выберите из списка --</option>
-                                <option th:each="item: ${items}"
-                                        th:value="${item}"
-                                        th:field="*{exchangeToBuy}"
-                                        th:text="${item.getName()}"
-                                ></option>
-                            </select>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="feeTaker">КОМИССИЯ ЗА ВВОД, $</label>
-                                <input type="text" class="form-control" name="feeTaker" id="feeTaker"
-                                       placeholder="Введите сумму *"
-                                       th:field="*{feeTaker}">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="addFeeTaker">ДОП. КОМИССИЯ (ЕСЛИ ЕСТЬ), $</label>
-                                <input type="text" class="form-control" id="addFeeTaker" name="addFeeTaker"
-                                       placeholder="Введите сумму *"
-                                       th:field="*{addFeeTaker}">
+                                   th:value="${wantToBuy}" required>
+                            <div class="invalid-feedback">
+                                Пожалуйста, введите сумму.
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="rangeBuy">ТОРГОВАЯ КОМИССИЯ, %</label>
-                            <input type="text" id="rangeBuy" name="rangeBuy"
-                                   th:field="*{rangeBuy}">
-                        </div>
-
-                        <p class="text-center"><b>Данные о продаже криптовалюты для вывода $</b></p>
-                        <div class="form-group">
-                            <label for="exchangeToSell">БИРЖА ПРОДАЖИ КРИПТОВАЛЮТЫ И ВЫВОДА $</label>
-                            <select class="custom-select" required name="exchangeToSell" id="exchangeToSell">
-                                <option selected>-- выберите из списка --</option>
-                                <option th:each="item: ${items}"
-                                        th:value="${item}"
-                                        th:field="*{exchangeToSell}"
-                                        th:text="${item.getName()}"
-                                ></option>
-                            </select>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="feeMaker">КОМИССИЯ ЗА ВЫВОД, $</label>
-                                <input type="text" class="form-control" id="feeMaker" name="feeMaker"
-                                       placeholder="Введите сумму *" th:field="*{feeMaker}">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <p class="text-center"><b>ДАННЫЕ О ВВОДЕ $ ДЛЯ ПОКУПКИ КРИПТОВАЛЮТЫ</b></p>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="exchangeToBuy">БИРЖА ВВОДА $ И ПОКУПКИ КРИПТОВАЛЮТЫ</label>
+                                            <select class="custom-select" name="exchangeToBuy" id="exchangeToBuy"
+                                                    required>
+                                                <option value="">-- выберите из списка --</option>
+                                                <option th:each="item: ${items}"
+                                                        th:value="${item}"
+                                                        th:field="*{exchangeToBuy}"
+                                                        th:text="${item.getName()}"
+                                                ></option>
+                                            </select>
+                                            <div class="invalid-feedback">Пожалуйста, выберите биржу.</div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="feeTaker">КОМИССИЯ ЗА  ВВОД, $</label>
+                                                <input type="text" class="form-control" name="feeTaker" id="feeTaker"
+                                                       placeholder="Введите сумму *"
+                                                       th:field="*{feeTaker}">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="addFeeTaker">ДОП. КОМИССИЯ (ЕСЛИ ЕСТЬ), $</label>
+                                                <input type="text" class="form-control" id="addFeeTaker"
+                                                       name="addFeeTaker"
+                                                       placeholder="Введите сумму *"
+                                                       th:field="*{addFeeTaker}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="rangeBuy">ТОРГОВАЯ КОМИССИЯ, %</label>
+                                            <input type="text" id="rangeBuy" name="rangeBuy"
+                                                   th:field="*{rangeBuy}">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label for="addFeeMaker">ДОП. КОМИССИЯ (ЕСЛИ ЕСТЬ), $</label>
-                                <input type="text" class="form-control" id="addFeeMaker" name="addFeeMaker"
-                                       placeholder="Введите сумму *"
-                                       th:field="*{addFeeMaker}">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <p class="text-center"><b>ДАННЫЕ О ПРОДАЖЕ КРИПТОВАЛЮТЫ ДЛЯ ВЫВОДА $</b></p>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="exchangeToSell">БИРЖА ПРОДАЖИ КРИПТОВАЛЮТЫ И ВЫВОДА $</label>
+                                            <select class="custom-select" name="exchangeToSell" id="exchangeToSell"
+                                                    required>
+                                                <option value="">-- выберите из списка --</option>
+                                                <option th:each="item: ${items}"
+                                                        th:value="${item}"
+                                                        th:field="*{exchangeToSell}"
+                                                        th:text="${item.getName()}"
+                                                ></option>
+                                            </select>
+                                            <div class="invalid-feedback">Пожалуйста, выберите биржу.</div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="feeMaker">КОМИССИЯ ЗА ВЫВОД, $</label>
+                                                <input type="text" class="form-control" id="feeMaker" name="feeMaker"
+                                                       placeholder="Введите сумму *" th:field="*{feeMaker}">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="addFeeMaker">ДОП. КОМИССИЯ (ЕСЛИ ЕСТЬ), $</label>
+                                                <input type="text" class="form-control" id="addFeeMaker"
+                                                       name="addFeeMaker"
+                                                       placeholder="Введите сумму *"
+                                                       th:field="*{addFeeMaker}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="rangeSell"><b>ТОРГОВАЯ КОМИССИЯ, %</b></label>
+                                            <input type="text" id="rangeSell" name="rangeSell"
+                                                   th:field="*{rangeSell}">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="rangeSell"><b>ТОРГОВАЯ КОМИССИЯ, %</b></label>
-                            <input type="text" id="rangeSell" name="rangeSell"
-                                   th:field="*{rangeSell}">
                         </div>
                     </div>
+
                     <div class="row justify-content-center mb-4">
                         <div class="col align-self-center col-2 mb-3">
                             <button type="submit" class="btn btn-success btn-round-lg btn-lg">
@@ -282,6 +308,11 @@ min: 0.0,
  step: 0.1,
  prettify_enabled: true
  });
+
+
+
+
+
 
 
 

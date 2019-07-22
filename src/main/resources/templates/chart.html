@@ -17,7 +17,6 @@
 
 <body style="color:Black; background-color: #e7e8e8;">
 
-
 <div th:replace="fragments/header :: top-navbar"></div>
 
 <div class="container-fluid my-4" >
@@ -25,7 +24,7 @@
 
     <th:block th:switch="${error}">
         <div th:case="error" class="alert alert alert-dismissible fade show"
-             style="background-color: #FFC0CB; "
+             style="background-color: #FFC0CB; width: 1100px "
              role="alert">
             <h4 class="alert-heading">Возникла ошибка</h4>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -77,12 +76,12 @@
                         <div class="btn-group btn-block">
                             <select name="coinType" id="coinType" class="form-control form-control-lg">
 
-                                <option th:unless="${coin}" th:value="''">Выбрать валюту</option>
-                                <option th:if="${coin!=''}" th:value="${coin}" th:text="${coin}"></option>
-                                <option th:each="coinType : ${coins}" th:unless="${coinType.getNameOfCoin()} == ${coin}"
-                                        th:value="${coinType.getNameOfCoin()}"
-                                        th:text="${coinType.getNameOfCoin()}"
-                                ></option>
+                            <option th:unless="${coin}" th:value="''">Выбрать валюту</option>
+                            <option th:if="${coin!=''}" th:value="${coin}" th:text="${coin}"></option>
+                            <option th:each="coinType : ${coins}" th:unless="${coinType.getNameOfCoin()} == ${coin}"
+                                    th:value="${coinType.getNameOfCoin()}"
+                                    th:text="${coinType.getNameOfCoin()}"
+                            ></option>
 
 
                             </select>
@@ -138,7 +137,7 @@
         </div>
     </form>
 
-    <card class="card">
+    <card class="card" style="width: 1100px">
 
         <div class="card-header text-center">
             <h3 th:unless="${error}" th:text=" 'Данные на бирже ' + ${exchange} + ' ' + ${time}"></h3>

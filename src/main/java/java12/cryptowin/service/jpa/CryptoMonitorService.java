@@ -2,7 +2,6 @@ package java12.cryptowin.service.jpa;
 
 import java12.cryptowin.entity.CryptoMonitor;
 import java12.cryptowin.entity.enumeration.TimeType;
-import java12.cryptowin.pojo.CryptoMonitorResult;
 import java12.cryptowin.repository.CryptoMonitorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +34,7 @@ public class CryptoMonitorService {
         repository.deleteById(id);
     }
 
-    public List<CryptoMonitorResult> getListForMailPage() {
+    public List<CryptoMonitor> getAllWithMaxLocalDateTime() {
         return repository.findAllNew();
     }
 
@@ -46,7 +45,6 @@ public class CryptoMonitorService {
     public List<CryptoMonitor> fillListToUserRequest(String coinType, String timeType, String exchangeType) {
         List<CryptoMonitor> all = repository.findAll();
 
-        System.out.println(all.size());
         CryptoMonitor cryptoMonitor;
         LocalDateTime localDate = LocalDateTime.now();
         if (timeType.equals(TimeType.TWO_WEEK.getName())) {
@@ -58,7 +56,6 @@ public class CryptoMonitorService {
         if (timeType.equals(TimeType.TODAY.getName())) {
             localDate = localDate.minusHours(24);
         }
-
 
         int size = all.size();
         List<CryptoMonitor> result = new ArrayList<>();
