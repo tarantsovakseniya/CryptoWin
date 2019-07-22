@@ -37,7 +37,7 @@
                 </button>
                 <p class="lead" th:text="'Вы уже подписаны на ' + ${coin.getNameOfCoin()}"></p>
                 <hr class="my-4">
-                <p class="mb-0">Чтобы перейти к списку своих подписок перейдите на вкладку <a href="/userProfile" class="alert-link">
+                <p class="mb-0">Чтобы перейти к списку своих подписок перейдите на вкладку <a href="/user" class="alert-link">
                     мои подписки.</a></p>
             </div>
 
@@ -50,7 +50,7 @@
                 <p class="lead" th:text="'Теперь вы подписанны на валюту ' + ${coin.getNameOfCoin()}"></p>
                 <hr class="my-4">
                 <p class="mb-0">Чтобы перейти к списку своих подписок перейдите на вкладку
-                    <a href="/userProfile" class="alert-link">мои подписки</a>.</p>
+                    <a href="/user" class="alert-link">мои подписки</a>.</p>
             </div>
         </th:block>
     </th:block>
@@ -65,7 +65,7 @@
             между покупкой и продажей.</p>
     </div>
 
-    <form method="post" action="/subscription">
+    <form method="post" action="/user/subscription">
 
         <div class="card mt-1 mb-3">
             <div class="card-header">
@@ -107,7 +107,7 @@
                     <button th:if="${user}" type="submit"
                             class="btn btn-success float-right">Оформить подписку
                     </button>
-                    <a th:unless="${user}" href="/subscription?error=error"
+                    <a th:unless="${user}" href="/user/subscription?error=error"
                        class="btn btn-success float-right"> Оформить подписку</a>
 
                 </div>
