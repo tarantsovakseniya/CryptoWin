@@ -3,6 +3,7 @@ package java12.cryptowin.controller;
 import java12.cryptowin.entity.Subscription;
 import java12.cryptowin.entity.User;
 import java12.cryptowin.entity.enumeration.CryptCoinType;
+import java12.cryptowin.entity.enumeration.IconType;
 import java12.cryptowin.service.jpa.SubscriptionService;
 import java12.cryptowin.service.jpa.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
-@RequestMapping ("/user")
+@RequestMapping("/user")
 public class ProfileController {
     @Autowired
     private UserService userService;
@@ -28,18 +29,12 @@ public class ProfileController {
     public ModelAndView getProfile() {
         ModelAndView view = new ModelAndView("security/user-profile");
         view.addObject("user", userService.getCurrentUser());
-        view.addObject("subscription", subscriptionService.getByUserId(userService.getCurrentUser().getId()));
+        List<Subscription> subscriptions = subscriptionService.getByUser(userService.getCurrentUser());
+        view.addObject("subscription", subscriptionService.getByUser(userService.getCurrentUser()));
         return view;
 
     }
 
-    @GetMapping("/userN")
-    public ModelAndView getTest() {
-        ModelAndView view = new ModelAndView("security/user");
-        view.addObject("user", userService.getCurrentUser());
-        return view;
-
-    }
 
     @GetMapping("/delete")
     public ModelAndView deleteSubscription(@RequestParam("id") long id) {
@@ -49,7 +44,7 @@ public class ProfileController {
             subscriptionService.deleteById(id);
             view.addObject("user", userService.getCurrentUser());
             view.addObject("error", "success");
-            view.addObject("subscription", subscriptionService.getByUserId(userService.getCurrentUser().getId()));
+            view.addObject("subscription", subscriptionService.getByUser(userService.getCurrentUser()));
         }
 
         return view;
@@ -63,15 +58,32 @@ public class ProfileController {
         view.addObject("s", subscription);
         view.addObject("coins", CryptCoinType.values());
         view.addObject("user", userService.getCurrentUser());
-        view.addObject("subscription", subscriptionService.getByUserId(userService.getCurrentUser().getId()));
+        view.addObject("subscription", subscriptionService.getByUser(userService.getCurrentUser()));
 
         return view;
     }
 
-    @GetMapping("/changeData")
-    public ModelAndView getFortToChange() {
+    @GetMapping("/changeIcon")
+    public ModelAndView getNewIcon(@RequestParam(name = "icon") IconType iconType){
         ModelAndView view = new ModelAndView("security/user-profile");
-        view.addObject("ref", "info");
+        User user = userService.getCurrentUser();
+        user.setIcon(iconType);
+        userService.update(user);
+        view.addObject("subscription", subscriptionService.getByUser(userService.getCurrentUser()));
+        view.addObject("user", user);
+        view.addObject("error", "add");
+        return view;
+    }
+
+    @GetMapping("/changeData")
+    public ModelAndView getFortToChange(@RequestParam(name = "ref", required = false) String ref) {
+        ModelAndView view = new ModelAndView("security/user-profile");
+        if (ref == null) {
+            view.addObject("ref", "info");
+        } else {
+            view.addObject("ref", ref);
+            view.addObject("icons", IconType.values());
+        }
         view.addObject("user", userService.getCurrentUser());
         return view;
     }
@@ -88,13 +100,13 @@ public class ProfileController {
 
         ModelAndView view = new ModelAndView("security/user-profile");
         view.addObject("user", user);
-        view.addObject("subscription", subscriptionService.getByUserId(user.getId()));
+        view.addObject("subscription", subscriptionService.getByUser(user));
         view.addObject("error", "add");
         return view;
     }
 
 
-    @PostMapping("/subscription/change")
+    @PostMapping("/change")
     public ModelAndView changeSubscription(@RequestParam("coinType") CryptCoinType coinType,
                                            @RequestParam("minResult") Double min,
                                            @RequestParam("maxResult") Double max,
@@ -112,7 +124,7 @@ public class ProfileController {
                 subscriptionService.deleteById(id);
                 Subscription newSome = new Subscription(id, userService.getCurrentUser(), coinType, min, max, profit);
                 subscriptionService.save(newSome);
-                view.addObject("subscription", subscriptionService.getByUserId(userService.getCurrentUser().getId()));
+                view.addObject("subscription", subscriptionService.getByUser(userService.getCurrentUser()));
                 view.addObject("error", "add");
             }
         }
@@ -148,16 +160,18 @@ public class ProfileController {
             error = "incorrect";
         } else {
 
-            List<Subscription> subscriptions = subscriptionService.getByUserId(user.getId());
+            List<Subscription> subscriptions = subscriptionService.getByUser(user);
             Subscription subscription;
             boolean mark = true;
 
-            for (Subscription s : subscriptions) {
-                if (s.getMinResult() == minResult &&
-                        s.getMaxResult() == maxResult &&
-                        s.getCryptCoinType() == coinType &&
-                        s.getProfit() == profit) {
-                    mark = false;
+            if (subscriptions != null) {
+                for (Subscription s : subscriptions) {
+                    if (s.getMinResult() == minResult &&
+                            s.getMaxResult() == maxResult &&
+                            s.getCryptCoinType() == coinType &&
+                            s.getProfit() == profit) {
+                        mark = false;
+                    }
                 }
             }
 
@@ -166,8 +180,7 @@ public class ProfileController {
                 subscription = new Subscription(user, coinType, minResult, maxResult, profit);
                 subscriptionService.save(subscription);
                 error = "success";
-            }
-            else {
+            } else {
                 error = "exist";
             }
         }

@@ -1,10 +1,12 @@
 package java12.cryptowin.service.jpa;
 
 import java12.cryptowin.entity.Subscription;
+import java12.cryptowin.entity.User;
 import java12.cryptowin.repository.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,6 +23,17 @@ public class SubscriptionService {
 
     public void deleteById(long id){subscriptionRepository.deleteById(id);}
 
-    public List<Subscription> getByUserId(long id){ return subscriptionRepository.getByUserId(id);}
+    public List<Subscription> getByUser(User user){
+        List<Subscription> all = subscriptionRepository.findAll();
+        List<Subscription> result = new ArrayList<>();
+
+        all.forEach(subscription -> {
+            if(subscription.getUser().equals(user)){
+                result.add(subscription);
+            }
+        });
+
+        return result.size()== 0 ? null : result ;
+    }
 
 }

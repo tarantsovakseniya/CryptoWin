@@ -61,7 +61,8 @@
                         <div class="form-group">
                             <label for="coinType">Выберите валюту</label>
                             <select class="custom-select" required name="coinType" id="coinType">
-                                <option selected th:text="${s.getCryptCoinType().getNameOfCoin()}"></option>
+                                <option selected th:value="${s.getCryptCoinType()}"
+                                        th:text="${s.getCryptCoinType().getNameOfCoin()}"></option>
                                 <option th:each="coinType : ${coins}" th:unless="${coinType} == ${s.getCryptCoinType()}"
                                         th:value="${coinType}"
                                         th:text="${coinType.getNameOfCoin()}"
@@ -107,7 +108,7 @@
 
         <div class="container-fluid my-4 mt-3">
 
-            <div class="row">
+            <div class="row" style="min-height: 500px">
 
                 <div class="col-3">
 
@@ -119,10 +120,16 @@
                         <div class="card-body">
 
                             <div class="text-center">
-                                <img class="img-fluid rounded-circle"
+
+                                <img th:if="${user.getIcon()} == null" class="img-fluid rounded-circle"
                                      src="http://bootstraptema.ru/snippets/icons/2017/smtb/elliot.jpg"
                                      alt="Card image cap"
                                      style="width: 200px; height: 200px border-radius:50%;">
+                                <img th:if="${user.getIcon()} != null" class="img-fluid rounded-circle"
+                                     th:src="${user.getIcon().getUrl()}"
+                                     alt="Card image cap"
+                                     style="width: 200px; height: 200px border-radius:50%;">
+
 
                                 <hr class="my-4">
 
@@ -150,14 +157,20 @@
                 <div class="col-9">
 
                     <div class="card rounded border-success">
-                        <div class="card-header">
-                            <div th:unless="${subscription}" class=" card border-success mb-3">
+                        <div class="card-header text-center">
+                            <div th:unless="${subscription}">
                                 <h2>Нет оформленных подписок</h2>
                             </div>
-
                             <h3 th:if="${subscription}">Ваши подписки</h3>
                         </div>
-                        <div th:if="${subscription}" class="card-body">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <a href="/user/subscription"
+                                   class="btn btn-light btn-block btn-outline-success">Оформить подписку
+                                </a>
+                            </div>
+
+                            <hr class="my-4">
 
                             <ul>
                                 <th:block th:each="sub:${subscription}">
@@ -229,6 +242,14 @@
 
                     <div class="card-body">
 
+                        <div class="text-center">
+                            <a href="/user/changeData?ref=icon"
+                               class="btn btn-light btn-block btn-outline-success">Изменить фото профиля
+                            </a>
+                        </div>
+
+                        <hr class="my-4">
+
                         <div class="form-group row">
                             <label for="email" class="col-sm-2 col-form-label">Email</label>
                             <div class="col-sm-10">
@@ -255,11 +276,47 @@
                                    name="lastname" id="lastname" th:value="${user.getLastName()}">
                         </div>
                     </div>
+
+
                     <div class="card-footer">
                         <button type="submit" class="btn btn-success float-right">Подтвердить</button>
                     </div>
                 </div>
             </form>
+        </div>
+    </th:block>
+
+    <th:block th:case="icon">
+        <div class="container my-4 mt-3">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>Выберете фото для профиля</h3></div>
+
+                <div class="card-body">
+
+                    <ul class="list-group">
+                        <li class="list-group-item" th:each="icon: ${icons}">
+                            <div class="row">
+
+                                <div class="col">
+                                    <img class="img-fluid rounded-circle"
+                                         th:src="${icon.getUrl()}"
+                                         alt="Card image cap"
+                                         style="width: 100px; height: 100px border-radius:50%;">
+                                </div>
+
+                                <div class="col">
+                                    <a th:href="'/user/changeIcon?icon=' + ${icon}" class="btn btn-light btn-block btn-outline-success" >Выбрать</a>
+                                </div>
+
+                            </div>
+                        </li>
+                    </ul>
+
+
+                </div>
+            </div>
+
         </div>
     </th:block>
 </th:block>
