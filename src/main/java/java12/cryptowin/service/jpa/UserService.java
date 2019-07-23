@@ -65,4 +65,6 @@ public class UserService {
 
         return userRepository.getUserByEmail(currentUserEmail);
     }
+
+    public User getById(long id){return userRepository.getOne(id);}
 }

@@ -9,10 +9,7 @@ import org.springframework.scheduling.annotation.*;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @EnableScheduling
 public class SubscriberMailSender {
@@ -31,9 +28,10 @@ public class SubscriberMailSender {
 
     @Scheduled(cron = "0 0 9 * * ?")
     public void sendEmail() {
-        Map<User, StringBuilder> result = getNeedEmailUsers();
+        Map<Long, StringBuilder> result = getNeedEmailUsers();
 
-        result.keySet().forEach((user -> {
+        result.keySet().forEach((id -> {
+            User user = userService.getById(id);
             try {
                 MimeMessage message = emailSender.createMimeMessage();
 
@@ -43,10 +41,10 @@ public class SubscriberMailSender {
 
                 helper.setTo(user.getEmail());
                 helper.setSubject("Crypto-Benefit Report");
-                helper.setText("Добрый!\n" +
-                        "Вы получил это письмо, т.к. ранее подписались на обновления на нашем сайте : http://crypto-benefit.com/\n" +
-                        "Сейчас самое время совершить сделку, ведь мы нашли для Вас варианты, соответствующие Вашим желаниям в пределах 5%: ");
-                helper.setText(String.valueOf(result.get(user)));
+                helper.setText("Добрый день!\n\n" +
+                        "Вы получили это письмо, т.к. ранее подписались на обновления на нашем сайте : http://crypto-benefit.com/\n" +
+                        "Сейчас самое время совершить сделку, ведь мы нашли для Вас варианты, соответствующие Вашим желаниям в пределах 5%: \n\n" +
+                        /*+*/ result.get(user.getId()).toString());
                 emailSender.send(message);
             } catch (MessagingException e) {
                 e.printStackTrace();
@@ -54,8 +52,8 @@ public class SubscriberMailSender {
         }));
     }
 
-    private Map<User, StringBuilder> getNeedEmailUsers() {
-        Map<User, StringBuilder> result = new HashMap<>();
+    private Map<Long, StringBuilder> getNeedEmailUsers() {
+        Map<Long, StringBuilder> result = new HashMap<>();
 
         List<CryptoMonitor> cryptoMonitorList = withCheckDateList();
         List<Subscription> subscriptionList = subscriptionService.getAll();
@@ -67,20 +65,20 @@ public class SubscriberMailSender {
         return result;
     }
 
-    private void mergeMap(Map<User, StringBuilder> result, Map<User, StringBuilder> afterCheckMap) {
+    private void mergeMap(Map<Long, StringBuilder> result, Map<Long, StringBuilder> afterCheckMap) {
         afterCheckMap.forEach((keyAfterCheck, valueAfterCheck) -> {
             result.merge(keyAfterCheck, valueAfterCheck, (keyResult, valueResult) -> keyResult).append(valueAfterCheck);
         });
     }
 
-    private Map<User, StringBuilder> checkMinResult(Map<User, StringBuilder> result, List<CryptoMonitor> cryptoMonitorList, List<Subscription> subscriptionList) {
+    private Map<Long, StringBuilder> checkMinResult(Map<Long, StringBuilder> result, List<CryptoMonitor> cryptoMonitorList, List<Subscription> subscriptionList) {
         for (CryptoMonitor cryptoMonitor : cryptoMonitorList) {
             for (Subscription subscription : subscriptionList) {
                 if (cryptoMonitor.getCoinType() == subscription.getCryptCoinType()
                         & cryptoMonitor.getSellingRate() == subscription.getMinResult() * 0.95
                         & cryptoMonitor.getSellingRate() <= subscription.getMaxResult() * 1.05) {
                     StringBuilder stringBuilder = new StringBuilder();
-                    result.put(subscription.getUser(), stringBuilder
+                    result.put(subscription.getUser().getId(), stringBuilder
                             .append("\nМинимальная цена (в соответствии с запросом), по которой Вы можете совершить покупку в размере: $")
                             .append(cryptoMonitor.getSellingRate())
                             .append(" была за последние 24 часа выставлена на бирже ")
@@ -92,14 +90,14 @@ public class SubscriberMailSender {
         return result;
     }
 
-    private Map<User, StringBuilder> checkMaxResult(Map<User, StringBuilder> result, List<CryptoMonitor> cryptoMonitorList, List<Subscription> subscriptionList) {
+    private Map<Long, StringBuilder> checkMaxResult(Map<Long, StringBuilder> result, List<CryptoMonitor> cryptoMonitorList, List<Subscription> subscriptionList) {
         for (CryptoMonitor cryptoMonitor : cryptoMonitorList) {
             for (Subscription subscription : subscriptionList) {
                 if (cryptoMonitor.getCoinType() == subscription.getCryptCoinType()
                         & cryptoMonitor.getBuyingRate() >= subscription.getMaxResult() * 0.95
                         & cryptoMonitor.getBuyingRate() <= subscription.getMaxResult() * 1.05) {
                     StringBuilder stringBuilder = new StringBuilder();
-                    result.put(subscription.getUser(), stringBuilder
+                    result.put(subscription.getUser().getId(), stringBuilder
                             .append("\nМаксимальная цена (в соответствии с запросом), по которой Вы можете совершить продажу в размере: $")
                             .append(cryptoMonitor.getBuyingRate())
                             .append(" была за последние 24 часа выставлена на бирже ")
@@ -111,7 +109,7 @@ public class SubscriberMailSender {
         return result;
     }
 
-    private Map<User, StringBuilder> checkProfit(Map<User, StringBuilder> result, List<CryptoMonitor> cryptoMonitorList, List<Subscription> subscriptionList) {
+    private Map<Long, StringBuilder> checkProfit(Map<Long, StringBuilder> result, List<CryptoMonitor> cryptoMonitorList, List<Subscription> subscriptionList) {
         for (CryptoMonitor cryptoMonitor : cryptoMonitorList) {
             for (CryptoMonitor monitor : cryptoMonitorList) {
                 for (Subscription subscription : subscriptionList) {
@@ -119,16 +117,16 @@ public class SubscriberMailSender {
                             & (cryptoMonitor.getBuyingRate() - monitor.getSellingRate()) >= subscription.getProfit() * 0.95
                             & (cryptoMonitor.getBuyingRate() - monitor.getSellingRate()) <= subscription.getProfit() * 1.1) {
                         StringBuilder stringBuilder = new StringBuilder();
-                        result.put(subscription.getUser(), stringBuilder
+                        result.put(subscription.getUser().getId(), stringBuilder
                                 .append("\nЖелаемый профит ")
                                 .append(subscription.getProfit())
-                                .append(" может быть получен благодаря:\n покупке по цене: ")
+                                .append(" может быть получен благодаря:\n     покупке по цене: ")
                                 .append(monitor.getSellingRate())
-                                .append(" на бирже ")
+                                .append("$ на бирже ")
                                 .append(monitor.getExchange())
-                                .append("\n продаже по цене: ")
+                                .append("\n     продаже по цене: ")
                                 .append(cryptoMonitor.getBuyingRate())
-                                .append(" на бирже ")
+                                .append("$ на бирже ")
                                 .append(cryptoMonitor.getExchange()));
                     }
                 }
