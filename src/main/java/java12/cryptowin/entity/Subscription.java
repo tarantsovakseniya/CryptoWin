@@ -50,4 +50,15 @@ public class Subscription {
         this.profit = profit;
     }
 
+    @Override
+    public String toString() {
+        return "Subscription{" +
+                "id=" + id +
+                ", user=" + user +
+                ", cryptCoinType=" + cryptCoinType +
+                ", minResult=" + minResult +
+                ", maxResult=" + maxResult +
+                ", profit=" + profit +
+                '}';
+    }
 }
