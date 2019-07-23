@@ -4,7 +4,7 @@
 <head>
     <div th:replace="fragments/header :: page-start"></div>
     <title th:text="'Курс ' +${cryptMonitor.getCoinType()}+ ' на бирже ' + ${cryptMonitor.getExchange()}"></title>
-    <meta http-equiv="refresh" content="30">
+    <meta http-equiv="refresh" content="300">
     <meta name="keywords"
           content="курс криптовалюты к доллару, курс покупки криптовалюты, курс продажи криптовалюты, курс криптовалюты сегодня, курс криптовалюты, курсы криптовалют">
     <meta name="description" content="
@@ -19,7 +19,7 @@
 <div th:replace="fragments/header :: top-navbar"></div>
 
 <div class="container-fluid mt-3">
-    <div class="card">
+    <div class="card border-success">
         <div class="row">
             <div class="col-sm-12">
                 <div class="card-header">
