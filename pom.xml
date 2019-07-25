@@ -93,6 +93,13 @@
 			<version>2.8.5</version>
 		</dependency>
 
+		<!-- SiteMap -->
+		<dependency>
+			<groupId>com.google.code</groupId>
+			<artifactId>sitemapgen4j</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
