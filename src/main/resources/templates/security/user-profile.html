@@ -8,6 +8,8 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!--    <link rel="stylesheet" href="http://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>-->
     <link type="text/css" rel="StyleSheet" href="http://bootstraptema.ru/plugins/2016/shieldui/style.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body style="color:Black; background-color: #e7e8e8;">
 
@@ -16,7 +18,7 @@
 
     <th:block th:if="${error}">
         <th:block th:switch="${error}">
-            <div th:case="incorrect" class="alert alert alert-dismissible fade show" style="background-color: #FFC0CB"
+            <div th:case="incorrect" class="alert alert-dismissible fade show" style="background-color: #FFC0CB"
                  role="alert">
                 <h4 class="alert-heading">Возникла ошибка</h4>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -27,7 +29,7 @@
                 <p class="mb-0">Попробуйте еще раз.</p>
             </div>
 
-            <div th:case="add" class="alert alert-successes alert-dismissible show"
+            <div th:case="add" class="alert alert-dismissible fade show"
                  style="background-color: #98FB98"
                  role="alert">
                 <div class="alert-heading">
@@ -53,6 +55,7 @@
             </div>
         </th:block>
     </th:block>
+
 </div>
 
 <th:block th:switch="${ref}">
@@ -72,7 +75,8 @@
                             <select class="custom-select" required name="coinType" id="coinType">
                                 <option selected th:value="${s.getCryptCoinType()}"
                                         th:text="${s.getCryptCoinType().getNameOfCoin()}"></option>
-                                <option th:each="coinType : ${coins}" th:unless="${coinType} == ${s.getCryptCoinType()}"
+                                <option th:each="coinType : ${coins}"
+                                        th:unless="${coinType} == ${s.getCryptCoinType()}"
                                         th:value="${coinType}"
                                         th:text="${coinType.getNameOfCoin()}"
                                 ></option>
@@ -269,7 +273,8 @@
 
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control from-control-sm" name="password" id="password"
+                            <input type="password" class="form-control from-control-sm" name="password"
+                                   id="password"
                                    th:value="${user.getPassword()}">
                         </div>
 
@@ -330,9 +335,6 @@
         </div>
     </th:block>
 </th:block>
-
-
-</div>
 
 </body>
 </html>
