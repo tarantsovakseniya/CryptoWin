@@ -144,10 +144,10 @@ public class ProfileController {
     }
 
     @PostMapping("/subscription")
-    public ModelAndView getAdd(@RequestParam("minResult") Double minResult,
-                               @RequestParam("maxResult") Double maxResult,
-                               @RequestParam("coinType") CryptCoinType coinType,
-                               @RequestParam("profit") Double profit) {
+    public ModelAndView getAdd(@RequestParam("minResult") String minResult,
+                               @RequestParam("maxResult") String maxResult,
+                               @RequestParam("coinType") String coinType,
+                               @RequestParam("profit") String profit) {
 
         ModelAndView result = new ModelAndView("subscription/subscription");
         result.addObject("user", userService.getCurrentUser());
@@ -156,7 +156,7 @@ public class ProfileController {
 
         String error = null;
         User user = userService.getCurrentUser();
-        if (minResult == null || maxResult == null || coinType == null) {
+        if (minResult.equals("") || maxResult.equals("") || coinType.equals("") || profit.equals("")) {
             error = "incorrect";
         } else {
 
@@ -164,12 +164,16 @@ public class ProfileController {
             Subscription subscription;
             boolean mark = true;
 
+            double minDouble = Double.parseDouble(minResult.replace(",","."));
+            double maxDouble = Double.parseDouble(maxResult.replace(",","."));
+            double profitDouble = Double.parseDouble(profit.replace(",","."));
+
             if (subscriptions != null) {
                 for (Subscription s : subscriptions) {
-                    if (s.getMinResult() == minResult &&
-                            s.getMaxResult() == maxResult &&
-                            s.getCryptCoinType() == coinType &&
-                            s.getProfit() == profit) {
+                    if (s.getMinResult() == minDouble &&
+                            s.getMaxResult() ==  maxDouble &&
+                            s.getCryptCoinType() == CryptCoinType.valueOf(coinType) &&
+                            s.getProfit() == profitDouble) {
                         mark = false;
                     }
                 }
@@ -177,7 +181,8 @@ public class ProfileController {
 
             if (mark) {
 
-                subscription = new Subscription(user, coinType, minResult, maxResult, profit);
+                subscription = new Subscription(user, CryptCoinType.valueOf(coinType), minDouble,
+                        maxDouble,profitDouble);
                 subscriptionService.save(subscription);
                 error = "success";
             } else {
