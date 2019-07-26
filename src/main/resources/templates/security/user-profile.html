@@ -12,39 +12,48 @@
 <body style="color:Black; background-color: #e7e8e8;">
 
 <div th:replace="fragments/header :: top-navbar"></div>
+<div class="container-fluid my-4 ">
 
-<th:block th:if="${error}" th:switch="${error}">
-    <div th:case="incorrect" class="alert alert alert-dismissible fade show" style="background-color: #FFC0CB"
-         role="alert">
-        <h4 class="alert-heading">Возникла ошибка</h4>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <p class="lead">Неверно введены ключевые данные!</p>
-        <hr class="my-4">
-        <p class="mb-0">Попробуйте еще раз.</p>
-    </div>
+    <th:block th:if="${error}">
+        <th:block th:switch="${error}">
+            <div th:case="incorrect" class="alert alert alert-dismissible fade show" style="background-color: #FFC0CB"
+                 role="alert">
+                <h4 class="alert-heading">Возникла ошибка</h4>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <p class="lead">Неверно введены ключевые данные!</p>
+                <hr class="my-4">
+                <p class="mb-0">Попробуйте еще раз.</p>
+            </div>
 
-    <div th:case="add" class="alert  alert-dismissible fade show" style="background-color: #98FB98"
-         role="alert">
-        <h4 class="alert-heading">Операция завершена успешно</h4>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <p class="lead"> Данные изменены</p>
+            <div th:case="add" class="alert alert-successes alert-dismissible show"
+                 style="background-color: #98FB98"
+                 role="alert">
+                <div class="alert-heading">
+                    <h4>Операция завершена успешно</h4>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <hr class="my-4">
+                <p class="lead"> Данные изменены</p>
 
-    </div>
+            </div>
 
-    <div th:case="success" class="alert  alert-dismissible fade show" style="background-color: #98FB98"
-         role="alert">
-        <h4 class="alert-heading">Операция завершена успешно</h4>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <p class="lead" th:text="'Подписка удалена'"></p>
+            <div th:case="success" class="alert alert-dismissible fade show" role="alert"
+                 style="background-color: #98FB98">
+                <h4 class="alert-heading">Операция завершена успешно</h4>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <hr class="my-4">
+                <p class="lead" th:text="'Подписка удалена'"></p>
 
-    </div>
-</th:block>
+            </div>
+        </th:block>
+    </th:block>
+</div>
 
 <th:block th:switch="${ref}">
 
@@ -234,7 +243,7 @@
 
     <th:block th:case="info">
         <div class="container my-4 mt-3">
-            <form method="post" action="/userProfile/changeData">
+            <form method="post" action="/user/changeData">
                 <div class="card ml-auto mr-auto" style="max width: 600px;">
                     <div class="card-header">
                         Редактирование данных
@@ -306,7 +315,8 @@
                                 </div>
 
                                 <div class="col">
-                                    <a th:href="'/user/changeIcon?icon=' + ${icon}" class="btn btn-light btn-block btn-outline-success" >Выбрать</a>
+                                    <a th:href="'/user/changeIcon?icon=' + ${icon}"
+                                       class="btn btn-light btn-block btn-outline-success">Выбрать</a>
                                 </div>
 
                             </div>
