@@ -13,6 +13,21 @@
     <style>
         .btn-round-lg{
         border-radius: 25px;}
+
+    .modal-custom {
+      width: 90%;
+      height: 90%;
+      padding: 0;
+    }
+    .modal-content-custom {
+      height: 100%;
+      min-height: 100%;
+      border-radius: 0;
+    }
+    .modal-body {
+      height: 70%;
+    }
+
     </style>
 
 </head>
@@ -26,7 +41,8 @@
         <div class="card-header">
             <div class="d-flex align-items-center">
                 <i><h1 class="mr-auto p-3"
-                    th:text="'Выгодные варианты покупки и продажи криптовалюты '+${cryptCoin.getNameOfCoin()}"></h1></i>
+                       th:text="'Выгодные варианты покупки и продажи криптовалюты '+${cryptCoin.getNameOfCoin()}"></h1>
+                </i>
             </div>
         </div>
 
@@ -53,11 +69,11 @@
                             + Комиссия
                         </button>
                         <!-- Modal -->
-                        <div class="modal fade bd-example-modal-lg" tabindex="-1"
-                             aria-labelledby="myLargeModalLabel" aria-hidden="true" id="myModalSell" role="dialog"
+                        <div class="modal fade bd-example-modal-xl" tabindex="-1"
+                             aria-labelledby="myExtraLargeModalLabel" aria-hidden="false" id="myModalSell" role="dialog"
                              th:attrappend="id=${betterOffer.get(1).getExchange()}">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
+                            <div class="modal-dialog modal-xl modal-custom">
+                                <div class="modal-content modal-content-custom">
                                     <div class="modal-header">
                                         <h5 class="modal-title">
                                             <span th:text="${betterOffer.get(1).getExchange().getName()} + ' условия и комиссия'"></span>
@@ -67,9 +83,9 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <iframe th:src="${betterOffer.get(1).getExchange().getLinkWithDetails()}"
-                                                style="width:100%; height:100%;margin:0px;border:0px"></iframe>
-
+                                            <iframe th:src="${betterOffer.get(1).getExchange().getLinkWithDetails()}"
+                                                    style="width:100%; height:100%;margin:0px;border:0px;">
+                                            </iframe>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
@@ -90,11 +106,11 @@
                             + Комиссия
                         </button>
                         <!-- Modal -->
-                        <div class="modal fade bd-example-modal-lg p-3" tabindex="-1"
-                             aria-labelledby="myLargeModalLabel" aria-hidden="true" id="myModalBuy" role="dialog"
+                        <div class="modal fade bd-example-modal-xl" tabindex="-1"
+                             aria-labelledby="myExtraLargeModalLabel" aria-hidden="false" id="myModalBuy" role="dialog"
                              th:attrappend="id=${betterOffer.get(0).getExchange()}">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
+                            <div class="modal-dialog modal-xl modal-custom">
+                                <div class="modal-content modal-content-custom">
                                     <div class="modal-header">
                                         <h5 class="modal-title">
                                             <span th:text="${betterOffer.get(0).getExchange().getName()} + ' условия и комиссия'"></span>
@@ -105,7 +121,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <iframe th:src="${betterOffer.get(0).getExchange().getLinkWithDetails()}"
-                                                style="width:100%; height:100%;margin:0px;border:0px">
+                                                style="width:100%; height:100%;margin:0px;border:0px;">
                                         </iframe>
 
                                     </div>
@@ -170,7 +186,7 @@
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="feeTaker">КОМИССИЯ ЗА  ВВОД, $</label>
+                                                <label for="feeTaker">КОМИССИЯ ЗА ВВОД, $</label>
                                                 <input type="text" class="form-control" name="feeTaker" id="feeTaker"
                                                        placeholder="Введите сумму *"
                                                        th:field="*{feeTaker}">
@@ -308,6 +324,8 @@ min: 0.0,
  step: 0.1,
  prettify_enabled: true
  });
+
+
 
 
 

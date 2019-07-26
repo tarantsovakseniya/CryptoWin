@@ -11,8 +11,7 @@ import java.time.format.DateTimeFormatter;
 @XmlRootElement(name = "url")
 public class XmlUrl {
     public enum Priority {
-        HIGH("1.0"), MEDIUM("0.5XmlUrl\n" +
-                "XmlUrlSet");
+        HIGH("1.0"), MEDIUM("0.5");
 
         private String value;
 
@@ -26,7 +25,7 @@ public class XmlUrl {
     }
 
     @XmlElement
-    private String loc;
+    private String link;
 
     @XmlElement
     private String lastmod = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE);
@@ -41,13 +40,13 @@ public class XmlUrl {
 
     }
 
-    public XmlUrl(String loc, Priority priority) {
-        this.loc = loc;
+    public XmlUrl(String link, Priority priority) {
+        this.link = link;
         this.priority = priority.getValue();
     }
 
-    public String getLoc() {
-        return loc;
+    public String getLink() {
+        return link;
     }
 
     public String getPriority() {
