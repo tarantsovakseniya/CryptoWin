@@ -26,7 +26,7 @@ public class SubscriberMailSender {
     @Autowired
     private UserService userService;
 
-    @Scheduled(cron = "0 0 9 * * ?")
+    @Scheduled(cron = "0 0 9 * * ?", zone = "Europe/London")
     public void sendEmail() {
         Map<Long, StringBuilder> result = getNeedEmailUsers();
 
