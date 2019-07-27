@@ -4,7 +4,8 @@
 <head>
     <div th:replace="fragments/header :: page-start"></div>
     <title>График изменения криптовалюты основных бирж</title>
-    <meta name="keywords" content="статистика изменений курса криптовалюты, курс криптовалюты сегодня, курсы криптовалют">
+    <meta name="keywords"
+          content="статистика изменений курса криптовалюты, курс криптовалюты сегодня, курсы криптовалют">
     <meta name="description" content="
     ➤ График изменения криптовалюты основных бирж
     ✅ За сегодняшний день
@@ -15,15 +16,13 @@
     <script src="http://bootstraptema.ru/plugins/jquery/jquery-1.11.3.min.js"></script>
     <script src="http://bootstraptema.ru/plugins/2016/shieldui/script.js"></script>
 
-
 </head>
-
 
 <body style="color:Black; background-color: #e7e8e8;">
 
 <div th:replace="fragments/header :: top-navbar"></div>
 
-<div class="container-fluid my-4" >
+<div class="container-fluid my-4">
 
 
     <th:block th:switch="${error}">
@@ -43,7 +42,7 @@
 
     <!--            buttons to choose options-->
     <form method="post" action="/charts">
-        <div class="card" >
+        <div class="card">
 
             <div class="card-header text-center">
                 <th:block th:switch="${state}">
@@ -80,12 +79,12 @@
                         <div class="btn-group btn-block">
                             <select name="coinType" id="coinType" class="form-control form-control-lg">
 
-                            <option th:unless="${coin}" th:value="''">Выбрать валюту</option>
-                            <option th:if="${coin!=''}" th:value="${coin}" th:text="${coin}"></option>
-                            <option th:each="coinType : ${coins}" th:unless="${coinType.getNameOfCoin()} == ${coin}"
-                                    th:value="${coinType.getNameOfCoin()}"
-                                    th:text="${coinType.getNameOfCoin()}"
-                            ></option>
+                                <option th:unless="${coin}" th:value="''">Выбрать валюту</option>
+                                <option th:if="${coin!=''}" th:value="${coin}" th:text="${coin}"></option>
+                                <option th:each="coinType : ${coins}" th:unless="${coinType.getNameOfCoin()} == ${coin}"
+                                        th:value="${coinType.getNameOfCoin()}"
+                                        th:text="${coinType.getNameOfCoin()}"
+                                ></option>
 
 
                             </select>
@@ -103,7 +102,6 @@
                                         th:unless="${exchangeType.getName()} == ${exchange}"
                                         th:value="${exchangeType.getName()}"
                                         th:text="${exchangeType.getName()}"></option>
-
 
 
                             </select>
@@ -150,10 +148,10 @@
 
         <div class="card-body">
 
-            <div class="card border-info text-center">
+            <div class="card border-info">
                 <div class="card-body">
                     <div th:if="${error==null AND crypto != null}" id="container"
-                         style="height: 400px; min-width: 1000px"></div>
+                         style="width:100%; height:100%;margin:0px;border:0px;"></div>
                     <div th:if="${error}">
                         <h2 class="text">Извините, но недостаточно данных для отображения графика и таблицы</h2>
                     </div>
@@ -161,13 +159,13 @@
                 </div>
             </div>
 
-
             <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
             <script src="https://code.highcharts.com/stock/highstock.js"></script>
             <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
             <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
             <script src="//cdnjs.cloudflare.com/ajax/libs/d3/2.10.0/d3.v2.js"></script>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
             <script>
 
 console.log($(document.getElementById("state")));
@@ -187,24 +185,22 @@ var time = arr.join(" ");
 
 
 
-$.getJSON('/data?coinType=' + coin + '&exchangeType=' + exchange +
-'&timeType=' + time + '&state=' + state , function (main) {
+ $.getJSON('/data?coinType=' + coin + '&exchangeType=' + exchange +
+ '&timeType=' + time + '&state=' + state , function (main) {
 
-var data = new Array();
-for (var i = 0; i < main.length; i++) {
-data[i] = new Array(2);
+    var data = new Array();
+    for (var i = 0; i < main.length; i++) {
+    data[i] = new Array(2);
 
-data[i][0] = (new Date(main[i][0])).getTime();
-data[i][1] = main[i][1];
-}
+    data[i][0] = (new Date(main[i][0])).getTime();
+    data[i][1] = main[i][1];
+    }
 
-data.sort();
+    data.sort();
 
+    var chart = Highcharts.stockChart('container', {
 
-      Highcharts.stockChart('container', {
-
-
-      rangeSelector: {
+        rangeSelector: {
             selected: 1
         },
 
@@ -236,11 +232,7 @@ data.sort();
     });
 });
 
-
-
-
             </script>
-
         </div>
     </card>
 </div>
