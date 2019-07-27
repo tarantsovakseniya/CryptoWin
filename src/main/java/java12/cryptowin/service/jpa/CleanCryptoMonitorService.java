@@ -15,8 +15,8 @@ public class CleanCryptoMonitorService {
     @Autowired
     CryptoMonitorService cryptoMonitorService;
 
-    // executed every day at 2:01 am
-    @Scheduled(cron = "0 1 2 * * *", zone = "Europe/Rome")
+    // executed every day at 4:01 am
+    @Scheduled(cron = "0 1 4 * * *", zone = "Europe/London")
     public void clean() {
         List<CryptoMonitor> cryptoMonitors = cryptoMonitorService.getAll();
         cryptoMonitors.forEach(cryptoMonitor -> {
@@ -24,7 +24,6 @@ public class CleanCryptoMonitorService {
 
             LocalDateTime minusTwoWeeks = LocalDateTime.now().minusWeeks(2);
             if (cryptoMonitorDate.isBefore(minusTwoWeeks)) {
-                //System.out.println("deleted monitor " + cryptoMonitor);
                 cryptoMonitorService.deleteById(cryptoMonitor.getId());
             }
         });

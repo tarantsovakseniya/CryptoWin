@@ -8,43 +8,55 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!--    <link rel="stylesheet" href="http://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>-->
     <link type="text/css" rel="StyleSheet" href="http://bootstraptema.ru/plugins/2016/shieldui/style.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body style="color:Black; background-color: #e7e8e8;">
 
 <div th:replace="fragments/header :: top-navbar"></div>
+<div class="container-fluid my-4 ">
 
-<th:block th:if="${error}" th:switch="${error}">
-    <div th:case="incorrect" class="alert alert alert-dismissible fade show" style="background-color: #FFC0CB"
-         role="alert">
-        <h4 class="alert-heading">Возникла ошибка</h4>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <p class="lead">Неверно введены ключевые данные!</p>
-        <hr class="my-4">
-        <p class="mb-0">Попробуйте еще раз.</p>
-    </div>
+    <th:block th:if="${error}">
+        <th:block th:switch="${error}">
+            <div th:case="incorrect" class="alert alert-dismissible fade show" style="background-color: #FFC0CB"
+                 role="alert">
+                <h4 class="alert-heading">Возникла ошибка</h4>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <p class="lead">Неверно введены ключевые данные!</p>
+                <hr class="my-4">
+                <p class="mb-0">Попробуйте еще раз.</p>
+            </div>
 
-    <div th:case="add" class="alert  alert-dismissible fade show" style="background-color: #98FB98"
-         role="alert">
-        <h4 class="alert-heading">Операция завершена успешно</h4>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <p class="lead"> Данные изменены</p>
+            <div th:case="add" class="alert alert-dismissible fade show"
+                 style="background-color: #98FB98"
+                 role="alert">
+                <div class="alert-heading">
+                    <h4>Операция завершена успешно</h4>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <hr class="my-4">
+                <p class="lead"> Данные изменены</p>
 
-    </div>
+            </div>
 
-    <div th:case="success" class="alert  alert-dismissible fade show" style="background-color: #98FB98"
-         role="alert">
-        <h4 class="alert-heading">Операция завершена успешно</h4>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <p class="lead" th:text="'Подписка удалена'"></p>
+            <div th:case="success" class="alert alert-dismissible fade show" role="alert"
+                 style="background-color: #98FB98">
+                <h4 class="alert-heading">Операция завершена успешно</h4>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <hr class="my-4">
+                <p class="lead" th:text="'Подписка удалена'"></p>
 
-    </div>
-</th:block>
+            </div>
+        </th:block>
+    </th:block>
+
+</div>
 
 <th:block th:switch="${ref}">
 
@@ -61,8 +73,10 @@
                         <div class="form-group">
                             <label for="coinType">Выберите валюту</label>
                             <select class="custom-select" required name="coinType" id="coinType">
-                                <option selected th:text="${s.getCryptCoinType().getNameOfCoin()}"></option>
-                                <option th:each="coinType : ${coins}" th:unless="${coinType} == ${s.getCryptCoinType()}"
+                                <option selected th:value="${s.getCryptCoinType()}"
+                                        th:text="${s.getCryptCoinType().getNameOfCoin()}"></option>
+                                <option th:each="coinType : ${coins}"
+                                        th:unless="${coinType} == ${s.getCryptCoinType()}"
                                         th:value="${coinType}"
                                         th:text="${coinType.getNameOfCoin()}"
                                 ></option>
@@ -107,7 +121,7 @@
 
         <div class="container-fluid my-4 mt-3">
 
-            <div class="row">
+            <div class="row" style="min-height: 500px">
 
                 <div class="col-3">
 
@@ -119,10 +133,16 @@
                         <div class="card-body">
 
                             <div class="text-center">
-                                <img class="img-fluid rounded-circle"
+
+                                <img th:if="${user.getIcon()} == null" class="img-fluid rounded-circle"
                                      src="http://bootstraptema.ru/snippets/icons/2017/smtb/elliot.jpg"
                                      alt="Card image cap"
                                      style="width: 200px; height: 200px border-radius:50%;">
+                                <img th:if="${user.getIcon()} != null" class="img-fluid rounded-circle"
+                                     th:src="${user.getIcon().getUrl()}"
+                                     alt="Card image cap"
+                                     style="width: 200px; height: 200px border-radius:50%;">
+
 
                                 <hr class="my-4">
 
@@ -150,14 +170,20 @@
                 <div class="col-9">
 
                     <div class="card rounded border-success">
-                        <div class="card-header">
-                            <div th:unless="${subscription}" class=" card border-success mb-3">
+                        <div class="card-header text-center">
+                            <div th:unless="${subscription}">
                                 <h2>Нет оформленных подписок</h2>
                             </div>
-
                             <h3 th:if="${subscription}">Ваши подписки</h3>
                         </div>
-                        <div th:if="${subscription}" class="card-body">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <a href="/user/subscription"
+                                   class="btn btn-light btn-block btn-outline-success">Оформить подписку
+                                </a>
+                            </div>
+
+                            <hr class="my-4">
 
                             <ul>
                                 <th:block th:each="sub:${subscription}">
@@ -221,13 +247,21 @@
 
     <th:block th:case="info">
         <div class="container my-4 mt-3">
-            <form method="post" action="/userProfile/changeData">
+            <form method="post" action="/user/changeData">
                 <div class="card ml-auto mr-auto" style="max width: 600px;">
                     <div class="card-header">
                         Редактирование данных
                     </div>
 
                     <div class="card-body">
+
+                        <div class="text-center">
+                            <a href="/user/changeData?ref=icon"
+                               class="btn btn-light btn-block btn-outline-success">Изменить фото профиля
+                            </a>
+                        </div>
+
+                        <hr class="my-4">
 
                         <div class="form-group row">
                             <label for="email" class="col-sm-2 col-form-label">Email</label>
@@ -239,7 +273,8 @@
 
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control from-control-sm" name="password" id="password"
+                            <input type="password" class="form-control from-control-sm" name="password"
+                                   id="password"
                                    th:value="${user.getPassword()}">
                         </div>
 
@@ -255,6 +290,8 @@
                                    name="lastname" id="lastname" th:value="${user.getLastName()}">
                         </div>
                     </div>
+
+
                     <div class="card-footer">
                         <button type="submit" class="btn btn-success float-right">Подтвердить</button>
                     </div>
@@ -262,10 +299,42 @@
             </form>
         </div>
     </th:block>
+
+    <th:block th:case="icon">
+        <div class="container my-4 mt-3">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>Выберете фото для профиля</h3></div>
+
+                <div class="card-body">
+
+                    <ul class="list-group">
+                        <li class="list-group-item" th:each="icon: ${icons}">
+                            <div class="row">
+
+                                <div class="col">
+                                    <img class="img-fluid rounded-circle"
+                                         th:src="${icon.getUrl()}"
+                                         alt="Card image cap"
+                                         style="width: 100px; height: 100px border-radius:50%;">
+                                </div>
+
+                                <div class="col">
+                                    <a th:href="'/user/changeIcon?icon=' + ${icon}"
+                                       class="btn btn-light btn-block btn-outline-success">Выбрать</a>
+                                </div>
+
+                            </div>
+                        </li>
+                    </ul>
+
+
+                </div>
+            </div>
+
+        </div>
+    </th:block>
 </th:block>
-
-
-</div>
 
 </body>
 </html>

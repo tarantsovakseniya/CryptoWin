@@ -1,11 +1,13 @@
 package java12.cryptowin.entity;
 
+import java12.cryptowin.entity.enumeration.IconType;
 import lombok.Data;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -29,6 +31,9 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name="icon_type")
+    private IconType icon;
+
     @Column(name = "active")
     private int active = 1;
 
@@ -48,4 +53,21 @@ public class User {
 
         return false;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id &&
+                email.equals(user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email);
+    }
+
+
+
 }

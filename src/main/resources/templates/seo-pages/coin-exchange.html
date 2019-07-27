@@ -3,7 +3,7 @@
 
 <head>
     <div th:replace="fragments/header :: page-start"></div>
-    <title th:text="'Курс ' +${cryptMonitor.getCoinType()}+ ' на бирже ' + ${cryptMonitor.getExchange()}"></title>
+    <title th:text="'Курс ' +${cryptMonitor.getCoinType().getNameOfCoin()}+ ' на бирже ' + ${cryptMonitor.getExchange()} + ' сегодня'"></title>
     <meta http-equiv="refresh" content="300">
     <meta name="keywords"
           content="курс криптовалюты к доллару, курс покупки криптовалюты, курс продажи криптовалюты, курс криптовалюты сегодня, курс криптовалюты, курсы криптовалют">
@@ -24,14 +24,14 @@
             <div class="col-sm-12">
                 <div class="card-header">
                     <h1><i>
-                        <p th:text="'Курс ' +${cryptMonitor.getCoinType()}+ ' на бирже ' + ${cryptMonitor.getExchange()}"/>
+                        <p th:text="'Курс ' +${cryptMonitor.getCoinType().getNameOfCoin()}+ ' на бирже ' + ${cryptMonitor.getExchange()} + ' сегодня'"/>
                     </i></h1>
                 </div>
                 <div class="card-body">
 
                     <div class="card mb-3">
                         <div class="card-header">
-                            <h4 th:text="'Текущий курс покупки и продажи '+${cryptMonitor.getCoinType()}+ ' на бирже ' + ${cryptMonitor.getExchange()}"></h4>
+                            <h4 th:text="'Текущий курс покупки и продажи '+${cryptMonitor.getCoinType().getNameOfCoin()}+ ' на бирже ' + ${cryptMonitor.getExchange()}"></h4>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -47,13 +47,13 @@
 
                     <div class="card mb-3">
                         <div class="card-header">
-                            <h4 th:text="'Минимальный курс покупки и продажи '+${cryptMonitor.getCoinType()}+ ' на бирже ' + ${cryptMonitor.getExchange()}"></h4>
+                            <h4 th:text="'Минимальный курс покупки и продажи '+${cryptMonitor.getCoinType().getNameOfCoin()}+ ' на бирже ' + ${cryptMonitor.getExchange()} + ' сегодня'"></h4>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 col-sm-12">
-                                    <h6 th:text="'Минимальный курс покупки за сегодня: '+'$'+${minBuy}"></h6>
-                                    <h6 th:text="'Минимальный курс продажи за сегодня: '+'$'+${minSell}"></h6>
+                                    <h6 th:text="'Минимальный курс покупки: '+'$'+${minBuy}"></h6>
+                                    <h6 th:text="'Минимальный курс продажи: '+'$'+${minSell}"></h6>
                                 </div>
                             </div>
                         </div>
@@ -61,13 +61,13 @@
 
                     <div class="card mb-3">
                         <div class="card-header">
-                            <h4 th:text="'Максимальный курс покупки и продажи '+${cryptMonitor.getCoinType()}+ ' на бирже ' + ${cryptMonitor.getExchange()}"></h4>
+                            <h4 th:text="'Максимальный курс покупки и продажи '+${cryptMonitor.getCoinType().getNameOfCoin()}+ ' на бирже ' + ${cryptMonitor.getExchange()} + ' сегодня'"></h4>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 col-sm-12">
-                                    <h6 th:text="'Максимальный курс покупки за сегодня: '+'$'+${maxBuy}"></h6>
-                                    <h6 th:text="'Максимальный курс продажи за сегодня: '+'$'+${maxSell}"></h6>
+                                    <h6 th:text="'Максимальный курс покупки: '+'$'+${maxBuy}"></h6>
+                                    <h6 th:text="'Максимальный курс продажи: '+'$'+${maxSell}"></h6>
                                 </div>
                             </div>
                         </div>
