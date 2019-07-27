@@ -51,6 +51,9 @@ public class CryptoWinController {
             betterOfferService.getCalc(formCalc, items, cryptCoin, buy);
         }
 
+        if (buy == null) {
+            buy = 1000.0;
+        }
         result.addObject("cryptCoin", cryptCoin);
         result.addObject("betterOffers", betterOffers);
         result.addObject("user", userService.getCurrentUser());
