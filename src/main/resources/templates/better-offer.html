@@ -172,7 +172,7 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <label for="exchangeToBuy">БИРЖА ВВОДА $ И ПОКУПКИ КРИПТОВАЛЮТЫ</label>
+                                            <label for="exchangeToBuy">БИРЖА ВВОДА $ И ПОКУПКИ ВАЛЮТЫ</label>
                                             <select class="custom-select" name="exchangeToBuy" id="exchangeToBuy"
                                                     required>
                                                 <option value="">-- выберите из списка --</option>
@@ -186,13 +186,13 @@
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="feeTaker">КОМИССИЯ ЗА ВВОД, $</label>
+                                                <label for="feeTaker">КОМИССИЯ ЗА ВВОД, <br>$</label>
                                                 <input type="text" class="form-control" name="feeTaker" id="feeTaker"
                                                        placeholder="Введите сумму *"
                                                        th:field="*{feeTaker}">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="addFeeTaker">ДОП. КОМИССИЯ (ЕСЛИ ЕСТЬ), $</label>
+                                                <label for="addFeeTaker">ДОП. КОМИССИЯ <br>(ЕСЛИ ЕСТЬ), $</label>
                                                 <input type="text" class="form-control" id="addFeeTaker"
                                                        name="addFeeTaker"
                                                        placeholder="Введите сумму *"
@@ -214,7 +214,7 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <label for="exchangeToSell">БИРЖА ПРОДАЖИ КРИПТОВАЛЮТЫ И ВЫВОДА $</label>
+                                            <label for="exchangeToSell">БИРЖА ПРОДАЖИ ВАЛЮТЫ И ВЫВОДА $</label>
                                             <select class="custom-select" name="exchangeToSell" id="exchangeToSell"
                                                     required>
                                                 <option value="">-- выберите из списка --</option>
@@ -228,12 +228,12 @@
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="feeMaker">КОМИССИЯ ЗА ВЫВОД, $</label>
+                                                <label for="feeMaker">КОМИССИЯ ЗА ВЫВОД, <br>$</label>
                                                 <input type="text" class="form-control" id="feeMaker" name="feeMaker"
                                                        placeholder="Введите сумму *" th:field="*{feeMaker}">
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="addFeeMaker">ДОП. КОМИССИЯ (ЕСЛИ ЕСТЬ), $</label>
+                                                <label for="addFeeMaker">ДОП. КОМИССИЯ <br>(ЕСЛИ ЕСТЬ), $</label>
                                                 <input type="text" class="form-control" id="addFeeMaker"
                                                        name="addFeeMaker"
                                                        placeholder="Введите сумму *"
@@ -241,7 +241,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="rangeSell"><b>ТОРГОВАЯ КОМИССИЯ, %</b></label>
+                                            <label for="rangeSell">ТОРГОВАЯ КОМИССИЯ, %</label>
                                             <input type="text" id="rangeSell" name="rangeSell"
                                                    th:field="*{rangeSell}">
                                         </div>
