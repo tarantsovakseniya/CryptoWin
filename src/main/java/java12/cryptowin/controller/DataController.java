@@ -1,15 +1,11 @@
 package java12.cryptowin.controller;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import java12.cryptowin.entity.CryptoMonitor;
 import java12.cryptowin.service.jpa.CryptoMonitorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,6 +32,5 @@ public class DataController {
             }
         }
         return new Gson().toJson(main);
-
     }
 }

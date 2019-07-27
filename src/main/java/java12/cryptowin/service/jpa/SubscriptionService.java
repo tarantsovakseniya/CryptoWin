@@ -1,13 +1,11 @@
 package java12.cryptowin.service.jpa;
 
-import java12.cryptowin.entity.Subscription;
-import java12.cryptowin.entity.User;
+import java12.cryptowin.entity.*;
 import java12.cryptowin.repository.SubscriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class SubscriptionService {
@@ -35,5 +33,4 @@ public class SubscriptionService {
 
         return result.size()== 0 ? null : result ;
     }
-
 }

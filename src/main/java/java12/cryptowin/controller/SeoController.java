@@ -1,13 +1,11 @@
 package java12.cryptowin.controller;
 
-import java12.cryptowin.seo.XmlUrl;
 import java12.cryptowin.seo.XmlUrlSet;
 import java12.cryptowin.service.seo.SeoGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class SeoController {

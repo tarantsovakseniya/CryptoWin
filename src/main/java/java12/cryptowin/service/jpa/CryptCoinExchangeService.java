@@ -3,7 +3,6 @@ package java12.cryptowin.service.jpa;
 import java12.cryptowin.entity.CryptoMonitor;
 import java12.cryptowin.entity.enumeration.CryptCoinType;
 import java12.cryptowin.entity.enumeration.CryptoExchange;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

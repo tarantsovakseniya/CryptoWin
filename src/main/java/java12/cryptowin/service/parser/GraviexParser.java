@@ -3,21 +3,18 @@ package java12.cryptowin.service.parser;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import java12.cryptowin.entity.CryptoMonitor;
-import java12.cryptowin.entity.enumeration.CryptCoinType;
-import java12.cryptowin.entity.enumeration.CryptoExchange;
+import java12.cryptowin.entity.enumeration.*;
 import org.jsoup.Jsoup;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class GraviexParser {
 
     public List<CryptoMonitor> parse() throws IOException {
-        // XRP, Stellar, TRON, EOS, IOTA are absent
 
         List<CryptoMonitor> result = new ArrayList<>();
 

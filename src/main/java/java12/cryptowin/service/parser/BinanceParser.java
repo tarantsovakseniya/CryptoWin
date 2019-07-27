@@ -3,17 +3,14 @@ package java12.cryptowin.service.parser;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import java12.cryptowin.entity.CryptoMonitor;
-import java12.cryptowin.entity.enumeration.CryptCoinType;
-import java12.cryptowin.entity.enumeration.CryptoExchange;
+import java12.cryptowin.entity.enumeration.*;
 import org.jsoup.Jsoup;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.math.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class BinanceParser {
@@ -46,12 +43,13 @@ public class BinanceParser {
             LinkedTreeMap linkedTreeMap = (LinkedTreeMap) objects.get(i);
             Object name = linkedTreeMap.get("symbol");
             if (name.equals(kye)) {
-                bid_price = new BigDecimal(Double.parseDouble((String) (linkedTreeMap.get("bidPrice")))).setScale(2, RoundingMode.HALF_EVEN).doubleValue(); // string, цена покупки
-                ask_price = new BigDecimal(Double.parseDouble((String) (linkedTreeMap.get("askPrice")))).setScale(2, RoundingMode.HALF_EVEN).doubleValue();// string, цена продажи
+                bid_price = new BigDecimal(Double.parseDouble((String) (linkedTreeMap.get("bidPrice"))))
+                        .setScale(2, RoundingMode.HALF_EVEN).doubleValue(); // string, цена покупки
+                ask_price = new BigDecimal(Double.parseDouble((String) (linkedTreeMap.get("askPrice"))))
+                        .setScale(2, RoundingMode.HALF_EVEN).doubleValue();// string, цена продажи
             }
         }
 
         return new CryptoMonitor(cryptCoinType, CryptoExchange.BINANCE, bid_price, LocalDateTime.now(), ask_price);
-
     }
 }

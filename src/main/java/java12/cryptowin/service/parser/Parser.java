@@ -3,14 +3,11 @@ package java12.cryptowin.service.parser;
 import java12.cryptowin.entity.CryptoMonitor;
 import java12.cryptowin.service.jpa.CryptoMonitorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.annotation.*;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @EnableScheduling

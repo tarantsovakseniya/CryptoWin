@@ -15,10 +15,4 @@ public interface CryptoMonitorRepository extends JpaRepository<CryptoMonitor, Lo
             "GROUP BY type_coin,  crypto_monitor.exchange)\n" +
             "ORDER BY date_time desc;")
     List<CryptoMonitor> findAllNew();
-
-
-//    SELECT * from crypto_monitor WHERE date_time IN (
-//            SELECT MAX(date_time) FROM crypto_monitor
-//    GROUP BY type_coin,  crypto_monitor.exchange)
-//    ORDER BY date_time desc;
 }

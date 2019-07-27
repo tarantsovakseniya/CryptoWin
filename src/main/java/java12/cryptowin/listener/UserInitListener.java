@@ -1,10 +1,7 @@
 package java12.cryptowin.listener;
 
-
-import java12.cryptowin.entity.Role;
-import java12.cryptowin.entity.User;
-import java12.cryptowin.service.jpa.RoleService;
-import java12.cryptowin.service.jpa.UserService;
+import java12.cryptowin.entity.*;
+import java12.cryptowin.service.jpa.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

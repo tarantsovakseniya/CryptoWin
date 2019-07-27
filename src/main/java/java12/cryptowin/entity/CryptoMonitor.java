@@ -1,7 +1,6 @@
 package java12.cryptowin.entity;
 
-import java12.cryptowin.entity.enumeration.CryptCoinType;
-import java12.cryptowin.entity.enumeration.CryptoExchange;
+import java12.cryptowin.entity.enumeration.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

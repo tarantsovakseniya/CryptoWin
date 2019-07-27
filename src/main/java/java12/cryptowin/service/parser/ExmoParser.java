@@ -3,22 +3,17 @@ package java12.cryptowin.service.parser;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import java12.cryptowin.entity.CryptoMonitor;
-import java12.cryptowin.entity.enumeration.CryptCoinType;
-import java12.cryptowin.entity.enumeration.CryptoExchange;
+import java12.cryptowin.entity.enumeration.*;
 import org.jsoup.Jsoup;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.math.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ExmoParser {
-
-    // на exmo нет ни IOTA, ни IOT, ни MOITA
 
     public List<CryptoMonitor> parse() throws IOException {
         List<CryptoMonitor> list = new ArrayList<>();
