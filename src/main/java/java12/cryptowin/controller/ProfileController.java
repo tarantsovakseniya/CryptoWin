@@ -1,17 +1,11 @@
 package java12.cryptowin.controller;
 
-import java12.cryptowin.entity.Subscription;
-import java12.cryptowin.entity.User;
-import java12.cryptowin.entity.enumeration.CryptCoinType;
-import java12.cryptowin.entity.enumeration.IconType;
-import java12.cryptowin.service.jpa.SubscriptionService;
-import java12.cryptowin.service.jpa.UserService;
+import java12.cryptowin.entity.*;
+import java12.cryptowin.entity.enumeration.*;
+import java12.cryptowin.service.jpa.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -32,9 +26,7 @@ public class ProfileController {
         List<Subscription> subscriptions = subscriptionService.getByUser(userService.getCurrentUser());
         view.addObject("subscription", subscriptionService.getByUser(userService.getCurrentUser()));
         return view;
-
     }
-
 
     @GetMapping("/delete")
     public ModelAndView deleteSubscription(@RequestParam("id") long id) {
@@ -46,7 +38,6 @@ public class ProfileController {
             view.addObject("error", "success");
             view.addObject("subscription", subscriptionService.getByUser(userService.getCurrentUser()));
         }
-
         return view;
     }
 
@@ -105,7 +96,6 @@ public class ProfileController {
         return view;
     }
 
-
     @PostMapping("/change")
     public ModelAndView changeSubscription(@RequestParam("coinType") CryptCoinType coinType,
                                            @RequestParam("minResult") Double min,
@@ -129,7 +119,6 @@ public class ProfileController {
             }
         }
         view.addObject("user", userService.getCurrentUser());
-
 
         return view;
     }
@@ -203,7 +192,5 @@ public class ProfileController {
         result.addObject("error", error);
         result.addObject("coins", CryptCoinType.values());
         return result;
-
     }
-
 }

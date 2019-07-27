@@ -6,6 +6,8 @@ import java12.cryptowin.seo.XmlUrl;
 import java12.cryptowin.seo.XmlUrlSet;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 @Service
 public class SeoGeneratorService {
 
@@ -44,17 +46,42 @@ public class SeoGeneratorService {
         //better-offer and coin-exchange
         for (CryptCoinType cryptCoinType : CryptCoinType.values()) {
             xmlUrlSet.addUrl(new XmlUrl(
-                    "http://crypto-benefit.com/better-offer/?cryptCoin=" + cryptCoinType,
+                    "http://crypto-benefit.com/better-offer/?cryptCoin=" + cryptCoinType + '/',
                     XmlUrl.Priority.HIGH));
             for (CryptoExchange cryptoExchange : CryptoExchange.values()) {
-                xmlUrlSet.addUrl(new XmlUrl(
-                        "http://crypto-benefit.com/stats/?cryptCoin=" + cryptCoinType + "&exchange=" + cryptoExchange,
-                        XmlUrl.Priority.HIGH));
+                if (cryptoExchange.equals(CryptoExchange.CRYPTO_BRIDGE)
+                        && cryptCoinType.equals(CryptCoinType.BITCOIN)
+                        || cryptCoinType.equals(CryptCoinType.DASH)
+                        || cryptCoinType.equals(CryptCoinType.LITECOIN)
+                        || cryptCoinType.equals(CryptCoinType.XRP)) {
+                    xmlUrlSet.addUrl(new XmlUrl(
+                            "http://crypto-benefit.com/stats/?cryptCoin=" + cryptCoinType + "&exchange=" + cryptoExchange + '/',
+                            XmlUrl.Priority.HIGH));
+                }
+                if (cryptoExchange.equals(CryptoExchange.EXMO) || cryptoExchange.equals(CryptoExchange.POLONIEX)
+                        && cryptCoinType != (CryptCoinType.IOTA_MIOTA)) {
+                    xmlUrlSet.addUrl(new XmlUrl(
+                            "http://crypto-benefit.com/stats/?cryptCoin=" + cryptCoinType + "&exchange=" + cryptoExchange + '/',
+                            XmlUrl.Priority.HIGH));
+                }
+                if (cryptoExchange.equals(CryptoExchange.GRAVIEX)
+                        && cryptCoinType.equals(CryptCoinType.BITCOIN)
+                        || cryptCoinType.equals(CryptCoinType.ETHEREUM)
+                        || cryptCoinType.equals(CryptCoinType.LITECOIN)) {
+                    xmlUrlSet.addUrl(new XmlUrl(
+                            "http://crypto-benefit.com/stats/?cryptCoin=" + cryptCoinType + "&exchange=" + cryptoExchange + '/',
+                            XmlUrl.Priority.HIGH));
+                }
+                if (cryptoExchange.equals(CryptoExchange.BINANCE) || cryptoExchange.equals(CryptoExchange.BITFINEX)) {
+                    xmlUrlSet.addUrl(new XmlUrl(
+                            "http://crypto-benefit.com/stats/?cryptCoin=" + cryptCoinType + "&exchange=" + cryptoExchange + '/',
+                            XmlUrl.Priority.HIGH));
+                }
             }
         }
 
         //charts
-        xmlUrlSet.addUrl(new XmlUrl("http://crypto-benefit.com/charts", XmlUrl.Priority.MEDIUM));
+        xmlUrlSet.addUrl(new XmlUrl("http://crypto-benefit.com/charts/", XmlUrl.Priority.MEDIUM));
 
         return xmlUrlSet;
     }

@@ -3,20 +3,18 @@ package java12.cryptowin.service.parser;
 import com.google.gson.Gson;
 import com.google.gson.internal.LinkedTreeMap;
 import java12.cryptowin.entity.CryptoMonitor;
-import java12.cryptowin.entity.enumeration.CryptCoinType;
-import java12.cryptowin.entity.enumeration.CryptoExchange;
+import java12.cryptowin.entity.enumeration.*;
 import org.jsoup.Jsoup;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class PoloniexParser {
     public List<CryptoMonitor> parse() throws IOException {
-        // IOTA and TRON are absent
+
         List<CryptoMonitor> result = new ArrayList<>();
 
         result.add(addCurrency("USDC_BTC", CryptCoinType.BITCOIN));
@@ -29,6 +27,7 @@ public class PoloniexParser {
 
         return result;
     }
+
     private CryptoMonitor addCurrency(String key, CryptCoinType cryptCoinType) throws IOException {
         Gson gson = new Gson();
         String apiUrl = "https://poloniex.com/public?command=returnTicker";
@@ -39,6 +38,5 @@ public class PoloniexParser {
         double sellPrice = Double.parseDouble((String) values.get("highestBid"));
 
         return new CryptoMonitor(cryptCoinType, CryptoExchange.POLONIEX, buyPrice, LocalDateTime.now(), sellPrice);
-
     }
 }
