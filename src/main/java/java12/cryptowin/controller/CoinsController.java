@@ -8,6 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Controller
@@ -34,14 +37,17 @@ public class CoinsController {
             }
         });
 
-        Map<String,Double> minMaxResult= coinExchangeService.getMaxMinResultToday(cryptoMonitorService.getAll(),coinType,cryptoExchange);
+        Map<String, Double> minMaxResult = coinExchangeService.getMaxMinResultToday(cryptoMonitorService.getAll(), coinType, cryptoExchange);
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
         result.addObject("items", cryptoMonitorService);
         result.addObject("user", userService.getCurrentUser());
-        result.addObject("minSell",minMaxResult.get("minSell"));
-        result.addObject("maxBuy",minMaxResult.get("maxBuy"));
-        result.addObject("maxSell",minMaxResult.get("maxSell"));
-        result.addObject("minBuy",minMaxResult.get("minBuy"));
+        result.addObject("minSell", minMaxResult.get("minSell"));
+        result.addObject("maxBuy", minMaxResult.get("maxBuy"));
+        result.addObject("maxSell", minMaxResult.get("maxSell"));
+        result.addObject("minBuy", minMaxResult.get("minBuy"));
+        result.addObject("today", dateTimeFormatter.format(LocalDate.now()));
 
         return result;
     }
