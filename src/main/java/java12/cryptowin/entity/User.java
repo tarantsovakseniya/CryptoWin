@@ -2,8 +2,6 @@ package java12.cryptowin.entity;
 
 import java12.cryptowin.entity.enumeration.IconType;
 import lombok.Data;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.HashSet;
