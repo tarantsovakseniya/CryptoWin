@@ -3,10 +3,8 @@ package java12.cryptowin.service.mailing;
 import java12.cryptowin.entity.*;
 import java12.cryptowin.service.jpa.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.support.NullValue;
 import org.springframework.mail.javamail.*;
 import org.springframework.scheduling.annotation.*;
-import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -28,7 +26,7 @@ public class SubscriberMailSender {
     @Autowired
     private UserService userService;
 
-    @Scheduled(cron = "0 0 9 * * ?", zone = "Europe/London")
+    @Scheduled(cron = "0 0 9 * * *", zone = "Europe/London")
     public void sendEmail() {
         Map<Long, StringBuilder> result = getNeedEmailUsers();
 
@@ -57,7 +55,9 @@ public class SubscriberMailSender {
     private Map<Long, StringBuilder> getNeedEmailUsers() {
         Map<Long, StringBuilder> result = new HashMap<>();
 
+        //list of cryptoMonitors for last 24 h
         List<CryptoMonitor> cryptoMonitorList = withCheckDateList();
+
         List<Subscription> subscriptionList = subscriptionService.getAll();
 
         mergeMap(result, checkMinResult(result, cryptoMonitorList, subscriptionList));
@@ -77,15 +77,17 @@ public class SubscriberMailSender {
         for (CryptoMonitor cryptoMonitor : cryptoMonitorList) {
             for (Subscription subscription : subscriptionList) {
                 if (cryptoMonitor.getCoinType() == subscription.getCryptCoinType()
-                        & cryptoMonitor.getSellingRate() == subscription.getMinResult() * 0.95
-                        & cryptoMonitor.getSellingRate() <= subscription.getMaxResult() * 1.05) {
+                        && cryptoMonitor.getSellingRate() >= (subscription.getMinResult() * 0.9)
+                        && cryptoMonitor.getSellingRate() <= (subscription.getMinResult() * 1.1)) {
                     StringBuilder stringBuilder = new StringBuilder();
                     result.put(subscription.getUser().getId(), stringBuilder
                             .append("\nМинимальная цена (в соответствии с запросом), по которой Вы можете совершить покупку в размере: $")
                             .append(cryptoMonitor.getSellingRate())
                             .append(" была за последние 24 часа выставлена на бирже ")
                             .append(cryptoMonitor.getExchange())
-                            .append(" - ").append(cryptoMonitor.getExchange().getUrl()).append("\n"));
+                            .append(" - ")
+                            .append(cryptoMonitor.getExchange().getUrl())
+                            .append("\n"));
                 }
             }
         }
@@ -96,15 +98,17 @@ public class SubscriberMailSender {
         for (CryptoMonitor cryptoMonitor : cryptoMonitorList) {
             for (Subscription subscription : subscriptionList) {
                 if (cryptoMonitor.getCoinType() == subscription.getCryptCoinType()
-                        & cryptoMonitor.getBuyingRate() >= subscription.getMaxResult() * 0.95
-                        & cryptoMonitor.getBuyingRate() <= subscription.getMaxResult() * 1.05) {
+                        & cryptoMonitor.getBuyingRate() >= (subscription.getMaxResult() * 0.9)
+                        & cryptoMonitor.getBuyingRate() <= (subscription.getMaxResult() * 1.1)) {
                     StringBuilder stringBuilder = new StringBuilder();
                     result.put(subscription.getUser().getId(), stringBuilder
                             .append("\nМаксимальная цена (в соответствии с запросом), по которой Вы можете совершить продажу в размере: $")
                             .append(cryptoMonitor.getBuyingRate())
                             .append(" была за последние 24 часа выставлена на бирже ")
                             .append(cryptoMonitor.getExchange())
-                            .append(" - ").append(cryptoMonitor.getExchange().getUrl()).append("\n"));
+                            .append(" - ")
+                            .append(cryptoMonitor.getExchange().getUrl())
+                            .append("\n"));
                 }
             }
         }
@@ -116,8 +120,8 @@ public class SubscriberMailSender {
             for (CryptoMonitor monitor : cryptoMonitorList) {
                 for (Subscription subscription : subscriptionList) {
                     if (cryptoMonitor.getCoinType() == subscription.getCryptCoinType()
-                            & (cryptoMonitor.getBuyingRate() - monitor.getSellingRate()) >= subscription.getProfit() * 0.95
-                            & (cryptoMonitor.getBuyingRate() - monitor.getSellingRate()) <= subscription.getProfit() * 1.1) {
+                            && (cryptoMonitor.getBuyingRate() - monitor.getSellingRate()) >= (subscription.getProfit() * 0.9)
+                            && (cryptoMonitor.getBuyingRate() - monitor.getSellingRate()) <= (subscription.getProfit() * 1.1)) {
                         StringBuilder stringBuilder = new StringBuilder();
                         result.put(subscription.getUser().getId(), stringBuilder
                                 .append("\nЖелаемый профит ")
@@ -126,10 +130,15 @@ public class SubscriberMailSender {
                                 .append(monitor.getSellingRate())
                                 .append("$ на бирже ")
                                 .append(monitor.getExchange())
+                                .append(" - ")
+                                .append(monitor.getExchange().getUrl())
                                 .append("\n     продаже по цене: ")
                                 .append(cryptoMonitor.getBuyingRate())
                                 .append("$ на бирже ")
-                                .append(cryptoMonitor.getExchange()));
+                                .append(cryptoMonitor.getExchange())
+                                .append(" - ")
+                                .append(cryptoMonitor.getExchange().getUrl())
+                                .append("\n"));
                     }
                 }
             }
@@ -141,8 +150,7 @@ public class SubscriberMailSender {
         List<CryptoMonitor> cryptoMonitorList = cryptoMonitorService.getAll();
         List<CryptoMonitor> last24h = new ArrayList<>();
         cryptoMonitorList.forEach(cryptoMonitor -> {
-            if (cryptoMonitor.getDate().isBefore(LocalDateTime.now())
-                    & cryptoMonitor.getDate().isAfter(LocalDateTime.now().minusHours(24))) {
+            if (cryptoMonitor.getDate().isAfter(LocalDateTime.now().minusHours(24))) {
                 last24h.add(cryptoMonitor);
             }
         });
