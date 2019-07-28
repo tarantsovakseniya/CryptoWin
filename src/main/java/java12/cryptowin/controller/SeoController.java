@@ -1,8 +1,5 @@
 package java12.cryptowin.controller;
 
-import java12.cryptowin.entity.enumeration.CryptCoinType;
-import java12.cryptowin.entity.enumeration.CryptoExchange;
-import java12.cryptowin.seo.XmlUrl;
 import java12.cryptowin.seo.XmlUrlSet;
 import java12.cryptowin.service.seo.SeoGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
