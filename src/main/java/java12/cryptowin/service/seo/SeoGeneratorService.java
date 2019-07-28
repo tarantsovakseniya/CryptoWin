@@ -35,9 +35,7 @@ public class SeoGeneratorService {
                 "Sitemap: http://crypto-benefit.com/sitemap.xml";
     }
 
-    public XmlUrlSet getXmlUrlSet() {
-        XmlUrlSet xmlUrlSet = new XmlUrlSet();
-
+    public XmlUrlSet getXmlUrlSet(XmlUrlSet xmlUrlSet) {
         //main
         xmlUrlSet.addUrl(new XmlUrl(
                 "http://crypto-benefit.com/",
