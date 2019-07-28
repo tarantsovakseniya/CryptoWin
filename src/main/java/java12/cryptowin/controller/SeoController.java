@@ -22,11 +22,19 @@ public class SeoController {
         return generatorService.getRobotsTxt();
     }
 
-    @RequestMapping(value = "/sitemap.xml", produces = MediaType.APPLICATION_XML_VALUE)
+    @RequestMapping(value = "/sitemap.xml", produces = MediaType.TEXT_XML_VALUE)
     @ResponseBody
     public XmlUrlSet main() {
         XmlUrlSet xmlUrlSet = new XmlUrlSet();
+        create(xmlUrlSet, "", XmlUrl.Priority.HIGH);
+        create(xmlUrlSet, "/better-offer", XmlUrl.Priority.HIGH);
+        create(xmlUrlSet, "/charts", XmlUrl.Priority.MEDIUM);
 
-        return generatorService.getXmlUrlSet(xmlUrlSet);
+        return xmlUrlSet;
     }
+
+    private void create(XmlUrlSet xmlUrlSet, String link, XmlUrl.Priority priority) {
+        xmlUrlSet.addUrl(new XmlUrl("http://crypto-benefit.com" + link, priority));
+    }
+
 }
