@@ -22,7 +22,7 @@ public class XmlUrl {
     }
 
     @XmlElement
-    private String link;
+    private String loc;
 
     @XmlElement
     private String lastmod = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE);
@@ -34,16 +34,15 @@ public class XmlUrl {
     private String priority;
 
     public XmlUrl() {
-
     }
 
-    public XmlUrl(String link, Priority priority) {
-        this.link = link;
+    public XmlUrl(String loc, Priority priority) {
+        this.loc = loc;
         this.priority = priority.getValue();
     }
 
-    public String getLink() {
-        return link;
+    public String getLoc() {
+        return loc;
     }
 
     public String getPriority() {
