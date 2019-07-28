@@ -22,7 +22,7 @@ public class SeoController {
         return generatorService.getRobotsTxt();
     }
 
-    @RequestMapping(value = "/sitemap.xml", produces = MediaType.TEXT_XML_VALUE)
+    @RequestMapping(value = "/sitemap.xml", produces = MediaType.APPLICATION_XML_VALUE)
     @ResponseBody
     public XmlUrlSet main() {
         XmlUrlSet xmlUrlSet = new XmlUrlSet();
