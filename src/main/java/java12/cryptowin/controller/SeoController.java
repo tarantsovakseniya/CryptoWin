@@ -26,15 +26,6 @@ public class SeoController {
     @ResponseBody
     public XmlUrlSet main() {
         XmlUrlSet xmlUrlSet = new XmlUrlSet();
-        create(xmlUrlSet, "", XmlUrl.Priority.HIGH);
-        create(xmlUrlSet, "/better-offer", XmlUrl.Priority.HIGH);
-        create(xmlUrlSet, "/charts", XmlUrl.Priority.MEDIUM);
-
-        return xmlUrlSet;
+        return generatorService.getXmlUrlSet(xmlUrlSet);
     }
-
-    private void create(XmlUrlSet xmlUrlSet, String link, XmlUrl.Priority priority) {
-        xmlUrlSet.addUrl(new XmlUrl("http://crypto-benefit.com" + link, priority));
-    }
-
 }
