@@ -47,7 +47,7 @@
         </div>
 
         <div class="card-body">
-            <h4><p class="text-center"><b>ТОП-выгодных вариантов</b></p></h4>
+            <h4><p class="text-center"><b>ТОП-ВЫГОДНЫХ ВАРИАНТОВ БЕЗ УЧЕТА КОМИССИЙ</b></p></h4>
             <table class="table table-bordered table-sm text-center">
                 <thead>
                 <tr class="table-success">
@@ -139,20 +139,18 @@
                 </th:block>
                 </tbody>
             </table>
-            <p class="font-weight-light">*Прибыль указана без учета комиссии.</p>
-            <p></p>
 
+            <div class="container">
+                <div class="row justify-content-start">
             <!-- FORMS -->
             <form method="get" action="/better-offer" th:object="${formCalc}">
                 <input type="hidden" th:value="${cryptCoin}" name="cryptCoin"/>
 
-                <div class="card mt-1 mb-3">
-                    <div class="card-header">
-                        <div class="row">
+                <div class="card mt-1 mb-3 card-center border-success">
+                    <div class="card-header text-white bg-success">
                             <div class="col align-self-center">
                                 <h5><p class="text-center"><b>КАЛЬКУЛЯТОР РАСЧЕТА ПРИБЫЛИ С УЧЕТОМ КОМИССИЙ</b></p></h5>
                             </div>
-                        </div>
                     </div>
                     <div class="card-body" style="background-color: #FFFFFF">
                         <div class="form-group">
@@ -286,6 +284,8 @@
                 </div>
             </form>
 
+                </div>
+            </div>
         </div>
         <div class="card-footer">
             <a href="/" class="btn btn-light btn-outline-success">Назад</a>
