@@ -27,7 +27,7 @@ public class SubscriberMailSender {
     @Autowired
     private UserService userService;
 
-    private Map<Long, StringBuilder> result = new HashMap<>();
+    private Map<Long, StringBuilder> result=new HashMap<>();
 
     @Scheduled(cron = "0 0 9 * * ?", zone = "Europe/Kiev")
     public void sendEmail() {
@@ -53,6 +53,8 @@ public class SubscriberMailSender {
                 e.printStackTrace();
             }
         }));
+
+        result.clear();
     }
 
     private void getNeedEmailUsers() {
