@@ -14,7 +14,7 @@
 <div th:replace="fragments/header :: top-navbar"></div>
 
 <div class="container mt-3">
-    <div th:if="${error}" th:text="${error}" class="p-2 mb-3 bg-warning"></div>
+    <div th:if="${error}" th:text="${error}" class="p-2 mb-3 bg-info rounded" style="color:white;"></div>
     <form method="post" action="/register">
         <div class="card ml-auto mr-auto" style="max width: 600px;">
             <div class="card-header">
