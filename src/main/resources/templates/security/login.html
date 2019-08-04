@@ -33,10 +33,23 @@
 
 
     <form method="post" action="/login">
+        <div th:if="${param.error}">
+            <div class="alert alert-danger">
+                Invalid username or password.
+            </div>
+        </div>
+
+        <div th:if="${param.logout}">
+            <div class="alert alert-info">
+                You have been logged out.
+            </div>
+        </div>
+
         <div class="card ml-auto mr-auto" style="max-width: 600 px;">
             <div class="card-header">
                 Вход
             </div>
+
             <div class="card-body">
                 <div class="form-group">
                     <label for="username">Email</label>
